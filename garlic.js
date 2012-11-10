@@ -156,6 +156,7 @@
   * ========================= */
 
   $.fn.garlic = function ( option ) {
+    var options = $.extend( {}, $.fn.garlic.defaults, option, this.data() );
 
     var storage = new Storage();
 
@@ -167,8 +168,7 @@
 
     function bind (self) {
       var $this = $( self )
-        , data = $this.data( 'garlic' )
-        , options = typeof option == 'object' && option;
+        , data = $this.data( 'garlic' );
 
       if ( !data ) {
         $this.data( 'garlic', ( data = new Garlic( self, storage, options ) ) );
@@ -186,8 +186,7 @@
       // if a form elem is given, bind all its input children
       if ( $( this ).is( 'form' ) ) {
 
-        // we currently only support input:text, select and textarea
-        $( this ).find('input:text, textarea, select').each( function () {
+        $( this ).find(options.inputSelector).each( function () {
           bind( $( this ) );
         });
       }
@@ -200,6 +199,7 @@
 
   $.fn.garlic.defaults = {
       storage: true
+    , inputSelector: 'input:text, textarea'
     , template: '<div class="garlic"><div class="garlic-arrow"></div><div class="garlic-inner"></div></div>'
   }
 

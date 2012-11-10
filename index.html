@@ -48,7 +48,7 @@
                 the presisted data will be destroyed, considering it has properly been submited</label>
                 <input type="text" name="mytext" id="field1"/><br/>
                 <textarea name="textarea"></textarea><br/>
-                <label for="select">Currently, only input text, select and textarea are persisted.</select><br/>
+				<label for="select">Currently, only input text and textarea are persisted by default.  This is configurable.</label>
                 <select id="select">
                     <option>Hello</option>
                     <option>World</option>
@@ -99,6 +99,20 @@
                 <pre>
 &lt;script type="text/javascript">
   $('[rel=persist]').garlic();
+&lt;/script></pre>
+            </li>
+            <li>
+                <strong>Destroy storage for an element</strong><br/>
+                <pre>
+&lt;script type="text/javascript">
+  $('input.no_good').garlic('destroy');
+&lt;/script></pre>
+            </li>
+            <li>
+                <strong>Persist select boxes and checkboxes as well</strong><br/>
+                <pre>
+&lt;script type="text/javascript">
+  $('[rel=persist]').garlic( { inputSelector: 'input, select, textarea' } );
 &lt;/script></pre>
             </li>
         </ul>
