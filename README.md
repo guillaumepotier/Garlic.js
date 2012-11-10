@@ -8,7 +8,7 @@ http://guillaumepotier.github.com/Garlic.js
 
 #Version
 
-alpha
+very early alpha 0.0.1
 
 #TODO
 
@@ -17,8 +17,9 @@ alpha
 * Work on an alternative to localStorage for non compatible browsers
 * Work on cases where server put content in text fields, let the user choose bw server or localStorage version
 * Add tests
-* And much more..
+* Improve compatibility
+* And much more, for fun!
 
 #Licence
 
-MIT
+MIT - See LICENCE.md
