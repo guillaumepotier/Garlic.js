@@ -76,10 +76,8 @@
 
       this.retrieve();
 
-      var events = ['DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus'];
-		
-      var event_string = events.join('.'+this.type+' ');
-      this.$element.on( event_string, false, $.proxy( this.persist, this ) );
+      var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ];
+      this.$element.on( events.join('.'+this.type+' ') , false, $.proxy( this.persist, this ) );
 
       this.$element.closest( 'form' ).on( 'submit' , false, $.proxy( this.destroy, this ) );
       this.$element.addClass('garlic-auto-save');
@@ -175,7 +173,7 @@
         $this.data( 'garlic', ( data = new Garlic( self, storage, options ) ) );
       }
 
-      if ( typeof option == 'string' ) {
+      if ( typeof option == 'string' && typeof data[option] !== 'undefined' ) {
         data[option]();
       }
     }
@@ -187,7 +185,7 @@
       // if a form elem is given, bind all its input children
       if ( $( this ).is( 'form' ) ) {
 
-        $( this ).find(options.inputSelector).each( function () {
+        $( this ).find( options.inputs ).each( function () {
           bind( $( this ) );
         });
       }
@@ -198,7 +196,7 @@
 
   $.fn.garlic.defaults = {
       storage: true
-    , inputSelector: 'input:text, textarea'
+    , inputs: 'input:text, textarea'
     , template: '<div class="garlic"><div class="garlic-arrow"></div><div class="garlic-inner"></div></div>'
   }
 
