@@ -1,3 +1,11 @@
+/*
+  Garlic.js allows you to automatically persist your forms' text field values locally,
+  until the form is submitted. This way, your users don't lose any precious data if they
+  accidentally close their tab or browser.
+
+  author: Guillaume Potier - @guillaumepotier
+*/
+
 !function ($) {
 
   "use strict";
@@ -68,7 +76,11 @@
 
       this.retrieve();
 
-      this.$element.on( 'keyup.' + this.type, false, $.proxy( this.persist, this ) );
+	  var events = ['DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus'];
+		
+	  var event_string = events.join('.'+this.type+' ');
+      this.$element.on( event_string, false, $.proxy( this.persist, this ) );
+
       this.$element.closest( 'form' ).on( 'submit' , false, $.proxy( this.destroy, this ) );
     }
 
@@ -174,9 +186,9 @@
       // if a form elem is given, bind all its input children
       if ( $( this ).is( 'form' ) ) {
 
-        // we currently only support input:text and textarea
-        $( this ).find('input:text, textarea').each( function () {
-          bind ( $( this ) );
+        // we currently only support input:text, select and textarea
+        $( this ).find('input:text, textarea, select').each( function () {
+          bind( $( this ) );
         });
       }
 
