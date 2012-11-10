@@ -76,7 +76,14 @@
 
       this.retrieve();
 
-      this.$element.on( 'keyup.' + this.type, false, $.proxy( this.persist, this ) );
+      // We bind to all these events because browsers are complicated.
+      // change doesn't fire until focus is lost, select boxes can be manipulated
+      // without keys and pasting can be done without keys.
+      var events = ['DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus'];
+		
+      var event_string = events.join('.'+this.type+' ');
+      this.$element.on( event_string, false, $.proxy( this.persist, this ) );
+
       this.$element.closest( 'form' ).on( 'submit' , false, $.proxy( this.destroy, this ) );
     }
 
@@ -182,9 +189,9 @@
       // if a form elem is given, bind all its input children
       if ( $( this ).is( 'form' ) ) {
 
-        // we currently only support input:text and textarea
-        $( this ).find('input:text, textarea').each( function () {
-          bind ( $( this ) );
+        // we currently only support input:text, select and textarea
+        $( this ).find('input:text, textarea, select').each( function () {
+          bind( $( this ) );
         });
       }
 
