@@ -10,6 +10,15 @@ http://guillaumepotier.github.com/Garlic.js
 
 alpha
 
+#TODO
+
+* Improve doc and api
+* refactorize some code
+* Work on an alternative to localStorage for non compatible browsers
+* Work on cases where server put content in text fields, let the user choose bw server or localStorage version
+* Add tests
+* And much more..
+
 #Licence
 
 MIT
