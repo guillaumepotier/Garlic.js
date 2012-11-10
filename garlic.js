@@ -82,6 +82,7 @@
       this.$element.on( event_string, false, $.proxy( this.persist, this ) );
 
       this.$element.closest( 'form' ).on( 'submit' , false, $.proxy( this.destroy, this ) );
+      this.$element.addClass('garlic-auto-save');
     }
 
     , getOptions: function ( options ) {
@@ -190,8 +191,6 @@
           bind( $( this ) );
         });
       }
-
-      bind ( self );
     });
   }
 
