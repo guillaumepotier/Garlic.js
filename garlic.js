@@ -73,15 +73,11 @@
       this.storage = storage;
       this.path = this.$element.getPath();
 
-      // garlic only apply to form elements!
-      if ( !this.$element.context.form ) {
-        return;
-      }
-
       this.retrieve();
 
       this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
       this.$element.closest( 'form' ).on( 'submit' , false, $.proxy( this.destroy, this ) );
+
       this.$element.addClass('garlic-auto-save');
     }
 
@@ -142,8 +138,8 @@
       var parent = node.parent()
         , siblings = parent.children(name);
 
-      if ( siblings.length > 1 ) { 
-          name += ':eq(' + siblings.index(realNode) + ')';
+      if ( siblings.length > 1 ) {
+          name += ':eq(' + siblings.index( realNode ) + ')';
       }
 
       path = name + ( path ? '>' + path : '' );
