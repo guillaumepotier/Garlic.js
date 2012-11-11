@@ -49,6 +49,10 @@
 
       return true;
     }
+
+    , clear: function () {
+      localStorage.clear();
+    }
   }
 
  /* GARLIC PUBLIC CLASS DEFINITION
@@ -76,9 +80,7 @@
 
       this.retrieve();
 
-      var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ];
-      this.$element.on( events.join('.'+this.type+' ') , false, $.proxy( this.persist, this ) );
-
+      this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
       this.$element.closest( 'form' ).on( 'submit' , false, $.proxy( this.destroy, this ) );
       this.$element.addClass('garlic-auto-save');
     }
@@ -165,6 +167,11 @@
       return false;
     }
 
+    // access Garlic storage in debug mode for debugging purpose
+    if ( options.debug ) {
+      window.garlicStorage = storage;
+    }
+
     function bind (self) {
       var $this = $( self )
         , data = $this.data( 'garlic' );
@@ -189,23 +196,25 @@
           bind( $( this ) );
         });
       }
+
+      // if it is a Garlic supported single element, bind it too
+      if ( $( this ).is( config.supportedInputs ) ) {
+        bind( $( this ) );
+      }
     });
   }
 
   $.fn.garlic.Constructor = Garlic;
 
-  $.fn.garlic.defaults = {
-      storage: true
-    , inputs: 'input:text, textarea'
-    , template: '<div class="garlic"><div class="garlic-arrow"></div><div class="garlic-inner"></div></div>'
+  var config = {
+      supportedInputs: 'input:text, textarea, select'
   }
 
-  // call here some 'static' public methods
-  $.garlic = function ( options ) {
-    if ( 'clean' === options ) {
-      var storage = new Storage();
-      return storage.clean();
-    }
-  };
+  $.fn.garlic.defaults = {
+      debug: false                        // In debug mode, storage is available though window.garlicStorage
+    , storage: true                       // Allows to disable storage on the go for fields with data-storage="false"
+    , inputs: 'input:text, textarea'      // Default supported inputs. See config.supportedInputs
+    , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
+  }
 
 }(window.jQuery);
