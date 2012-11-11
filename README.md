@@ -8,7 +8,7 @@ http://guillaumepotier.github.com/Garlic.js
 
 #Version
 
-very early alpha 0.0.1
+early alpha 0.0.2
 
 #TODO
 
