@@ -3,6 +3,7 @@
 var testSuite = function () {
   describe ( 'Garlic.js test suite', function () {
     $('[rel=persist-select]').garlic({inputs: 'input:text, textarea, select', debug: true});
+    $('#form1').garlic();
 
     describe ( 'Test getPath', function () {
       it ( 'getPath()', function () {
@@ -68,21 +69,44 @@ var testSuite = function () {
       it ( 'On a select input on extended configuration with select persistency', function () {
         expect( $("#select2").hasClass( 'garlic-auto-save' ) ).to.be( true );
       } )
+      it ( 'On a form without data-persist, binded manually in javascript', function () {
+        expect( $("#input5").hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
     } )
 
     garlicStorage.clear();
     describe ( 'Test inputs events', function () {
       var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ]
-          , fieldPath = $("#testEvents").getPath();
+        , fieldPath = $("#input6").getPath();
 
       for ( var event in events ) {
         it ( 'Letters are persisted on ' + events[event] + 'event', function () {
-          $('#testEvents').val( 'foo' +  events[event] );
-          $('#testEvents').trigger( $.Event( events[event] ) );
-          expect( $("#testEvents").val() ).to.be( 'foo' +  events[event] );
+          $('#input6').val( 'foo' +  events[event] );
+          $('#input6').trigger( $.Event( events[event] ) );
+          expect( $("#input6").val() ).to.be( 'foo' +  events[event] );
           expect( garlicStorage.get( fieldPath ) ).to.be( 'foo' +  events[event] );
         } )
       }
     } )
+
+    garlicStorage.clear();
+    describe ( 'Test input data retrieving', function () {
+      garlicStorage.set( $("#input7").getPath(), 'foo' );
+      garlicStorage.set( $("#textarea2").getPath(), 'bar' );
+      it ( 'An input should be populated by its stored data', function () {
+        expect( $("#input7").val() ).to.be( 'foo' );
+        expect( $("#textarea2").val() ).to.be( 'bar' );
+      } )
+    } )
+
+    describe ( 'Test input data destroy', function () {
+      garlicStorage.set( $("#input8").getPath(), 'foo' );
+      it ( 'An input should be populated by its stored data', function () {
+        expect( $("#input8").val() ).to.be( 'foo' );
+        $("#input8").garlic( 'destroy' );
+        expect( garlicStorage.has( $("#input8").getPath() ) ).to.be( false );
+      } )
+    } )
+
   } )
 }
