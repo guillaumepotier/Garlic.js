@@ -2,9 +2,9 @@
 
 Garlic.js allows you to automatically persist your forms' text and select field values locally, until the form is submitted. This way, your users don't lose any precious data if they accidentally close their tab or browser.
 
-#Demonstration
+#Demonstration / Documentation
 
-http://guillaumepotier.github.com/Garlic.js
+http://garlicjs.org/
 
 #Version
 
