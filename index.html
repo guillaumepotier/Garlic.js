@@ -59,7 +59,7 @@
         <h1 class="">
             Garlic.js
 
-            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://garlicjs.org" data-text="Garlic.js: allows you to automatically persist your forms' text field values locally, until the form is submitted" data-size="large">Share the love!</a>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://garlicjs.org" data-text="Garlic.js: allows you to automatically persist your forms' text field values locally, until the form is submitted" data-size="large"></a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </h1>
 
@@ -74,6 +74,7 @@
                     <li><a href="#requirements"><i class="icon-chevron-right"></i> Requirements / Compatibiliy</a></li>
                     <li><a href="#usage"><i class="icon-chevron-right"></i> Usage</a></li>
                     <li><a href="#documentation"><i class="icon-chevron-right"></i> Documentation</a></li>
+                    <li><a href="#other"><i class="icon-chevron-right"></i> Other stuff</a></li>
                     <li><a href="#licence"><i class="icon-chevron-right"></i> Version / Licence</a></li>
                 </ul>
             </div>
@@ -83,7 +84,7 @@
                     <div class="page-header">
                         <h1>Demonstration <small>some magic..</small></h1>
                     </div>
-                    <form rel="persist" method="POST">
+                    <form data-persist="garlic" method="POST">
                         <fieldset>
                             <legend>1 - Simple form</legend><br/>
                             <label for="field1">Forms are independent. All text data is localy persisted thanks to localStorage<br/>
@@ -104,7 +105,7 @@
                         </fieldset>
                     </form>
 
-                    <form rel="persist"  method="POST">
+                    <form data-persist="garlic"  method="POST">
                         <fieldset>
                             <legend>2 - Form with non-persisted fields</legend><br/>
                             This field will be localy persisted while submit button is not triggered<br/>
@@ -116,7 +117,7 @@
                         </fieldset>
                     </form>
 
-                    <form rel="persist"  method="POST">
+                    <form data-persist="garlic"  method="POST">
                         <fieldset>
                             <legend>3 - Custom javascript or ajax validation</legend><br/>
                             <label for="ajax-test">This field will be localy persisted while js test not ok. Could be usefull<br/>
@@ -142,23 +143,17 @@
                     </div>
                     <ul>
                         <li>
-                            <strong>Include jQuery and garlic.js</strong><br/>
+                            <strong>Include jQuery (if not already here) and garlic.js</strong><br/>
                             <pre>
-            &lt;script src="jquery.js"></script>
-            &lt;script src="garlic.js"></script></pre>
+&lt;script src="jquery.js"></script>
+&lt;script src="garlic.js"></script></pre>
                         </li>
                         <li>
-                            <strong>Add </strong><code>rel="persist"</code><strong> to the forms you want to auto-persist</strong><br/>
-                            <pre>&lt;form rel="persist" method="POST"></form></script></pre>
-                        </li>
-                        <li>
-                            <strong>Call garlic on your page</strong><br/>
-                            <pre>
-            &lt;script type="text/javascript">
-              $('[rel=persist]').garlic();
-            &lt;/script></pre>
+                            <strong>Add </strong><code>data-persist="garlic"</code><strong> to the forms you want to auto-persist</strong><br/>
+                            <pre>&lt;form data-persist="garlic" method="POST"></form></script></pre>
                         </li>
                     </ul>
+                    <h3>That's all! ;)</h3>
                 </section>
 
                 <section id="documentation">
@@ -167,27 +162,42 @@
                     </div>
                     <ul>
                         <li>
-                            <strong>Destroy storage for an element</strong><br/>
+                            <strong>Manually call garlic in javascript</strong><br/>
                             <pre>
-            &lt;script type="text/javascript">
-              $('input.no_good').garlic('destroy');
-            &lt;/script></pre>
+&lt;script type="text/javascript">
+  $('[rel=persist]').garlic();
+&lt;/script></pre>
+                        </li>
+                        <li>
+                            <strong>Destroy storage for an element (don't work on an entire form yet, only input by input)</strong><br/>
+                            <pre>
+&lt;script type="text/javascript">
+  $('input.no_good').garlic('destroy');
+&lt;/script></pre>
                         </li>
                         <li>
                             <strong>Persist select boxes and checkboxes as well</strong><br/>
                             <pre>
-            &lt;script type="text/javascript">
-              $('[rel=persist]').garlic( { inputs: 'input, select, textarea' } );
-            &lt;/script></pre>
+&lt;script type="text/javascript">
+  $('[rel=persist]').garlic( { inputs: 'input, select, textarea' } );
+&lt;/script></pre>
                         </li>
                     </ul>
+                </section>
+
+                <section id="other">
+                    <div class="page-header">
+                        <h1>Other stuff</h1>
+                    </div>
+                    Please, feel free to fork and contribute to this plugin, or just discuss ideas, enhancement requests in an <a href="https://github.com/guillaumepotier/garlic.js/issues?state=open">issue</a>.<br/><br/>
+                    You could also fix my english mistakes, add some more tests in the test suite, and much more! :)
                 </section>
 
                 <section id="licence">
                     <div class="page-header">
                         <h1>Vesion / Licence</h1>
                     </div>
-                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.3 - MIT</a>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.4 - MIT</a>
                 </section>
             </div>
         </div>
@@ -202,8 +212,6 @@
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
 
     <script type="text/javascript">
-        $('[rel=persist]').garlic();
-
         $('#ajax-test').keyup( function () {
             if ($(this).val().length >= 10) {
                 $('#ajax-test').garlic('destroy');
