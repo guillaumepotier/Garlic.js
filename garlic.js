@@ -204,6 +204,9 @@
     });
   }
 
+  /* GARLIC CONFIGS & OPTIONS
+  * ========================= */
+
   $.fn.garlic.Constructor = Garlic;
 
   var config = {
@@ -216,5 +219,13 @@
     , inputs: 'input:text, textarea'      // Default supported inputs. See config.supportedInputs
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
   }
+
+  /* GARLIC DATA-API
+  * =============== */
+  $( window ).on( 'load', function () {
+    $( '[data-persist="garlic"]' ).each( function () {
+      $(this).garlic();
+    })
+  })
 
 }(window.jQuery);

@@ -2,9 +2,7 @@
 
 var testSuite = function () {
   describe ( 'Garlic.js test suite', function () {
-    $('[rel=persist]').garlic( { debug: true } );
-    garlicStorage.clear();
-    $('[rel=persist-select]').garlic({'inputs': 'input:text, textarea, select'});
+    $('[rel=persist-select]').garlic({inputs: 'input:text, textarea, select', debug: true});
 
     describe ( 'Test getPath', function () {
       it ( 'getPath()', function () {
@@ -12,6 +10,7 @@ var testSuite = function () {
       } )
     } )
 
+    garlicStorage.clear();
     describe ( 'Test Garlic storage', function () {
       it ( 'Test has()', function () {
         expect( garlicStorage.has('foo') ).to.be( false );
@@ -46,8 +45,8 @@ var testSuite = function () {
         expect( garlicStorage.get( 'test3' ) ).to.be( 'bar' );
       } )
     } )
-    garlicStorage.clear();
 
+    garlicStorage.clear();
     describe ( 'Test forms initialisation', function () {
       it ( 'On a simple form with only one input:text', function () {
         expect( $("#input1").hasClass( 'garlic-auto-save' ) ).to.be( true );
@@ -71,6 +70,7 @@ var testSuite = function () {
       } )
     } )
 
+    garlicStorage.clear();
     describe ( 'Test inputs events', function () {
       var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ]
           , fieldPath = $("#testEvents").getPath();
