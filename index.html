@@ -18,120 +18,183 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script src="https://raw.github.com/guillaumepotier/Garlic.js/master/garlic.min.js"></script>
-
     <style>
         body {
             display: block;
             padding: 10px 10%;
+            padding-top: 0;
             margin: auto;
+        }
+
+        h1.affix {
+            display: block;
+        }
+
+        .container {
+            margin-top: 0;
         }
 
         pre {
             margin: 10px 0 15px 0;
         }
+
+        .affix {
+            position: fixed;
+            clear: both;
+        }
+
+        .bs-docs-sidenav.affix {
+            top: 160px;
+        }
+
+        #demonstration {
+            padding-top: 0;
+        }
+
     </style>
 </head>
-<body>
-    <a href="https://github.com/guillaumepotier/garlic.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+<body data-spy="scroll" data-target=".navbar" data-offset="100">
+    <a href="https://github.com/guillaumepotier/garlic.js"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:9999" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
     <div class="container">
-        <h1>Garlic.js</h1><br/>
+        <h1 class="">Garlic.js</h1>
 
         <div class="row well">
             Garlic.js allows you to automatically persist your forms' text field values locally, until the form is submitted. This way, your users don't lose any precious data if they accidentally close their tab or browser.
         </div>
-        <br/>
-        <h2>Demonstration</h2>
-        <form rel="persist">
-            <fieldset>
-                <legend>1 - Simple form</legend><br/>
-                <label for="field1">Forms are independent. All text data is localy persisted thanks to localStorage<br/>
-                if browser supports it. If you reload this page, quit and go back here, your<br/>
-                data will still be there. On simple validation, if you press the submit button<br/>
-                the presisted data will be destroyed, considering it has properly been submited</label>
-                <input type="text" name="mytext" id="field1"/><br/>
-                <textarea name="textarea"></textarea><br/>
-                <label for="select">Currently, only input text and textarea are persisted by default.  This is configurable.</label>
-                <select id="select">
-                    <option>Hello</option>
-                    <option>World</option>
-                    <option>I</option>
-                    <option>Am</option>
-                    <option>Persisted</option>
-                </select><br/>
-                <input type="submit" class="btn"/>
-            </fieldset>
-        </form>
 
-        <form rel="persist">
-            <fieldset>
-                <legend>2 - Form with non-persisted fields</legend><br/>
-                This field will be localy persisted while submit button is not triggered<br/>
-                <input type="text" name="mytext" /><br/><br/>
+        <div class="row row-content">
+            <div class="span3 bs-docs-sidenav">
+                <ul class="nav nav-list bs-docs-sidenav affix">
+                    <li><a href="#demonstration"><i class="icon-chevron-right"></i> Demonstration</a></li>
+                    <li><a href="#requirements"><i class="icon-chevron-right"></i> Requirements / Compatibiliy</a></li>
+                    <li><a href="#usage"><i class="icon-chevron-right"></i> Usage</a></li>
+                    <li><a href="#documentation"><i class="icon-chevron-right"></i> Documentation</a></li>
+                    <li><a href="#licence"><i class="icon-chevron-right"></i> Version / Licence</a></li>
+                </ul>
+            </div>
 
-                Thise textarea will never be persisted since it has the <code>data-storage="false"</code> attribute<br/>
-                <textarea name="textarea" data-storage="false"></textarea><br/>
-                <input type="submit" class="btn"/>
-            </fieldset>
-        </form>
+            <div class="span9 doc-content">
+                <section id="demonstration">
+                    <div class="page-header">
+                        <h1>Demonstration <small>some magic..</small></h1>
+                    </div>
+                    <form rel="persist" method="POST">
+                        <fieldset>
+                            <legend>1 - Simple form</legend><br/>
+                            <label for="field1">Forms are independent. All text data is localy persisted thanks to localStorage<br/>
+                            if browser supports it. If you reload this page, quit and go back here, your<br/>
+                            data will still be there. On simple validation, if you press the submit button<br/>
+                            the presisted data will be destroyed, considering it has properly been submited</label>
+                            <input type="text" name="mytext" id="field1"/><br/>
+                            <textarea name="textarea"></textarea><br/>
+                            <label for="select">Currently, only input text and textarea are persisted by default.  This is configurable.</label>
+                            <select id="select">
+                                <option>Hello</option>
+                                <option>World</option>
+                                <option>I</option>
+                                <option>Am</option>
+                                <option>Persisted</option>
+                            </select><br/>
+                            <input type="submit" class="btn"/>
+                        </fieldset>
+                    </form>
 
-        <h2>3 - Custom javascript or ajax validation</h2>
-        <form rel="persist">
-            <fieldset>
-                <legend>2 - Form with non-persisted fields</legend><br/>
-                <label for="ajax-test">This field will be localy persisted while js test not ok. Could be usefull<br/>
-                with some AJAX behaviour. Here text will be persisted only if < 10 chars</label><br/>
-                <input type="text" id="ajax-test" name="myajaxtext" /> <span id="indicator"></span><br/>
-            </fieldset>
-        </form>
+                    <form rel="persist"  method="POST">
+                        <fieldset>
+                            <legend>2 - Form with non-persisted fields</legend><br/>
+                            This field will be localy persisted while submit button is not triggered<br/>
+                            <input type="text" name="mytext" /><br/><br/>
 
-        <h2>Usage</h2>
-        <ul>
-            <li>
-                <strong>Include jQuery and garlic.js</strong><br/>
-                <pre>
-&lt;script src="jquery.js"></script>
-&lt;script src="garlic.js"></script></pre>
-            </li>
-            <li>
-                <strong>Add </strong><code>rel="persist"</code><strong> to the forms you want to auto-persist</strong><br/>
-                <pre>&lt;form rel="persist" method="POST"></form></script></pre>
-            </li>
-            <li>
-                <strong>Call garlic on your page</strong><br/>
-                <pre>
-&lt;script type="text/javascript">
-  $('[rel=persist]').garlic();
-&lt;/script></pre>
-            </li>
-            <li>
-                <strong>Destroy storage for an element</strong><br/>
-                <pre>
-&lt;script type="text/javascript">
-  $('input.no_good').garlic('destroy');
-&lt;/script></pre>
-            </li>
-            <li>
-                <strong>Persist select boxes and checkboxes as well</strong><br/>
-                <pre>
-&lt;script type="text/javascript">
-  $('[rel=persist]').garlic( { inputs: 'input, select, textarea' } );
-&lt;/script></pre>
-            </li>
-        </ul>
+                            Thise textarea will never be persisted since it has the <code>data-storage="false"</code> attribute<br/>
+                            <textarea name="textarea" data-storage="false"></textarea><br/>
+                            <input type="submit" class="btn"/>
+                        </fieldset>
+                    </form>
 
-        <br/>
+                    <form rel="persist"  method="POST">
+                        <fieldset>
+                            <legend>3 - Custom javascript or ajax validation</legend><br/>
+                            <label for="ajax-test">This field will be localy persisted while js test not ok. Could be usefull<br/>
+                            with some AJAX behaviour. Here text will be persisted only if < 10 chars</label><br/>
+                            <input type="text" id="ajax-test" name="myajaxtext" /> <span id="indicator"></span><br/>
+                        </fieldset>
+                    </form>
+                </section>
 
-        <h2>Vestion / Licence</h2>
-        <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">Alpha 1 - MIT</a>
+                <section id="requirements">
+                    <div class="page-header">
+                        <h1>Requirements / Compatibiliy</h1>
+                    </div>
+                    <ul>
+                        <li>Requires jQuery</li>
+                        <li>Compatible yet with "modern browsers"</li>
+                    </ul>
+                </section>
 
-    <br/>
+                <section id="usage">
+                    <div class="page-header">
+                        <h1>Usage</h1>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong>Include jQuery and garlic.js</strong><br/>
+                            <pre>
+            &lt;script src="jquery.js"></script>
+            &lt;script src="garlic.js"></script></pre>
+                        </li>
+                        <li>
+                            <strong>Add </strong><code>rel="persist"</code><strong> to the forms you want to auto-persist</strong><br/>
+                            <pre>&lt;form rel="persist" method="POST"></form></script></pre>
+                        </li>
+                        <li>
+                            <strong>Call garlic on your page</strong><br/>
+                            <pre>
+            &lt;script type="text/javascript">
+              $('[rel=persist]').garlic();
+            &lt;/script></pre>
+                        </li>
+                    </ul>
+                </section>
+
+                <section id="documentation">
+                    <div class="page-header">
+                        <h1>Documentation</h1>
+                    </div>
+                    <ul>
+                        <li>
+                            <strong>Destroy storage for an element</strong><br/>
+                            <pre>
+            &lt;script type="text/javascript">
+              $('input.no_good').garlic('destroy');
+            &lt;/script></pre>
+                        </li>
+                        <li>
+                            <strong>Persist select boxes and checkboxes as well</strong><br/>
+                            <pre>
+            &lt;script type="text/javascript">
+              $('[rel=persist]').garlic( { inputs: 'input, select, textarea' } );
+            &lt;/script></pre>
+                        </li>
+                    </ul>
+                </section>
+
+                <section id="licence">
+                    <div class="page-header">
+                        <h1>Vesion / Licence</h1>
+                    </div>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.3 - MIT</a>
+                </section>
+            </div>
+        </div>
     </div>
 
     <br/>
-        <p>&copy; <a href="http://twitter.com/guillaumepotier" target="_blank">@guillaumepotier</a> 2012.</p>
+    <p>&copy; <a href="http://twitter.com/guillaumepotier" target="_blank">@guillaumepotier</a> 2012.</p>
 
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="https://raw.github.com/guillaumepotier/Garlic.js/master/garlic.min.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
 
     <script type="text/javascript">
         $('[rel=persist]').garlic();
