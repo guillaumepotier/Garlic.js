@@ -6,12 +6,17 @@ var testSuite = function () {
     $('#form1').garlic();
 
     describe ( 'Test getPath', function () {
-      it ( 'getPath()', function () {
-        expect( $("#input1").getPath() ).to.be( 'garlic:' + document.domain + '>' + 'html>body>div:eq(1)>form:eq(0)>input' );
+      it ( 'getPath() for #input1', function () {
+        expect( $("#input1").getPath() ).to.be( 'garlic:' + document.domain + '>' + 'form:eq(0)>input' );
+      } )
+      it ( 'getPath() for #div1', function () {
+        expect( $("#div1").getPath() ).to.be( 'garlic:' + document.domain + '>' + 'div:eq(1)>div' );
+      } )
+      it ( 'getPath() for #textarea2', function () {
+        expect( $("#textarea2").getPath() ).to.be( 'garlic:' + document.domain + '>' + 'form:eq(6)>textarea' );
       } )
     } )
 
-    garlicStorage.clear();
     describe ( 'Test Garlic storage', function () {
       it ( 'Test has()', function () {
         expect( garlicStorage.has('foo') ).to.be( false );
@@ -47,7 +52,6 @@ var testSuite = function () {
       } )
     } )
 
-    garlicStorage.clear();
     describe ( 'Test forms initialisation', function () {
       it ( 'On a simple form with only one input:text', function () {
         expect( $("#input1").hasClass( 'garlic-auto-save' ) ).to.be( true );
@@ -74,7 +78,6 @@ var testSuite = function () {
       } )
     } )
 
-    garlicStorage.clear();
     describe ( 'Test inputs events', function () {
       var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ]
         , fieldPath = $("#input6").getPath();
@@ -89,24 +92,36 @@ var testSuite = function () {
       }
     } )
 
-    garlicStorage.clear();
     describe ( 'Test input data retrieving', function () {
-      garlicStorage.set( $("#input7").getPath(), 'foo' );
-      garlicStorage.set( $("#textarea2").getPath(), 'bar' );
       it ( 'An input should be populated by its stored data', function () {
+        garlicStorage.set( $("#input7").getPath(), 'foo' );
+        garlicStorage.set( $("#textarea2").getPath(), 'bar' );
         expect( $("#input7").val() ).to.be( 'foo' );
         expect( $("#textarea2").val() ).to.be( 'bar' );
       } )
     } )
 
     describe ( 'Test input data destroy', function () {
-      garlicStorage.set( $("#input8").getPath(), 'foo' );
-      it ( 'An input should be populated by its stored data', function () {
-        expect( $("#input8").val() ).to.be( 'foo' );
-        $("#input8").garlic( 'destroy' );
-        expect( garlicStorage.has( $("#input8").getPath() ) ).to.be( false );
+      it ( 'Reset button should remove both text and localStorage, but only on current form', function () {
+        garlicStorage.set( $("#input8").getPath(), 'foo' );
+        garlicStorage.set( $("#input9").getPath(), 'foo' );
+        expect( garlicStorage.get( $("#input8").getPath() ) ).to.be( 'foo' );
+        expect( garlicStorage.get( $("#input9").getPath() ) ).to.be( 'foo' );
+        
+        $('#reset1').click( function () {
+          expect( $("#input9").val() ).to.be( '' );
+          expect( $("#input8").val() ).to.be( 'foo' );
+          expect( garlicStorage.has( $("#input8").getPath() ) ).to.be( false );
+          expect( garlicStorage.get( $("#input9").getPath() ) ).to.be( 'foo' );
+        });
+      } )
+      it ( 'Same behavior for submit button' )
+      it ( 'Destroy localStorage when garlic(\'destroy\') is fired on an elem', function () {
+        garlicStorage.set( $("#input10").getPath(), 'foo' );
+        expect( garlicStorage.get( $("#input10").getPath() ) ).to.be( 'foo' );
+        $("#input10").garlic('destroy');
+        expect( garlicStorage.has( $("#input10").getPath() ) ).to.be( false );
       } )
     } )
-
   } )
 }

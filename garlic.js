@@ -76,7 +76,7 @@
       this.retrieve();
 
       this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
-      this.$element.closest( 'form' ).on( 'submit' , false, $.proxy( this.destroy, this ) );
+      this.$element.closest( 'form' ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
 
       this.$element.addClass('garlic-auto-save');
     }
@@ -129,7 +129,7 @@
       var realNode = node[0]
         , name = realNode.localName;
 
-      if ( !name ) {
+      if ( !name || 'body' == name ) {
         break;
       }
 
@@ -143,6 +143,12 @@
       }
 
       path = name + ( path ? '>' + path : '' );
+
+      // break once we came up to form:eq(x), no need to go further
+      if ( 'form' == realNode.localName ) {
+        break;
+      }
+
       node = parent;
     }
 
@@ -153,9 +159,8 @@
   * ========================= */
 
   $.fn.garlic = function ( option ) {
-    var options = $.extend( {}, $.fn.garlic.defaults, option, this.data() );
-
-    var storage = new Storage();
+    var options = $.extend( {}, $.fn.garlic.defaults, option, this.data() )
+      , storage = new Storage();
 
     /* this plugin heavily rely on local Storage.
        If there is no localstorage, just stop here */
