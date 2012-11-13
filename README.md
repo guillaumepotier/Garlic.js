@@ -8,15 +8,9 @@ http://garlicjs.org/
 
 #Version
 
-Current 0.0.5
+0.0.6
 
-#Changelog
-
-* 0.0.5 : added support of input="reset" + improved tests
-* 0.0.4 : added data-api, no more need to call the plugin in javascript, just data-persist="garlic" in your form tag
-* 0.0.3 : fixed bug on standalone inputs. Added more tests
-* 0.0.2 : added optional support for select input. More events. Added some tests. (@cdmoyer)
-* 0.0.1 : initial commit. garlicjs.org. First release (@johnrees)
+See CHANGELOG for more info.
 
 #TODO
 

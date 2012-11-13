@@ -2,7 +2,7 @@
 
 var testSuite = function () {
   describe ( 'Garlic.js test suite', function () {
-    $('[rel=persist-select]').garlic({inputs: 'input:text, textarea, select', debug: true});
+    $('[rel=persist-select]').garlic({inputs: 'input[type=text], textarea, select', debug: true});
     $('#form1').garlic();
 
     describe ( 'Test getPath', function () {
@@ -94,10 +94,13 @@ var testSuite = function () {
 
     describe ( 'Test input data retrieving', function () {
       it ( 'An input should be populated by its stored data', function () {
-        garlicStorage.set( $("#input7").getPath(), 'foo' );
-        garlicStorage.set( $("#textarea2").getPath(), 'bar' );
-        expect( $("#input7").val() ).to.be( 'foo' );
-        expect( $("#textarea2").val() ).to.be( 'bar' );
+        garlicStorage.set( $("#input7").getPath(), 'foo', function () {
+          expect( $("#input7").val() ).to.be( 'foo' );
+        } );
+        garlicStorage.set( $("#textarea2").getPath(), 'bar', function () {
+          expect( $("#textarea2").val() ).to.be( 'bar' );
+        } );
+        
       } )
     } )
 

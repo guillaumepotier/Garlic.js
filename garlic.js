@@ -30,28 +30,29 @@
       return localStorage.getItem( key ) ? true : false;
     }
 
-    , set: function ( key, value ) {
+    , set: function ( key, value, fn ) {
       localStorage.setItem( key , value );
-      return true;
+      return 'function' === typeof fn ? fn() : true;
     }
 
-    , destroy: function ( key ) {
+    , destroy: function ( key, fn ) {
       localStorage.removeItem( key );
-      return true;
+      return 'function' === typeof fn ? fn() : true;
     }
 
-    , clean: function () {
+    , clean: function ( fn ) {
       for ( var i = localStorage.length - 1; i >= 0; i-- ) {
         if ( -1 !== localStorage.key(i).indexOf( 'garlic:' ) ) {
           localStorage.removeItem( localStorage.key(i) );
         }
       }
 
-      return true;
+      return 'function' === typeof fn ? fn() : true;
     }
 
-    , clear: function () {
+    , clear: function ( fn ) {
       localStorage.clear();
+      return 'function' === typeof fn ? fn() : true;
     }
   }
 
@@ -89,7 +90,7 @@
 
     , persist: function () {
       if ( this.options.storage ) {
-        this.storage.set( this.path , this.$element.context.value );
+        this.storage.set( this.path , this.$element.val() );
       }
     }
 
@@ -192,14 +193,12 @@
 
       // if a form elem is given, bind all its input children
       if ( $( this ).is( 'form' ) ) {
-
         $( this ).find( options.inputs ).each( function () {
           bind( $( this ) );
         });
-      }
 
       // if it is a Garlic supported single element, bind it too
-      if ( $( this ).is( config.supportedInputs ) ) {
+      } else if ( $( this ).is( 'input' ) ) {
         bind( $( this ) );
       }
     });
@@ -210,14 +209,10 @@
 
   $.fn.garlic.Constructor = Garlic;
 
-  var config = {
-      supportedInputs: 'input:text, textarea, select'
-  }
-
   $.fn.garlic.defaults = {
-      debug: false                        // In debug mode, storage is available though window.garlicStorage
-    , storage: true                       // Allows to disable storage on the go for fields with data-storage="false"
-    , inputs: 'input:text, textarea'      // Default supported inputs. See config.supportedInputs
+      debug: false                              // In debug mode, storage is available though window.garlicStorage
+    , storage: true                             // Allows to disable storage on the go for fields with data-storage="false"
+    , inputs: 'input[type=text], textarea'      // Default supported inputs. See config.supportedInputs
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
   }
 
@@ -229,4 +224,5 @@
     })
   })
 
-}(window.jQuery);
+// This plugin works with jQuery or Zepto (with data extension builded for Zepto. See changelog 0.0.6)
+}(window.jQuery || Zepto);
