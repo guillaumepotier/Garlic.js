@@ -1,5 +1,8 @@
 #Changelog
 
+* **0.0.7** : added support for select, radio and checkbox inputs. Added some tests
+              Some of them are waiting to be written
+
 * **0.0.6** : added Zepto support. Now Garlic.js with Zepto standalone is < 30Ko! 
  
    - Zepto does not support `input:text`, use `input[type=text]` instead  

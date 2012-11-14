@@ -8,7 +8,7 @@ http://garlicjs.org/
 
 #Version
 
-0.0.6
+0.0.7
 
 See CHANGELOG for more info.
 
