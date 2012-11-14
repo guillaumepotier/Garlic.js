@@ -20,6 +20,17 @@
         <form rel="persist-select">
             <select id="select2"></select>
         </form>
+
+        <form data-persist="garlic">
+            <input type="checkbox" id="checkbox1" name="checkbox[]" value="checkbox1" />
+            <input type="checkbox" id="checkbox2" name="checkbox[]" value="checkbox2" />
+            <input type="checkbox" id="checkbox3" name="checkbox[]" value="checkbox3" />
+        </form>
+        <form data-persist="garlic">
+            <input type="radio" id="radio1" name="radio" value="radio1" />
+            <input type="radio" id="radio2" name="radio" value="radio2" />
+        </form>
+
         <form>
             <input type="text" id="input3" data-persist="garlic" />
             <input type="text" id="input4" />
@@ -55,6 +66,7 @@
 
     <!-- Uncomment this line and comment jquery above to launch test suite with Zepto -->
     <!-- <script src="zepto-1.0rc1+databuild.min.js"></script> -->
+
 
     <script type="text/javascript" src="../garlic.js"></script>
     <script type="text/javascript" src="expect.js"></script>

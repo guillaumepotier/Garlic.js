@@ -90,18 +90,36 @@
 
     , persist: function () {
       if ( this.options.storage ) {
+        // for checkboxes, we need to implement a kind of toggle
+        if ( this.$element.is( 'input[type=checkbox]' ) && this.storage.has( this.path )) {
+          this.destroy();
+          return;
+        }
+
         this.storage.set( this.path , this.$element.val() );
       }
     }
 
     , retrieve: function () {
       if ( this.storage.has( this.path ) ) {
+        if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
+          if ( this.storage.get( this.path ) === this.$element.val() ) {
+            this.$element.attr( 'checked', 'checked' );
+          }
+
+          return;
+        }
+
         this.$element.val( this.storage.get( this.path ) );
       }
     }
 
     // only delete localStorage
     , destroy: function () {
+      if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
+        this.$element.attr( 'checked', false );
+      }
+
       this.storage.destroy( this.path );
     }
 
@@ -139,8 +157,11 @@
       var parent = node.parent()
         , siblings = parent.children(name);
 
-      if ( siblings.length > 1 ) {
-          name += ':eq(' + siblings.index( realNode ) + ')';
+      // if has sibilings, get eq(), exept for radio buttons, get name instead to group them by name
+      if ( siblings.length > 1 && !$( realNode ).is( 'input[type=radio]' ) ) {
+        name += ':eq(' + siblings.index( realNode ) + ')';
+      } else if ( $( realNode ).is( 'input[type=radio]' ) ) {
+        name += '#' + $( realNode ).attr( 'name' );
       }
 
       path = name + ( path ? '>' + path : '' );
@@ -198,7 +219,7 @@
         });
 
       // if it is a Garlic supported single element, bind it too
-      } else if ( $( this ).is( 'input' ) ) {
+      } else if ( $( this ).is( options.inputs ) ) {
         bind( $( this ) );
       }
     });
@@ -212,7 +233,7 @@
   $.fn.garlic.defaults = {
       debug: false                              // In debug mode, storage is available though window.garlicStorage
     , storage: true                             // Allows to disable storage on the go for fields with data-storage="false"
-    , inputs: 'input[type=text], textarea'      // Default supported inputs. See config.supportedInputs
+    , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'               // Default supported inputs. See config.supportedInputs
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
   }
 

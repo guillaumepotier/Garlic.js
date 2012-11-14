@@ -30,6 +30,14 @@
             display: block;
         }
 
+        #head-download {
+            float: right;
+        }
+
+        .download a, .download a:hover {
+            text-decoration:none;
+        }
+
         .container {
             margin-top: 0;
         }
@@ -64,7 +72,16 @@
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </h1>
 
-        <div class="row well">
+        <div class="row well intro">
+            <div id="head-download" class="download">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.7.zip">
+                    <img width="90" border="0" src="http://github.com/images/modules/download/zip.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                </a>
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.7.tar.gz">
+                    <img width="90" border="0" src="http://github.com/images/modules/download/tar.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                </a>
+            </div>
+
             <p>
                 Garlic.js allows you to automatically persist your forms' text field values locally, until the form is submitted. This way, your users don't lose any precious data if they accidentally close their tab or browser.
             </p>
@@ -78,6 +95,7 @@
                 <ul class="nav nav-list bs-docs-sidenav affix">
                     <li><a href="#demonstration"><i class="icon-chevron-right"></i> Demonstration</a></li>
                     <li><a href="#requirements"><i class="icon-chevron-right"></i> Requirements / Compatibiliy</a></li>
+                    <li><a href="#download"><i class="icon-chevron-right"></i> Download</a></li>
                     <li><a href="#usage"><i class="icon-chevron-right"></i> Usage</a></li>
                     <li><a href="#documentation"><i class="icon-chevron-right"></i> Documentation</a></li>
                     <li><a href="#they-use"><i class="icon-chevron-right"></i> They use Garlic.js!</a></li>
@@ -99,16 +117,44 @@
                             data will still be there. On simple validation, if you press the submit button<br/>
                             the presisted data will be destroyed, considering it has properly been submited</label>
                             <input type="text" name="mytext" id="field1"/><br/>
-                            <textarea name="textarea"></textarea><br/>
-                            <label for="select">Currently, only input text and textarea are persisted by default.  This is configurable, see <a href="#documentation">Documentation</a>.</label>
+                            <textarea name="textarea"></textarea>
+                            <br/>
+
+                            <label for="select"></label>
                             <select id="select">
                                 <option>Hello</option>
                                 <option>World</option>
                                 <option>I</option>
                                 <option>Am</option>
-                                <option>not</option>
                                 <option>Persisted</option>
-                            </select><br/>
+                            </select>
+                            <br/>
+
+                            <label class="radio">
+                                yes <input type="radio" name="radio1" value="yes" />&nbsp;
+                            </label>
+                            <label class="radio">
+                                no <input type="radio" name="radio1" value="no" />&nbsp;
+                            </label>
+                            <label class="radio">
+                                maybe <input type="radio" name="radio1" value="maybe" />
+                            </label>
+                            <br/>
+
+                            <label class="checkbox">
+                                I <input type="checkbox" name="checkbox[]" value="I">&nbsp;
+                            </label>
+                            <label class="checkbox">
+                                will <input type="checkbox" name="checkbox[]" value="will">&nbsp;
+                            </label>
+                            <label class="checkbox">
+                                be <input type="checkbox" name="checkbox[]" value="be">&nbsp;
+                            </label>
+                            <label class="checkbox">
+                                persisted <input type="checkbox" name="checkbox[]" value="persisted">
+                            </label>
+                            <br/>
+
                             Submit and Reset buttons will destroy the fields stored data. Try it out!<br>
                             <input type="submit" class="btn"/>
                             <input type="reset" class="btn"/>
@@ -143,10 +189,24 @@
                         <h1>Requirements / Compatibiliy</h1>
                     </div>
                     <ul>
-                        <li>Requires jQuery or Zepto (with data module builded for Zepto, see <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">changelog</a>)</li>
-                        <li>Compatible yet only with "modern browsers"</li>
+                        <li>Requires jQuery or Zepto (with data module builded for Zepto, see <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">changelog 0.0.6</a>)</li>
+                        <li>Compatible yet only with "modern browsers": IE8+, FF 4+, Safari 4+, Opera 11+. See more <a href="http://www.html5rocks.com/en/features/storage">here</a></li>
                     </ul>
                     <a href="#top" class="pull-right">Top</a>
+                </section>
+
+                <section id="download">
+                    <div class="page-header">
+                        <h1>Download</h1>
+                    </div>
+                    <div id="download" class="download">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.7.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
+                            <img width="90" border="0" src="http://github.com/images/modules/download/zip.png">
+                        </a>
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.7.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                            <img width="90" border="0" src="http://github.com/images/modules/download/tar.png">
+                        </a>
+                    </div>
                 </section>
 
                 <section id="usage">
