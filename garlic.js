@@ -14,8 +14,8 @@
 
   /* STORAGE PUBLIC CLASS DEFINITION
    * =============================== */
-  var Storage = function () {
-    this.defined = 'undefined' !== typeof localStorage ? true : false;
+  var Storage = function ( options ) {
+    this.defined = 'undefined' !== typeof localStorage;
   }
 
   Storage.prototype = {
@@ -31,7 +31,10 @@
     }
 
     , set: function ( key, value, fn ) {
-      localStorage.setItem( key , value );
+      if ( 'string' === typeof value && '' !== value ) {
+        localStorage.setItem( key , value );
+      }
+
       return 'function' === typeof fn ? fn() : true;
     }
 
@@ -72,7 +75,7 @@
       this.$element = $( element );
       this.options = this.getOptions( options );
       this.storage = storage;
-      this.path = this.$element.getPath();
+      this.path = this.getPath();
 
       this.retrieve();
 
@@ -89,15 +92,13 @@
     }
 
     , persist: function () {
-      if ( this.options.storage ) {
-        // for checkboxes, we need to implement a kind of toggle
-        if ( this.$element.is( 'input[type=checkbox]' ) && this.storage.has( this.path )) {
-          this.destroy();
-          return;
-        }
-
-        this.storage.set( this.path , this.$element.val() );
+      // for checkboxes, we need to implement a toggle behavior
+      if ( this.$element.is( 'input[type=checkbox]' ) && this.storage.has( this.path )) {
+        this.destroy();
+        return;
       }
+
+      this.storage.set( this.path , this.$element.val() );
     }
 
     , retrieve: function () {
@@ -128,53 +129,72 @@
       this.remove();
       this.$element.val( '' );
     }
-  }
 
-  /*  GETPATH IMPLEMENTATION
-     get unique elem selector
-  * ========================= */
+    /* retuns an unique identifier for form elements, depending on their behaviors:
+       * radio buttons: domain > pathname > form.<attr.name>[:eq(x)] > input.<attr.name>
+          no eq(); must be all stored under the same field name inside the same form
 
-  $.fn.getPath = function () {
+       * checkbokes: domain > pathname > form.<attr.name>[:eq(x)] > [fieldset, div, span..] > input.<attr.name>[:eq(y)]
+          cuz' they have the same name, must detect their exact position in the form. detect the exact hierarchy in DOM elements
 
-    // Requires one element.
-    if ( this.length != 1 ) {
-      return false;
+       * other inputs: domain > pathname > form.<attr.name>[:eq(x)] > input.<attr.name>[:eq(y)]
+          we just need the element name / eq() inside a given form
+    */
+    , getPath: function () {
+
+      // Requires one element.
+      if ( this.$element.length != 1 ) {
+        return false;
+      }
+
+      var path = ''
+        , fullPath = this.$element.is( 'input[type=checkbox]')
+        , node = this.$element;
+
+      while ( node.length ) {
+        var realNode = node[0]
+          , name = realNode.localName;
+
+        if ( !name ) {
+          break;
+        }
+
+        name = name.toLowerCase();
+
+        var parent = node.parent()
+          , siblings = parent.children( name );
+
+        // don't need to pollute path with select, fieldsets, divs and other noisy elements,
+        // exept for checkboxes that need exact path, cuz have same name and sometimes same eq()!
+        if ( !$( realNode ).is( 'form, input, select, textarea' ) && !fullPath ) {
+          node = parent;
+          continue;
+        }
+
+        // set input type as name + name attr if exists
+        name += 'undefined' !== typeof $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
+
+        // if has sibilings, get eq(), exept for radio buttons
+        if ( siblings.length > 1 && !$( realNode ).is( 'input[type=radio]' ) ) {
+          name += ':eq(' + siblings.index( realNode ) + ')';
+        }
+
+        path = name + ( path ? '>' + path : '' );
+
+        // break once we came up to form:eq(x), no need to go further
+        if ( 'form' == realNode.localName ) {
+          break;
+        }
+
+        node = parent;
+      }
+
+      return 'garlic:' + document.domain + window.location.pathname + '>' + path;
     }
 
-    var path
-      , node = this;
-
-    while ( node.length ) {
-      var realNode = node[0]
-        , name = realNode.localName;
-
-      if ( !name || 'body' == name ) {
-        break;
-      }
-
-      name = name.toLowerCase();
-
-      var parent = node.parent()
-        , siblings = parent.children(name);
-
-      // if has sibilings, get eq(), exept for radio buttons, get name instead to group them by name
-      if ( siblings.length > 1 && !$( realNode ).is( 'input[type=radio]' ) ) {
-        name += ':eq(' + siblings.index( realNode ) + ')';
-      } else if ( $( realNode ).is( 'input[type=radio]' ) ) {
-        name += '#' + $( realNode ).attr( 'name' );
-      }
-
-      path = name + ( path ? '>' + path : '' );
-
-      // break once we came up to form:eq(x), no need to go further
-      if ( 'form' == realNode.localName ) {
-        break;
-      }
-
-      node = parent;
+    , getStorage: function () {
+      return this.storage;
     }
-
-    return 'garlic:' + document.domain + '>' + path;
   }
 
   /* GARLIC PLUGIN DEFINITION
@@ -182,47 +202,57 @@
 
   $.fn.garlic = function ( option ) {
     var options = $.extend( {}, $.fn.garlic.defaults, option, this.data() )
-      , storage = new Storage();
+      , storage = new Storage()
+      , returnValue = false;
 
-    /* this plugin heavily rely on local Storage.
-       If there is no localstorage, just stop here */
+    // this plugin heavily rely on local Storage. If there is no localStorage or data-storage=false, no need to go further
     if ( !storage.defined ) {
       return false;
     }
 
-    // access Garlic storage in debug mode for debugging purpose
-    if ( options.debug ) {
+    if ( options.debug && 'undefined' === typeof garlicStorage ) {
       window.garlicStorage = storage;
     }
 
     function bind (self) {
       var $this = $( self )
-        , data = $this.data( 'garlic' );
+        , data = $this.data( 'garlic' )
+        , fieldOptions = $.extend( options, $this.data() );
 
-      if ( !data ) {
-        $this.data( 'garlic', ( data = new Garlic( self, storage, options ) ) );
+      // don't bind an elem with data-storage=false
+      if ( 'undefined' !== typeof fieldOptions.storage && !fieldOptions.storage ) {
+        return;
       }
 
-      if ( typeof option == 'string' && typeof data[option] !== 'undefined' ) {
-        data[option]();
+      // if data never binded, bind it right now!
+      if ( !data ) {
+        $this.data( 'garlic', ( data = new Garlic( self, storage, fieldOptions ) ) );
+      }
+
+      // here is our garlic public function accessor, currently does not support args
+      if ( 'string' === typeof option && 'function' === typeof data[option] ) {
+        return data[option]();
       }
     }
 
     // loop through every elemt we want to garlic
-    return this.each(function () {
+    this.each(function () {
       var self = this;
 
       // if a form elem is given, bind all its input children
       if ( $( this ).is( 'form' ) ) {
         $( this ).find( options.inputs ).each( function () {
-          bind( $( this ) );
+          returnValue = bind( $( this ) );
         });
 
       // if it is a Garlic supported single element, bind it too
+      // add here a return instance, cuz' we could call public methods on single elems with data[option]() above
       } else if ( $( this ).is( options.inputs ) ) {
-        bind( $( this ) );
+        returnValue = bind( $( this ) );
       }
     });
+
+    return returnValue;
   }
 
   /* GARLIC CONFIGS & OPTIONS
@@ -231,9 +261,8 @@
   $.fn.garlic.Constructor = Garlic;
 
   $.fn.garlic.defaults = {
-      debug: false                              // In debug mode, storage is available though window.garlicStorage
-    , storage: true                             // Allows to disable storage on the go for fields with data-storage="false"
-    , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'               // Default supported inputs. See config.supportedInputs
+      debug: true                                                                                 // debug mode. Add garlicStorage to window. TODO: make a proper getter
+    , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'       // Default supported inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
   }
 
