@@ -60,6 +60,32 @@
             <input type="text" id="input11" />
         </form>
         <input type="submit" id="submit2" />
+        <select id="select23" data-persist="garlic">
+            <option value="foo">foo</option>
+            <option value="bar">bar</option>
+            <option value="baz">baz</option>  
+        </select>
+        <form data-persist="garlic">
+            <input type="text" id="input12" />
+            <select id="select3">
+              <option value="foo">foo</option>
+              <option value="bar">bar</option>
+            </select>
+            <input type="radio" name="radio1" value="foo" />
+            <input type="radio" name="radio1" value="bar" />
+            <ul>
+              <li><input type="radio" name="radio2" value="foo" /></li>
+              <li><input type="radio" name="radio2" value="bar" /></li>
+            </ul>
+            <input type="checkbox" id="checkbox4" name="checkbox2[]" value="foo" />
+            <input type="checkbox" id="checkbox5" name="checkbox2[]" value="bar" />
+            <input type="checkbox" id="checkbox6" name="checkbox2[]" value="baz" />
+            <ul>
+              <li><input type="checkbox" id="checkbox7" name="checkbox3[]" value="bar" /></li>
+              <li><input type="checkbox" id="checkbox8" name="checkbox3[]" value="baz" /></li>
+            </ul>
+            <input type="checkbox" id="checkbox9" name="checkbox9[]" value="foo" />
+        </form>
     </div>
 
     <script type="text/javascript" src="jquery-1.8.2.min.js"></script>
