@@ -101,14 +101,14 @@ var testSuite = function () {
       var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ]
         , fieldPath = $( '#input6' ).garlic( 'getPath' );
 
-      for ( var event in events ) {
         it ( 'Data is persisted on ' + events[event] + 'event', function () {
-          $('#input6').val( 'foo' +  events[event] );
-          $('#input6').trigger( $.Event( events[event] ) );
-          expect( $( '#input6' ).val() ).to.be( 'foo' +  events[event] );
-          expect( garlicStorage.get( fieldPath ) ).to.be( 'foo' +  events[event] );
+          for ( var event in events ) {
+            $('#input6').val( 'foo' +  events[event] );
+            $('#input6').trigger( $.Event( events[event] ) );
+            expect( $( '#input6' ).val() ).to.be( 'foo' +  events[event] );
+            expect( garlicStorage.get( fieldPath ) ).to.be( 'foo' +  events[event] );
+          }
         } )
-      }
     } )
 
     /***************************************
@@ -219,11 +219,12 @@ var testSuite = function () {
         expect( garlicStorage.get( $( '#input8' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
         expect( garlicStorage.get( $( '#input9' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
         
+        $('#reset1').click();
         $('#reset1').click( function () {
           expect( $( '#input9' ).val() ).to.be( '' );
+          expect( garlicStorage.has( $( '#input9' ).garlic( 'getPath' ) ) ).to.be( false );
           expect( $( '#input8' ).val() ).to.be( 'foo' );
-          expect( garlicStorage.has( $( '#input8' ).garlic( 'getPath' ) ) ).to.be( false );
-          expect( garlicStorage.get( $( '#input9' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
+          expect( garlicStorage.get( $( '#input8' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
         });
       } )
       it ( 'Same behavior for radio buttons, remove stored state and uncheck the checked one' )
@@ -234,6 +235,18 @@ var testSuite = function () {
         expect( garlicStorage.get( $( '#input10' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
         $( '#input10' ).garlic('destroy');
         expect( garlicStorage.has( $( '#input10' ).garlic( 'getPath' ) ) ).to.be( false );
+      } )
+      it ( 'Do not destroy localStorage if data-destroy=false', function () {
+        garlicStorage.set( $( '#textarea40' ).garlic( 'getPath' ), 'foo' );
+        $( '#reset40' ).click( function () {                    
+          expect( garlicStorage.get( $( '#textarea40' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
+        } )
+        $( '#submit40' ).click( function ( e ) {          
+          expect( garlicStorage.get( $( '#textarea40' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
+          e.preventDefault();
+        } )
+        $( '#submit40' ).click();
+        $( '#reset40' ).click();
       } )
     } )
 

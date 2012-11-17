@@ -1,5 +1,10 @@
 #Changelog
 
+* **0.0.9** : 
+    
+    - added option `data-destroy=false` to give the possibility to not destroy
+      localStorage on submit and reset button
+
 * **0.0.8** : 
 
     - changed a bit the way inputs elements paths is calculated. Now, we

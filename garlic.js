@@ -80,7 +80,12 @@
       this.retrieve();
 
       this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
-      this.$element.closest( 'form' ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
+
+      if ( this.options.destroy ) {
+        this.$element.closest( 'form' ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
+      } else {
+        console.log( 'not for me' );
+      }
 
       this.$element.addClass('garlic-auto-save');
     }
@@ -117,6 +122,7 @@
 
     // only delete localStorage
     , destroy: function () {
+      console.log( this.$element )
       if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
         this.$element.attr( 'checked', false );
       }
@@ -264,6 +270,7 @@
       debug: true                                                                                 // debug mode. Add garlicStorage to window. TODO: make a proper getter
     , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'       // Default supported inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
+    , destroy: true                                                                               // remove or not localstorage on submit & clear 
   }
 
   /* GARLIC DATA-API

@@ -155,30 +155,43 @@
                             </label>
                             <br/>
 
-                            Submit and Reset buttons will destroy the fields stored data. Try it out!<br>
+                            Submit and Reset buttons will destroy the fields stored data. Try it out!<br/><br/>
                             <input type="submit" class="btn"/>
                             <input type="reset" class="btn"/>
                         </fieldset>
                     </form>
+                    <a href="#top" class="pull-right">Top</a>
 
                     <form data-persist="garlic"  method="POST">
                         <fieldset>
                             <legend>2 - Form with non-persisted fields</legend><br/>
                             This field will be localy persisted while submit button is not triggered<br/>
-                            <input type="text" name="mytext" /><br/><br/>
+                            <input type="text" name="mytext" /><br/>
 
                             Thise textarea will never be persisted since it has the <code>data-storage="false"</code> attribute<br/>
                             <textarea name="textarea" data-storage="false"></textarea><br/>
                             <input type="submit" class="btn"/>
                         </fieldset>
                     </form>
+                    <a href="#top" class="pull-right">Top</a>
 
-                    <form data-persist="garlic"  method="POST">
+                    <form data-persist="garlic" method="POST">
                         <fieldset>
                             <legend>3 - Custom javascript or ajax validation</legend><br/>
                             <label for="ajax-test">This field will be localy persisted while js test not ok. Could be usefull<br/>
-                            with some AJAX behaviour. Here text will be persisted only if < 10 chars</label><br/>
+                            with some AJAX behaviour. Here text will be persisted only if < 10 chars</label>
                             <input type="text" id="ajax-test" name="myajaxtext" /> <span id="indicator"></span><br/>
+                        </fieldset>
+                    </form>
+                    <a href="#top" class="pull-right">Top</a>
+
+                    <form data-persist="garlic" data-destroy="false" method="POST">
+                        <fieldset>
+                            <legend>4 - "Infinite" persistency</legend><br/>
+                            <label for="ajax-test">Use <code>data-destroy=false</code> in your <code>&lt;form></code> to never remove localStorage persistency</label>
+                            <input type="text" id="infinite-persistency" name="infinite-persistency" /><br/>
+                            <input type="submit" class="btn"/><br/><br/>
+                            You still can destroy localStorage data on custom javascript events, try <u><a style="cursor:pointer;" onClick="javascript:$('#infinite-persistency').garlic('destroy');">this action</a></u> and then refresh the page to see the difference ;)
                         </fieldset>
                     </form>
                     <a href="#top" class="pull-right">Top</a>
@@ -238,6 +251,9 @@
                             <strong>Want to specifically chart fields persisted by Garlic? Use the auto-added </strong><code>class="garlic-auto-save"</code><strong> class!</strong><br/>
                         </li>
                         <li>
+                            <strong>Never destroy localStorage for a form: use </strong><code>data-destryo="false"</code><strong> (<u>don't work on inputs separately, only on whole form inputs</u>)</strong><br/>
+                        </li>
+                        <li>
                             <strong>Manually call garlic in javascript</strong><br/>
                             <pre>
 &lt;script type="text/javascript">
@@ -245,17 +261,10 @@
 &lt;/script></pre>
                         </li>
                         <li>
-                            <strong>Destroy storage for an element (don't work on an entire form yet, only input by input)</strong><br/>
+                            <strong>Destroy storage for an element (<u>don't work on an entire form yet, only input by input</u>)</strong><br/>
                             <pre>
 &lt;script type="text/javascript">
   $('input.no_good').garlic('destroy');
-&lt;/script></pre>
-                        </li>
-                        <li>
-                            <strong>Persist select boxes and checkboxes as well</strong><br/>
-                            <pre>
-&lt;script type="text/javascript">
-  $('[rel=persist]').garlic( { inputs: 'input[type=text], select, textarea' } );
 &lt;/script></pre>
                         </li>
                     </ul>
@@ -294,7 +303,7 @@
                     <div class="page-header">
                         <h1>Version / Licence</h1>
                     </div>
-                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.6 - MIT</a>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.9 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
                     <a href="#top" class="pull-right">Top</a>
                 </section>
             </div>
