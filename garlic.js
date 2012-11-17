@@ -83,8 +83,6 @@
 
       if ( this.options.destroy ) {
         this.$element.closest( 'form' ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
-      } else {
-        console.log( 'not for me' );
       }
 
       this.$element.addClass('garlic-auto-save');
@@ -122,7 +120,6 @@
 
     // only delete localStorage
     , destroy: function () {
-      console.log( this.$element )
       if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
         this.$element.attr( 'checked', false );
       }
