@@ -263,7 +263,7 @@
         }
 
         // set input type as name + name attr if exists
-        name += 'undefined' !== typeof $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
+        name += $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
 
         // if has sibilings, get eq(), exept for radio buttons
         if ( siblings.length > 1 && !$( realNode ).is( 'input[type=radio]' ) ) {
@@ -280,7 +280,7 @@
         node = parent;
       }
 
-      return 'garlic:' + document.domain + window.location.pathname + '>' + path;
+      return 'garlic:' + document.domain + ( this.options.domain ? '*' : window.location.pathname ) + '>' + path;
     }
 
     , getStorage: function () {
@@ -355,6 +355,7 @@
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
     , template: '<span class="garlic-swap"></span>'                                               // template used to swap between values if conflict detected
     , message: 'This is your saved data. Click here to see default one'                           // default message for swapping data / state
+    , domain: false                                                                               // store et retrieve forms data accross all domain, not just on
   }
 
   /* GARLIC DATA-API
