@@ -83,8 +83,6 @@
 
       if ( this.options.destroy ) {
         this.$element.closest( 'form' ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
-      } else {
-        console.log( 'not for me' );
       }
 
       this.$element.addClass('garlic-auto-save');
@@ -122,7 +120,6 @@
 
     // only delete localStorage
     , destroy: function () {
-      console.log( this.$element )
       if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
         this.$element.attr( 'checked', false );
       }
@@ -195,7 +192,7 @@
         node = parent;
       }
 
-      return 'garlic:' + document.domain + window.location.pathname + '>' + path;
+      return 'garlic:' + document.domain + ( this.options.domain ? '*' : window.location.pathname ) + '>' + path;
     }
 
     , getStorage: function () {
@@ -271,6 +268,7 @@
     , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'       // Default supported inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
     , destroy: true                                                                               // remove or not localstorage on submit & clear 
+    , domain: false                                                                               // store et retrieve forms data accross all domain, not just on
   }
 
   /* GARLIC DATA-API

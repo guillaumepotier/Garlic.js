@@ -74,10 +74,10 @@
 
         <div class="row well intro">
             <div id="head-download" class="download">
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.9.zip">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.zip">
                     <img width="90" border="0" src="http://github.com/images/modules/download/zip.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.9.tar.gz">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.tar.gz">
                     <img width="90" border="0" src="http://github.com/images/modules/download/tar.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
             </div>
@@ -188,7 +188,7 @@
                     <form data-persist="garlic" data-destroy="false" method="POST">
                         <fieldset>
                             <legend>4 - "Infinite" persistency</legend><br/>
-                            <label for="ajax-test">Use <code>data-destroy=false</code> in your <code>&lt;form></code> to never remove localStorage persistency</label>
+                            <label for="ajax-test">Use <code>data-destroy="false"</code> in your <code>&lt;form></code> to never remove localStorage persistency</label>
                             <input type="text" id="infinite-persistency" name="infinite-persistency" /><br/>
                             <input type="submit" class="btn"/><br/><br/>
                             You still can destroy localStorage data on custom javascript events, try <u><a style="cursor:pointer;" onClick="javascript:$('#infinite-persistency').garlic('destroy');">this action</a></u> and then refresh the page to see the difference ;)
@@ -203,7 +203,7 @@
                     </div>
                     <ul>
                         <li>Requires jQuery or Zepto (with data module builded for Zepto, see <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">changelog 0.0.6</a>)</li>
-                        <li>Compatible yet only with "modern browsers": IE8+, FF 4+, Safari 4+, Opera 11+. See more <a href="http://www.html5rocks.com/en/features/storage">here</a></li>
+                        <li>Compatible yet only with "modern browsers": IE9+, Chrome 4+, FF 4+, Safari 4+, Opera 11+. See more <a href="http://www.html5rocks.com/en/features/storage">here</a></li>
                     </ul>
                     <a href="#top" class="pull-right">Top</a>
                 </section>
@@ -213,10 +213,10 @@
                         <h1>Download</h1>
                     </div>
                     <div id="download" class="download">
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.9.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
                             <img width="90" border="0" src="http://github.com/images/modules/download/zip.png">
                         </a>
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.9.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                             <img width="90" border="0" src="http://github.com/images/modules/download/tar.png">
                         </a>
                     </div>
@@ -248,20 +248,23 @@
                     </div>
                     <ul>
                         <li>
-                            <strong>Want to specifically chart fields persisted by Garlic? Use the auto-added </strong><code>class="garlic-auto-save"</code><strong> class!</strong><br/>
+                            Want to specifically chart fields persisted by Garlic? Use the auto-added <code>class="garlic-auto-save"</code> class!<br/>
                         </li>
                         <li>
-                            <strong>Never destroy localStorage for a form: use </strong><code>data-destryo="false"</code><strong> (<u>don't work on inputs separately, only on whole form inputs</u>)</strong><br/>
+                            Never destroy localStorage for a form: use <code>data-destroy="false"</code> <strong>(don't work on inputs separately, only on whole form inputs)</strong>
                         </li>
                         <li>
-                            <strong>Manually call garlic in javascript</strong><br/>
+                            Store form localStorage accross all domain <strong>(by default, storage is specific to each pages)</strong>, use <code>data-domain="true"</code><br/>
+                        </li>
+                        <li>
+                            Manually call garlic in javascript<br/>
                             <pre>
 &lt;script type="text/javascript">
   $('[rel=persist]').garlic();
 &lt;/script></pre>
                         </li>
                         <li>
-                            <strong>Destroy storage for an element (<u>don't work on an entire form yet, only input by input</u>)</strong><br/>
+                            Destroy storage for an element <strong>(don't work on an entire form yet, only input by input)</strong><br/>
                             <pre>
 &lt;script type="text/javascript">
   $('input.no_good').garlic('destroy');
@@ -303,7 +306,7 @@
                     <div class="page-header">
                         <h1>Version / Licence</h1>
                     </div>
-                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.9 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.10 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
                     <a href="#top" class="pull-right">Top</a>
                 </section>
             </div>

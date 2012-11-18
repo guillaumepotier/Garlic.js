@@ -3,7 +3,7 @@
 var testSuite = function () {
   describe ( 'Garlic.js test suite', function () {
     $('[rel=persist-select]').garlic({debug: true});
-    $('#form1').garlic();
+    $('#form1').garlic( { domain: true } );
 
     /***************************************
                      getPath
@@ -29,6 +29,9 @@ var testSuite = function () {
       } )
       it ( 'getPath() for #radio2, should be same as #radio1', function () {
         expect( $( '#radio1' ).garlic( 'getPath' ) ).to.be( $( '#radio1' ).garlic( 'getPath' ) );
+      } )
+      it ( 'getPath() for elements with domain=true', function () {
+        expect( $( '#input5' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + '*>' + 'form:eq(6)>input' );
       } )
     } )
 
