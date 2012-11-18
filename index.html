@@ -248,6 +248,13 @@
                     </div>
                     <ul>
                         <li>
+                            Want to protect all your forms on the same page, without having to add for each one of them <code>data-persist="garlic"</code>?
+                            <pre>
+&lt;script type="text/javascript">
+  $( 'form' ).garlic();
+&lt;/script></pre>
+                        </li>
+                        <li>
                             Want to specifically chart fields persisted by Garlic? Use the auto-added <code>class="garlic-auto-save"</code> class!<br/>
                         </li>
                         <li>
@@ -257,17 +264,17 @@
                             Store form localStorage accross all domain <strong>(by default, storage is specific to each pages)</strong>, use <code>data-domain="true"</code><br/>
                         </li>
                         <li>
-                            Manually call garlic in javascript<br/>
+                            Manually call garlic in javascript for a form<br/>
                             <pre>
 &lt;script type="text/javascript">
-  $('[rel=persist]').garlic();
+  $( '#yourform' ).garlic();
 &lt;/script></pre>
                         </li>
                         <li>
                             Destroy storage for an element <strong>(don't work on an entire form yet, only input by input)</strong><br/>
                             <pre>
 &lt;script type="text/javascript">
-  $('input.no_good').garlic('destroy');
+  $( '#input.no_good' ).garlic( 'destroy' );
 &lt;/script></pre>
                         </li>
                     </ul>
