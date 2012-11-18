@@ -207,7 +207,7 @@
                         </fieldset>
                     </form>
 
-                    <form data-persist="garlic"  method="POST">
+                    <form id="conflicted-form" method="POST">
                         <fieldset>
                             <legend>4 - Manage database and localStorage conflict</legend><br/>
                             <label for="hello-world">These inputs have default values, let's say for example, database retrieved values. Try to edit them, and then, refresh the page!</label><br/>
@@ -372,6 +372,14 @@
             }
 
             $('#indicator').text("Will be persisted!").removeClass("alert alert-info").addClass("alert alert-success");
+        });
+        $( '#conflicted-form' ).garlic({
+            conflictManager: {
+                enabled: true
+                , garlicPriority: false
+                , template: '<span class="garlic-swap"></span>'
+                , message: 'Swap data'
+            }
         });
     </script>
     <script type="text/javascript">

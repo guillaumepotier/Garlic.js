@@ -170,6 +170,13 @@
 
     /* manage here the conflict, show default value depending on options.garlicPriority value */
     , conflictManager: function () {
+
+      // user can define here a custom function that could stop Garlic default behavior, if returns false
+      if ( 'function' === typeof this.options.conflictManager.onConflictDetected 
+        && !this.options.conflictManager.onConflictDetected( this.$element, this.storage.get( this.path ) ) ) {
+        return false;
+      }
+
       if ( this.options.conflictManager.garlicPriority ) {
         this.$element.data( 'swap-data', this.$element.val() );
         this.$element.data( 'swap-state', 'garlic' );
@@ -186,21 +193,16 @@
 
     /* manage swap user interface */
     , swapHandler: function () {
-      var swapChoiceElem = $( this.options.template );
-      this.$element.after( swapChoiceElem.text( this.options.message ) );
+      var swapChoiceElem = $( this.options.conflictManager.template );
+      this.$element.after( swapChoiceElem.text( this.options.conflictManager.message ) );
       swapChoiceElem.on( 'click', false, $.proxy( this.swap, this ) );
     }
 
     /* swap data / states for conflicted elements */
     , swap: function () {
       var val = this.$element.data( 'swap-data' );
+      this.$element.data( 'swap-state', 'garlic' === this.$element.data( 'swap-state' ) ? 'default' : 'garlic' );
       this.$element.data( 'swap-data', this.$element.val());
-
-      if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
-        $( this.$element ).attr( 'checked', true );
-        return;
-      }
-
       $( this.$element ).val( val );
     }
 
@@ -292,7 +294,7 @@
   * ========================= */
 
   $.fn.garlic = function ( option, fn ) {
-    var options = $.extend( {}, $.fn.garlic.defaults, option, this.data() )
+    var options = $.extend(true, {}, $.fn.garlic.defaults, option, this.data() )
       , storage = new Storage()
       , returnValue = false;
 
@@ -301,7 +303,7 @@
       return false;
     }
 
-    function bind (self) {
+    function bind ( self ) {
       var $this = $( self )
         , data = $this.data( 'garlic' )
         , fieldOptions = $.extend( options, $this.data() );
@@ -346,16 +348,17 @@
   $.fn.garlic.Constructor = Garlic;
 
   $.fn.garlic.defaults = {
-    conflictManager: {
-        enabled: true                                                                             // manage default data and persisted data. If false, persisted data will always replace default ones
-      , garlicPriority: true                                                                      // if form have default data, garlic persisted data will be shown first 
-    }
-    , destroy: true                                                                               // remove or not localstorage on submit & clear 
+      destroy: true                                                                               // remove or not localstorage on submit & clear 
     , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'       // Default supported inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
-    , template: '<span class="garlic-swap"></span>'                                               // template used to swap between values if conflict detected
-    , message: 'This is your saved data. Click here to see default one'                           // default message for swapping data / state
     , domain: false                                                                               // store et retrieve forms data accross all domain, not just on
+    , conflictManager: {
+        enabled: true                                                                             // manage default data and persisted data. If false, persisted data will always replace default ones
+      , garlicPriority: true                                                                      // if form have default data, garlic persisted data will be shown first 
+      , template: '<span class="garlic-swap"></span>'                                             // template used to swap between values if conflict detected
+      , message: 'This is your saved data. Click here to see default one'                         // default message for swapping data / state
+      , onConflictDetected: function ( item, storedVal ) { return true; }                         // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
+    }
   }
 
   /* GARLIC DATA-API

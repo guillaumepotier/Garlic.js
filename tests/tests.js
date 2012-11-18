@@ -2,11 +2,11 @@
 
 var testSuite = function () {
   describe ( 'Garlic.js test suite', function () {
-    $( '[rel=persist-select]' ).garlic()
-    $( '#noGarlicDefault' ).garlic( { conflictManager: { enabled: true, garlicPriority: false } } )
-    $( '#submit13' ).click( function (e) {
+    $( '#noGarlicDefault' ).garlic( { conflictManager: { enabled: true, garlicPriority: false } } );
+    $( '[rel=persist-select]' ).garlic();
+    $( '#submit13' ).click( function ( e ) {
       e.preventDefault();
-    } )
+    } );
     $('#form1').garlic( { domain: true } );
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
