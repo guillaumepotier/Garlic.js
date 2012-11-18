@@ -175,7 +175,7 @@
         }
 
         // set input type as name + name attr if exists
-        name += 'undefined' !== typeof $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
+        name += $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
 
         // if has sibilings, get eq(), exept for radio buttons
         if ( siblings.length > 1 && !$( realNode ).is( 'input[type=radio]' ) ) {
