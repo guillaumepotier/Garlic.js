@@ -1,5 +1,10 @@
 #Changelog
 
+* **0.0.10** : 
+
+    - added option `data-domain=true` to give the possibility to persist form
+      data accross all website pages. By default, only specific to current page
+
 * **0.0.9** : 
     
     - added option `data-destroy=false` to give the possibility to not destroy
