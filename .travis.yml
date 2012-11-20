@@ -6,4 +6,4 @@ node_js:
 before_script:
   - npm install mocha-phantomjs
 
-script: mocha-phantomjs -R dot ./tests/index.html
+script: mocha-phantomjs ./tests/index.html
