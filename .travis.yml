@@ -1,0 +1,10 @@
+language: node_js
+
+node_js:
+  - 0.6
+
+before_script:
+  - npm install mocha-phantomjs
+  - sleep 2
+
+script: mocha-phantomjs -R dot test/index.html

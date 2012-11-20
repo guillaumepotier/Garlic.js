@@ -131,10 +131,15 @@
     <script type="text/javascript">
 
         mocha.setup('bdd');
+        mocha.reporter('html');
         testSuite();
 
         onload = function() {
-            var runner = mocha.run();
+            if ( window.mochaPhantomJS ) {
+                mochaPhantomJS.run();
+            } else {
+                mocha.run();
+            }
         };
     </script>
     <script type="text/javascript">
