@@ -5,6 +5,6 @@ node_js:
 
 before_script:
   - npm install mocha-phantomjs
-  - cd guillaumepotier/Garlic.js/
+  - ls
 
-script: mocha-phantomjs -R dot test/index.html
+script: mocha-phantomjs -R dot ./test/index.html
