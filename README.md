@@ -17,7 +17,7 @@ See CHANGELOG for more info.
 #TODO
 
 * Improve doc and api;
-* refactorize some code;
+* Refactorize some code;
 * Work on an alternative to Local Storage for non compatible browsers;
 * Work on cases where server put content in text fields, let the user choose bw server or Local Storage version;
 * Improve tests coverage;
