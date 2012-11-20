@@ -1,5 +1,12 @@
 #Changelog
 
+* **0.1.0** :
+
+    - added first step of conflicts management. For input[type=text], textarea
+      and select. See doc
+
+    - travis-ci tests integration now
+
 * **0.0.10** : 
 
     - added option `data-domain=true` to give the possibility to persist form

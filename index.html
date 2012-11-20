@@ -59,6 +59,29 @@
             padding-top: 0;
         }
 
+        .garlic-swap {
+            /* twitter bootstrap alert */
+            padding: 6px 35px 6px 14px;
+            margin-bottom: 20px;
+            color: #C09853;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+            background-color: #FCF8E3;
+            border: 1px solid #FBEED5;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+
+            /* twitter bootstrap alert-info */
+            color: #3A87AD;
+            background-color: #D9EDF7;
+            border-color: #BCE8F1;
+
+            /* garlic custo */
+            cursor: pointer;
+            margin-left: 5px;
+            padding: 4px 6px;
+            height: 20px;
+        }
     </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="100">
@@ -78,10 +101,10 @@
 
         <div class="row well intro">
             <div id="head-download" class="download">
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.zip">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.1.0.zip">
                     <img width="90" border="0" src="http://github.com/images/modules/download/zip.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.tar.gz">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.1.0.tar.gz">
                     <img width="90" border="0" src="http://github.com/images/modules/download/tar.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
             </div>
@@ -126,11 +149,11 @@
 
                             <label for="select"></label>
                             <select id="select">
-                                <option>Hello</option>
-                                <option>World</option>
-                                <option>I</option>
-                                <option>Am</option>
-                                <option>Persisted</option>
+                                <option value="hello">Hello</option>
+                                <option value="world">World</option>
+                                <option value="i">I</option>
+                                <option value="am">Am</option>
+                                <option value="persisted">Persisted</option>
                             </select>
                             <br/>
 
@@ -187,12 +210,31 @@
                             <input type="text" id="ajax-test" name="myajaxtext" /> <span id="indicator"></span><br/>
                         </fieldset>
                     </form>
+
+                    <form id="conflicted-form" method="POST">
+                        <fieldset>
+                            <legend>4 - Manage database and localStorage conflict</legend><br/>
+                            <label for="hello-world">These inputs have default values, let's say for example, database retrieved values. Try to edit them, and then, refresh the page!</label><br/>
+                          <form data-persist="garlic" method="POST">
+                            <div>
+                                <input type="text" id="hello-world" name="hello-world" value="Hello" /><br/>
+                                <select id="select">
+                                    <option value="hello">Hello</option>
+                                    <option selected value="world">World</option>
+                                </select><br/>
+                            </div>
+                            <input type="reset" class="btn"/>
+                            <input type="submit" id="submit42" class="btn"/>
+                          </form>
+                        </fieldset>
+                    </form>
                     <a href="#top" class="pull-right">Top</a>
 
                     <form data-persist="garlic" data-destroy="false" method="POST">
                         <fieldset>
-                            <legend>4 - "Infinite" persistency</legend><br/>
+                            <legend>5 - "Infinite" persistency</legend><br/>
                             <label for="ajax-test">Use <code>data-destroy="false"</code> in your <code>&lt;form></code> to never remove localStorage persistency</label>
+
                             <input type="text" id="infinite-persistency" name="infinite-persistency" /><br/>
                             <input type="submit" class="btn"/><br/><br/>
                             You still can destroy localStorage data on custom javascript events, try <u><a style="cursor:pointer;" onClick="javascript:$('#infinite-persistency').garlic('destroy');">this action</a></u> and then refresh the page to see the difference ;)
@@ -217,10 +259,10 @@
                         <h1>Download</h1>
                     </div>
                     <div id="download" class="download">
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.1.0.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
                             <img width="90" border="0" src="http://github.com/images/modules/download/zip.png">
                         </a>
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.0.10.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/0.1.0.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                             <img width="90" border="0" src="http://github.com/images/modules/download/tar.png">
                         </a>
                     </div>
@@ -317,7 +359,7 @@
                     <div class="page-header">
                         <h1>Version / Licence</h1>
                     </div>
-                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.0.10 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">0.1.0 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
                     <a href="#top" class="pull-right">Top</a>
                 </section>
             </div>
@@ -341,6 +383,14 @@
             }
 
             $('#indicator').text("Will be persisted!").removeClass("alert alert-info").addClass("alert alert-success");
+        });
+        $( '#conflicted-form' ).garlic({
+            conflictManager: {
+                enabled: true
+                , garlicPriority: false
+                , template: '<span class="garlic-swap"></span>'
+                , message: 'Swap data'
+            }
         });
     </script>
     <script type="text/javascript">

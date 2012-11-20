@@ -18,7 +18,10 @@
         </form>
         <div data-persist="garlic" id="div1"></div>
         <form rel="persist-select">
-            <select id="select2"></select>
+            <select id="select2">
+                <option value="option1"></option>
+                <option value="option2"></option>
+            </select>
         </form>
 
         <form data-persist="garlic">
@@ -90,6 +93,29 @@
             <textarea id="textarea40"></textarea>
             <input type="submit" id="submit40" />
             <input type="reset" id="reset40" />
+        <form data-persist="garlic">
+            <input type="text" id="input13" />
+            <textarea id="textarea13"></textarea>
+            <select id="select13">
+                <option value="foo"></option>
+                <option value="bar"></option>
+            </select>
+            <input type="checkbox" id="checkbox13" value="foo">
+            <input type="radio" id="radio13" value="foo">
+            <input type="submit" id="submit13" />
+            <input type="reset" id="reset13" />
+        </form>
+        <form data-persist="garlic">
+            <input type="text" id="input14" value="default value" />
+            <textarea id="textarea14">default value</textarea>
+            <select id="select14">
+                <option value="first value">first value</option>
+                <option selected value="default value">default value</option>
+                <option value="not default">not default</option>
+            </select>
+        </form>
+        <form id="noGarlicDefault">
+            <input type="text" id="input15" value="default value" />
         </form>
     </div>
 
@@ -105,10 +131,15 @@
     <script type="text/javascript">
 
         mocha.setup('bdd');
+        mocha.reporter('html');
         testSuite();
 
         onload = function() {
-            var runner = mocha.run();
+            if ( window.mochaPhantomJS ) {
+                mochaPhantomJS.run();
+            } else {
+                mocha.run();
+            }
         };
     </script>
     <script type="text/javascript">

@@ -70,12 +70,14 @@
 
     constructor: Garlic
 
+    /* init data, bind jQuery on() actions */
     , init: function ( type, element, storage, options ) {
       this.type = type;
       this.$element = $( element );
       this.options = this.getOptions( options );
       this.storage = storage;
       this.path = this.getPath();
+      this.parentForm = this.$element.closest( 'form' );
 
       this.retrieve();
 
@@ -94,42 +96,130 @@
       return options;
     }
 
+    /* temporary store data / state in localStorage */
     , persist: function () {
-      // for checkboxes, we need to implement a toggle behavior
-      if ( this.$element.is( 'input[type=checkbox]' ) && this.storage.has( this.path )) {
-        this.destroy();
-        return;
+      // for checkboxes, we need to implement an unchecked / checked behavior
+      if ( this.$element.is( 'input[type=checkbox]' ) ) {
+        return this.storage.set( this.path , this.$element.attr( 'checked' ) ? 'checked' : 'unchecked' );
       }
 
       this.storage.set( this.path , this.$element.val() );
     }
 
+    /* retrieve localStorage data / state and update elem accordingly */
     , retrieve: function () {
       if ( this.storage.has( this.path ) ) {
+
+        // if conflictManager enabled, manage fields with already provided data, different from the one stored
+        if ( this.options.conflictManager.enabled && this.detectConflict() ) {
+          return this.conflictManager();
+        }
+
+        // input[type=checkbox] and input[type=radio] have a special checked / unchecked behavior
         if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
-          if ( this.storage.get( this.path ) === this.$element.val() ) {
-            this.$element.attr( 'checked', 'checked' );
+
+          // for checkboxes and radios
+          if ( 'checked' === this.storage.get( this.path ) || this.storage.get( this.path ) === this.$element.val() ) {
+            return this.$element.attr( 'checked', true );
+
+          // only needed for checkboxes
+          } else if ( 'unchecked' === this.storage.get( this.path ) ) {
+            this.$element.attr( 'checked', false );
           }
 
           return;
         }
 
+        // for input[type=text], select and textarea, just set val()
         this.$element.val( this.storage.get( this.path ) );
       }
     }
 
-    // only delete localStorage
-    , destroy: function () {
-      if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
-        this.$element.attr( 'checked', false );
+    /* there is a conflict when initial data / state differs from persisted data / state */
+    , detectConflict: function() {
+      var self = this;
+
+      // radio buttons and checkboxes are yet not supported
+      if ( this.$element.is( 'input[type=checkbox], input[type=radio]' ) ) {
+        return false;
       }
 
+      // there is a default not null value and we have a different one stored
+      if ( this.$element.val() && this.storage.get( this.path ) !== this.$element.val() ) {
+
+        // for select elements, we need to check if there is a default checked value
+        if ( this.$element.is( 'select' ) ) {
+          var selectConflictDetected = false;
+
+          // foreach each options except first one, always considered as selected, seeking for a default selected one
+          this.$element.find( 'option' ).each( function () {
+            if ( $( this ).index() !== 0 && $( this ).attr( 'selected' ) && $( this ).val() !== self.storage.get( this.path ) ) {
+              selectConflictDetected = true;
+              return;
+            }
+          });
+
+          return selectConflictDetected;
+        }
+
+        return true;
+      }
+
+      return false;
+    }
+
+    /* manage here the conflict, show default value depending on options.garlicPriority value */
+    , conflictManager: function () {
+
+      // user can define here a custom function that could stop Garlic default behavior, if returns false
+      if ( 'function' === typeof this.options.conflictManager.onConflictDetected 
+        && !this.options.conflictManager.onConflictDetected( this.$element, this.storage.get( this.path ) ) ) {
+        return false;
+      }
+
+      if ( this.options.conflictManager.garlicPriority ) {
+        this.$element.data( 'swap-data', this.$element.val() );
+        this.$element.data( 'swap-state', 'garlic' );
+        this.$element.val( this.storage.get( this.path ) );
+      } else {
+        this.$element.data( 'swap-data', this.storage.get( this.path ) );
+        this.$element.data( 'swap-state', 'default' );
+      }
+
+      this.swapHandler();
+      this.$element.addClass( 'garlic-conflict-detected' );
+      this.$element.closest( 'input[type=submit]' ).attr( 'disabled', true );
+    }
+
+    /* manage swap user interface */
+    , swapHandler: function () {
+      var swapChoiceElem = $( this.options.conflictManager.template );
+      this.$element.after( swapChoiceElem.text( this.options.conflictManager.message ) );
+      swapChoiceElem.on( 'click', false, $.proxy( this.swap, this ) );
+    }
+
+    /* swap data / states for conflicted elements */
+    , swap: function () {
+      var val = this.$element.data( 'swap-data' );
+      this.$element.data( 'swap-state', 'garlic' === this.$element.data( 'swap-state' ) ? 'default' : 'garlic' );
+      this.$element.data( 'swap-data', this.$element.val());
+      $( this.$element ).val( val );
+    }
+
+    /* delete localStorage persistance only */
+    , destroy: function () {
       this.storage.destroy( this.path );
     }
 
-    // remove content and delete localStorage
+    /* remove data / reset state AND delete localStorage */
     , remove: function () {
       this.remove();
+
+      if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
+        $( this.$element ).attr( 'checked', false );
+        return;
+      }
+
       this.$element.val( '' );
     }
 
@@ -175,7 +265,7 @@
         }
 
         // set input type as name + name attr if exists
-        name += 'undefined' !== typeof $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
+        name += $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
 
         // if has sibilings, get eq(), exept for radio buttons
         if ( siblings.length > 1 && !$( realNode ).is( 'input[type=radio]' ) ) {
@@ -203,8 +293,8 @@
   /* GARLIC PLUGIN DEFINITION
   * ========================= */
 
-  $.fn.garlic = function ( option ) {
-    var options = $.extend( {}, $.fn.garlic.defaults, option, this.data() )
+  $.fn.garlic = function ( option, fn ) {
+    var options = $.extend(true, {}, $.fn.garlic.defaults, option, this.data() )
       , storage = new Storage()
       , returnValue = false;
 
@@ -213,11 +303,7 @@
       return false;
     }
 
-    if ( options.debug && 'undefined' === typeof garlicStorage ) {
-      window.garlicStorage = storage;
-    }
-
-    function bind (self) {
+    function bind ( self ) {
       var $this = $( self )
         , data = $this.data( 'garlic' )
         , fieldOptions = $.extend( options, $this.data() );
@@ -240,7 +326,6 @@
 
     // loop through every elemt we want to garlic
     this.each(function () {
-      var self = this;
 
       // if a form elem is given, bind all its input children
       if ( $( this ).is( 'form' ) ) {
@@ -255,20 +340,25 @@
       }
     });
 
-    return returnValue;
+    return 'function' === typeof fn ? fn() : returnValue;
   }
 
   /* GARLIC CONFIGS & OPTIONS
   * ========================= */
-
   $.fn.garlic.Constructor = Garlic;
 
   $.fn.garlic.defaults = {
-      debug: true                                                                                 // debug mode. Add garlicStorage to window. TODO: make a proper getter
+      destroy: true                                                                               // remove or not localstorage on submit & clear 
     , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'       // Default supported inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
-    , destroy: true                                                                               // remove or not localstorage on submit & clear 
     , domain: false                                                                               // store et retrieve forms data accross all domain, not just on
+    , conflictManager: {
+        enabled: true                                                                             // manage default data and persisted data. If false, persisted data will always replace default ones
+      , garlicPriority: true                                                                      // if form have default data, garlic persisted data will be shown first 
+      , template: '<span class="garlic-swap"></span>'                                             // template used to swap between values if conflict detected
+      , message: 'This is your saved data. Click here to see default one'                         // default message for swapping data / state
+      , onConflictDetected: function ( item, storedVal ) { return true; }                         // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
+    }
   }
 
   /* GARLIC DATA-API
@@ -277,7 +367,7 @@
     $( '[data-persist="garlic"]' ).each( function () {
       $(this).garlic();
     })
-  })
+  });
 
 // This plugin works with jQuery or Zepto (with data extension builded for Zepto. See changelog 0.0.6)
 }(window.jQuery || Zepto);

@@ -2,8 +2,13 @@
 
 var testSuite = function () {
   describe ( 'Garlic.js test suite', function () {
-    $('[rel=persist-select]').garlic({debug: true});
+    $( '#noGarlicDefault' ).garlic( { conflictManager: { enabled: true, garlicPriority: false } } );
+    $( '[rel=persist-select]' ).garlic();
+    $( '#submit13' ).click( function ( e ) {
+      e.preventDefault();
+    } );
     $('#form1').garlic( { domain: true } );
+    var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
     /***************************************
                      getPath
@@ -160,55 +165,111 @@ var testSuite = function () {
         $( '#input12' ).val( 'hello world!' );
         $( '#input12' ).trigger( 'keypress', function () {
           expect( garlicStorage.get( $( '#input12' ).garlic( 'getPath' ) ) ).to.be( 'hello world!' );
-        });
+        } )
       } )
       it ( 'If a select is changed, new value should be stored', function () {
         $( '#select3' ).val( 'bar' );
         $( '#select3' ).trigger( 'change', function () {
           expect( garlicStorage.get( $( '#select3' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        });
+        } )
       } )
       it ( 'If radio button is selected, value or new value should be stored', function () {
         $( '#radio1' ).val( 'foo' );
         $( '#radio1' ).trigger( 'change', function () {
           expect( garlicStorage.get( $( '#radio1' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        });
+        } )
       } )
       it ( 'Same, but with radio buttons not at the same DOM level', function () {
         $( '#radio2' ).val( 'bar' );
         $( '#radio2' ).trigger( 'change', function () {
           expect( garlicStorage.get( $( '#radio2' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        });
+        } )
       } )
       it ( 'If a checkbox is checked, its state should be persisted', function () {
         $( '#checkbox4' ).val( 'foo' );
         $( '#checkbox6' ).val( 'bar' );
         $( '#checkbox4' ).trigger( 'change', function () {
           expect( garlicStorage.get( $( '#checkbox4' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        });
+        } )
         $( '#checkbox6' ).trigger( 'change', function () {
           expect( garlicStorage.get( $( '#checkbox6' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        });
+        } )
       } )
       it ( 'Same, but with checkboxes not at the same DOM level', function () {
         $( '#checkbox7' ).val( 'bar' );
         $( '#checkbox8' ).val( 'baz' );
         $( '#checkbox7' ).trigger( 'change', function () {
           expect( garlicStorage.get( $( '#checkbox7' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        });
+        } )
         $( '#checkbox8' ).trigger( 'change', function () {
           expect( garlicStorage.get( $( '#checkbox8' ).garlic( 'getPath' ) ) ).to.be( 'baz' );
-        });
+        } )
       } )
       it ( 'If a checkbox is unchecked, its state should be removed from storage', function () {
         $( '#checkbox9' ).trigger( 'click', function () {
           expect( $( '#checkbox9' ).attr( 'checked' ) ).to.be( 'checked' );
           expect( garlicStorage.get( $( '#checkbox9' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        } );
+        } )
         $( '#checkbox9' ).trigger( 'click', function () {
           expect( $( '#checkbox9' ).attr( 'checked' ) == undefined || $( '#checkbox9' ).attr( 'checked' ) == false ).to.be( true );
           expect( garlicStorage.has( $( '#checkbox9' ).garlic( 'getPath' ) ) ).to.be( false );
-        } );
+        } )
+      } )
+    } )
+
+    /***************************************
+            conflicts management
+    ***************************************/
+    describe ( 'Conflicts management', function () {
+      // tests for conflicts management, only for supported yet fields
+      var conflicts = [ 'input', 'textarea', 'select' ];
+      for ( var i in conflicts ) {
+        garlicStorage.set ( $( '#' + conflicts[ i ] + '14' ).garlic( 'getPath' ), 'not default' );          
+      }
+
+      it ( 'If ' + conflicts.join( ',' ) + ' fields have default value and conflictManager enabled, detect conflict', function () {
+        for ( var i in conflicts ) {
+          $( '#' + conflicts[ i ] + '14' ).garlic( 'retrieve', function () {
+            expect( $( '#' + conflicts[ i ] + '14' ).hasClass( 'garlic-conflict-detected' ) ).to.be( true );
+          } )
+        }
+      } )
+
+      it ( 'If ' + conflicts.join( ',' ) + ' fields have default value and conflictManager enabled, display swap handler next to it', function () {
+        for ( var i in conflicts ) {
+          expect( $( '#' + conflicts[ i ] + '14' ).next( 'span' ).hasClass( 'garlic-swap' ) ).to.be( true );
+        }
+      } )
+      it ( 'If garlicPriority is set to true (default), display for ' + conflicts.join( ',' ) + ' persisted data', function () {
+        for ( var i in conflicts ) {
+          expect( $( '#' + conflicts[ i ] + '14' ).val() ).to.be( 'not default' );
+        }
+      } )
+      it ( 'If swap action is triggered, change data for ' + conflicts.join( ',' ) + ' fields', function () {
+        for ( var i in conflicts ) {
+          $( '#' + conflicts[ i ] + '14' ).next( 'span' ).click( function () {
+            expect( $( '#' + conflicts[ i ] + '14' ).val() ).to.be( 'default value' );
+          } )
+        }
+      } )
+      it ( 'If swap action is triggered, again change data again for ' + conflicts.join( ',' ) + ' fields', function () {
+        for ( var i in conflicts ) {
+          $( '#' + conflicts[ i ] + '14' ).next( 'span' ).click( function () {
+            expect( $( '#' + conflicts[ i ] + '14' ).val() ).to.be( 'not default value' );
+          } )
+        }
+      } )
+
+      it ( 'If garlicPriority is set to false, display default data and swap with persisted one', function () {
+        garlicStorage.set( $( '#input15' ).garlic( 'getPath' ), 'not default value' );
+        $( '#input15' ).garlic( 'retrieve', function () {
+          expect( $( '#input15' ).hasClass( 'garlic-conflict-detected' ) ).to.be( true );
+          expect( $( '#input15' ).next( 'span' ).hasClass( 'garlic-swap' ) ).to.be( true );
+          expect( $( '#input15' ).val() ).to.be( 'default value' );
+          $( '#input15' ).next( 'span' ).click( function () {
+            expect( field.val() ).to.be( 'not default value' );
+          } )
+        } )
       } )
     } )
 
@@ -216,7 +277,22 @@ var testSuite = function () {
                 destroy data
     ***************************************/
     describe ( 'Test input data destroy', function () {
-      it ( 'Reset button should remove both text and localStorage, but only on current form, with input[type=text] and textarea', function () {
+      // test here destroy localstorage on each input type for reset or submit button
+      var names = [ 'input', 'textarea', 'select', 'checkbox', 'radio' ];
+      var inputs = [ 'submit', 'reset' ];
+
+      it ( inputs.join( ';' ) + ' button should destroy ' + names.join( ';' ) + ' fields persisted data', function () {
+        for ( var j in inputs ) {
+          for ( var i in names ) {
+            garlicStorage.set( $( '#' + names[ i ] + '13' ).garlic( 'getPath' ), 'foo' );
+            $( '#' + inputs[ j ] + '13' ).click( function () {
+              expect( garlicStorage.has( $( '#' + names[ i ] + '13' ).garlic( 'getPath' ) ) ).to.be( false );
+            } )
+          }
+        }
+      } ) 
+
+      it ( 'Reset button should remove both text and localStorage, but only on current form', function () {
         garlicStorage.set( $( '#input8' ).garlic( 'getPath' ), 'foo' );
         garlicStorage.set( $( '#input9' ).garlic( 'getPath' ), 'foo' );
         expect( garlicStorage.get( $( '#input8' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
@@ -228,16 +304,14 @@ var testSuite = function () {
           expect( garlicStorage.has( $( '#input9' ).garlic( 'getPath' ) ) ).to.be( false );
           expect( $( '#input8' ).val() ).to.be( 'foo' );
           expect( garlicStorage.get( $( '#input8' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        });
+        } )
       } )
-      it ( 'Same behavior for radio buttons, remove stored state and uncheck the checked one' )
-      it ( 'Same behavior for checkboxes, remove stored states and uncheck the checked ones' )
-      it ( 'Same behavior for all fields for submit button' )
-      it ( 'Destroy localStorage when garlic(\'destroy\') is fired on an elem', function () {
+
+      it ( 'Destroy localStorage when garlic( \'destroy\' ) is manually fired on an elem', function () {
         garlicStorage.set( $( '#input10' ).garlic( 'getPath' ), 'foo' );
-        expect( garlicStorage.get( $( '#input10' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        $( '#input10' ).garlic('destroy');
-        expect( garlicStorage.has( $( '#input10' ).garlic( 'getPath' ) ) ).to.be( false );
+        $( '#input10' ).garlic('destroy', function () {
+          expect( garlicStorage.has( $( '#input10' ).garlic( 'getPath' ) ) ).to.be( false );
+        } )
       } )
       it ( 'Do not destroy localStorage if data-destroy=false', function () {
         garlicStorage.set( $( '#textarea40' ).garlic( 'getPath' ), 'foo' );
