@@ -63,8 +63,6 @@ var testSuite = function () {
         garlicStorage.destroy( 'foo' );
         expect( garlicStorage.get( 'foo' ) ).to.be( null );
       } )
-      it ( 'Test clean(), at the end of the test suite' )
-      it ( 'Test clear(), at the end of the test suite' )
     } )
 
     /***************************************

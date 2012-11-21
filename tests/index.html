@@ -157,8 +157,8 @@
     <script type="text/javascript" src="mocha.js"></script>
     <script type="text/javascript" src="tests.js"></script> -->
     <script type="text/javascript">
-        var jquery = 'jquery-1.8.2.min.js'
-          , zepto = 'zepto-1.0rc1+databuild.min.js';
+        var jquery = '../resources/jquery-1.8.2.min.js'
+          , zepto = '../resources/zepto-1.0rc1[zepto.event.data].min.js';
 
         switch ( location.hash ) {
             case '#zepto':
@@ -168,13 +168,17 @@
                 break;
             case '#zepto-min':
                 jsAppend( zepto );
-                jsAppend( '../garlic.min.js' );
+                jsAppend( '../dist/garlic.min.js' );
                 document.getElementById( 'info' ).innerHTML = 'Garlic test suite for Zepto, minified version';
                 break;
             case '#jquery-min':
                 jsAppend( jquery );
-                jsAppend( '../garlic.min.js' );
+                jsAppend( '../dist/garlic.min.js' );
                 document.getElementById( 'info' ).innerHTML = 'Garlic test suite for jQuery, minified version';
+                break;
+            case '#standalone':
+                jsAppend( '../dist/garlic.standalone.min.js' );
+                document.getElementById( 'info' ).innerHTML = 'Garlic test suite for Standalone Minified version';
                 break;
             default:
                 jsAppend( jquery );

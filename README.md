@@ -10,7 +10,7 @@ http://garlicjs.org/
 
 #Version
 
-0.1.1
+1.0.0
 
 See CHANGELOG for more info.
 
@@ -23,6 +23,19 @@ See CHANGELOG for more info.
 * Improve tests coverage;
 * Improve compatibility;
 * And much more, for fun!
+
+#Run tests
+
+* In your browser: go to `tests/index.html`
+* Headless tests: install mocha-phantomjs with npm: `npm install -g mocha-phantomjs` and then run `./bin/test-suite.sh`
+
+#Make production minified versions
+
+You'll need ruby, and Google Closure compiler: `gem install closure-compiler`. Then, just call:
+
+`./bin/build.sh version` where version is the build release. eg: `./bin/build.sh 1.0.0`
+
+They'll be created and dumped in the dist/ directory
 
 #Contributors
 

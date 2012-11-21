@@ -1,5 +1,11 @@
 #Changelog
 
+* **1.0.0** : First "stable" v1 version
+
+    - created bin/build.sh script to build and dump various prod min files
+
+    - created full standalone version, with minimum Zepto builded inside!
+
 * **0.1.1** : 
 
     - fixed bug where data-storage="false" would stick.
