@@ -1,5 +1,7 @@
 #Changelog
 
+* **0.1.1** : fixed bug where data-storage="false" would stick.
+
 * **0.1.0** :
 
     - added first step of conflicts management. For input[type=text], textarea
