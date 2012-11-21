@@ -306,7 +306,7 @@
     function bind ( self ) {
       var $this = $( self )
         , data = $this.data( 'garlic' )
-        , fieldOptions = $.extend( options, $this.data() );
+        , fieldOptions = $.extend( {}, options, $this.data() );
 
       // don't bind an elem with data-storage=false
       if ( 'undefined' !== typeof fieldOptions.storage && !fieldOptions.storage ) {
