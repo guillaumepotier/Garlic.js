@@ -100,6 +100,11 @@ var testSuite = function () {
       it ( 'On a form without data-persist, binded manually in javascript', function () {
         expect( $( '#input5' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
       } )
+      it ( 'On a form that has data-storage="false" inputs', function () {
+        expect( $( '#input12' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
+        expect( $( '#input13' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
+
     } )
 
     /***************************************
