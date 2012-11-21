@@ -246,7 +246,7 @@
 
       while ( node.length ) {
         var realNode = node[0]
-          , name = realNode.localName;
+          , name = realNode.nodeName;
 
         if ( !name ) {
           break;
@@ -275,7 +275,7 @@
         path = name + ( path ? '>' + path : '' );
 
         // break once we came up to form:eq(x), no need to go further
-        if ( 'form' == realNode.localName ) {
+        if ( 'form' == realNode.nodeName.toLowerCase() ) {
           break;
         }
 
@@ -306,7 +306,7 @@
     function bind ( self ) {
       var $this = $( self )
         , data = $this.data( 'garlic' )
-        , fieldOptions = $.extend( options, $this.data() );
+        , fieldOptions = $.extend( {}, options, $this.data() );
 
       // don't bind an elem with data-storage=false
       if ( 'undefined' !== typeof fieldOptions.storage && !fieldOptions.storage ) {
@@ -370,4 +370,4 @@
   });
 
 // This plugin works with jQuery or Zepto (with data extension builded for Zepto. See changelog 0.0.6)
-}(window.jQuery || Zepto);
+}(window.jQuery || window.Zepto);

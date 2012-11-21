@@ -3,8 +3,36 @@
     <meta charset="utf-8">
     <title>Garlicjs Mocha Tests</title>
     <link rel="stylesheet" href="mocha.css" />
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36239082-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <script type="text/javascript">
+        function jsAppend ( js_file ) {
+          if ( 'string' === typeof js_file ) {
+              js_file = [ js_file ];
+          }
+
+          for ( var i in js_file ) {
+              var js_script = document.createElement( 'script' );
+              js_script.type = "text/javascript";
+              js_script.src = js_file[ i ];
+              document.getElementsByTagName( 'head' )[ 0 ].appendChild( js_script );
+          }
+        }
+    </script>
 </head>
 <body>
+    <div id="info"></div>
     <div id="mocha"></div>
 
     <div style="display:none;">
@@ -62,6 +90,12 @@
         <form data-persist="garlic">
             <input type="text" id="input11" />
         </form>
+
+        <form data-persist="garlic">
+            <input type="text" id="input12" data-storage="false" />
+            <input type="text" id="input13" />
+        </form>
+
         <input type="submit" id="submit2" />
         <select id="select23" data-persist="garlic">
             <option value="foo">foo</option>
@@ -119,41 +153,55 @@
         </form>
     </div>
 
-    <script type="text/javascript" src="jquery-1.8.2.min.js"></script>
-
-    <!-- Uncomment this line and comment jquery above to launch test suite with Zepto -->
-    <!-- <script src="zepto-1.0rc1+databuild.min.js"></script> -->
-
-    <script type="text/javascript" src="../garlic.js"></script>
-    <script type="text/javascript" src="expect.js"></script>
+    <!-- <script type="text/javascript" src="expect.js"></script>
     <script type="text/javascript" src="mocha.js"></script>
-    <script type="text/javascript" src="tests.js"></script>
+    <script type="text/javascript" src="tests.js"></script> -->
     <script type="text/javascript">
+        var jquery = '../resources/jquery-1.8.2.min.js'
+          , zepto = '../resources/zepto-1.0rc1[zepto.event.data].min.js';
 
-        mocha.setup('bdd');
-        mocha.reporter('html');
-        testSuite();
+        switch ( location.hash ) {
+            case '#zepto':
+                jsAppend( zepto );
+                jsAppend( '../garlic.js' );
+                document.getElementById( 'info' ).innerHTML = 'Garlic test suite for Zepto, unminified version';
+                break;
+            case '#zepto-min':
+                jsAppend( zepto );
+                jsAppend( '../dist/garlic.min.js' );
+                document.getElementById( 'info' ).innerHTML = 'Garlic test suite for Zepto, minified version';
+                break;
+            case '#jquery-min':
+                jsAppend( jquery );
+                jsAppend( '../dist/garlic.min.js' );
+                document.getElementById( 'info' ).innerHTML = 'Garlic test suite for jQuery, minified version';
+                break;
+            case '#standalone':
+                jsAppend( '../dist/garlic.standalone.min.js' );
+                document.getElementById( 'info' ).innerHTML = 'Garlic test suite for Standalone Minified version';
+                break;
+            default:
+                jsAppend( jquery );
+                jsAppend( '../garlic.js' );
+                document.getElementById( 'info' ).innerHTML = 'Garlic test suite for jQuery, unminified version';
+                break;
+        
+        }
+
+        jsAppend( [ 'expect.js', 'mocha.js', 'tests.js' ] );
 
         onload = function() {
+
+            mocha.setup('bdd');
+            mocha.reporter('html');
+            testSuite();
+
             if ( window.mochaPhantomJS ) {
                 mochaPhantomJS.run();
             } else {
                 mocha.run();
             }
         };
-    </script>
-    <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-36239082-1']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-
     </script>
 </body>
 </html>
