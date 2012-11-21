@@ -246,7 +246,7 @@
 
       while ( node.length ) {
         var realNode = node[0]
-          , name = realNode.localName;
+          , name = realNode.nodeName;
 
         if ( !name ) {
           break;
@@ -275,7 +275,7 @@
         path = name + ( path ? '>' + path : '' );
 
         // break once we came up to form:eq(x), no need to go further
-        if ( 'form' == realNode.localName ) {
+        if ( 'form' == realNode.nodeName.toLowerCase() ) {
           break;
         }
 
