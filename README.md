@@ -10,7 +10,7 @@ http://garlicjs.org/
 
 #Version
 
-0.1.0
+0.1.1
 
 See CHANGELOG for more info.
 
@@ -28,6 +28,7 @@ See CHANGELOG for more info.
 
 * @cdmoyer
 * @johnrees
+* @leondewey
 
 #Licence
 

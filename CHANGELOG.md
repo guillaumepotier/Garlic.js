@@ -1,6 +1,12 @@
 #Changelog
 
-* **0.1.1** : fixed bug where data-storage="false" would stick.
+* **0.1.1** : 
+
+    - fixed bug where data-storage="false" would stick.
+
+    - customized test suite to accept dev and minified version, jquery or zepto lib.
+
+    - updated travis-ci tests accordingly
 
 * **0.1.0** :
 

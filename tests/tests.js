@@ -147,17 +147,19 @@ var testSuite = function () {
         expect( $( '#select23' ).val() ).to.be( 'bar' );
       } )
       it ( 'Radio buttons must be checked accordingly to storage', function () {
-        $( '#radio1' ).garlic ( 'retrieve' );
-        $( '#radio2' ).garlic ( 'retrieve' );
-        expect( $( '#radio1' ).attr( 'checked' ) ).to.be( 'checked' );
-        expect( $( '#radio2' ).attr( 'checked' ) == undefined || $( '#radio2' ).attr( 'checked' ) == false ).to.be( true );
+        $( '#radio1' ).garlic ( 'retrieve', function () {
+          expect( $( '#radio1' ).attr( 'checked' ) == 'checked' || $( '#radio1' ).attr( 'checked' ) == 'true' ).to.be( true );
+        } );
+        $( '#radio2' ).garlic ( 'retrieve', function () {
+          expect( $( '#radio2' ).attr( 'checked' ) == undefined || $( '#radio2' ).attr( 'checked' ) == false ).to.be( true );
+        } );
       } )
       it ( 'Checkboxes buttons must be checked accordingly to storage', function () {
         $( '#checkbox1' ).garlic ( 'retrieve' );
         $( '#checkbox2' ).garlic ( 'retrieve' );
         $( '#checkbox3' ).garlic ( 'retrieve' );
-        expect( $( '#checkbox1' ).attr( 'checked' ) ).to.be( 'checked' );
-        expect( $( '#checkbox2' ).attr( 'checked' ) ).to.be( 'checked' );
+        expect( $( '#checkbox1' ).attr( 'checked' ) == 'checked' ||  $( '#checkbox1' ).attr( 'checked' ) == 'true' ).to.be( true );
+        expect( $( '#checkbox2' ).attr( 'checked' ) == 'checked' ||  $( '#checkbox2' ).attr( 'checked' ) == 'true' ).to.be( true );
         expect( $( '#checkbox3' ).attr( 'checked' ) == undefined || $( '#checkbox3' ).attr( 'checked' ) == false ).to.be( true );
       } )
     } )
