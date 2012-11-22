@@ -348,8 +348,8 @@
   $.fn.garlic.Constructor = Garlic;
 
   $.fn.garlic.defaults = {
-      destroy: true                                                                               // remove or not localstorage on submit & clear 
-    , inputs: 'input[type=text], input[type=radio], input[type=checkbox], textarea, select'       // Default supported inputs.
+      destroy: true                                                                               // remove or not localstorage on submit & clear
+    , inputs: 'input, textarea, select'                                                           // Default supported inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
     , domain: false                                                                               // store et retrieve forms data accross all domain, not just on
     , conflictManager: {

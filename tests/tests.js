@@ -102,7 +102,15 @@ var testSuite = function () {
         expect( $( '#input12' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
         expect( $( '#input13' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
       } )
-
+      it ( 'On a form that is of type number', function () {
+        expect( $( '#number' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
+      it ( 'On a form that is of type tel', function () {
+        expect( $( '#tel' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
+      it ( 'On a form that is of type email', function () {
+        expect( $( '#email' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
     } )
 
     /***************************************

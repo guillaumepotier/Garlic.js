@@ -10,7 +10,7 @@ http://garlicjs.org/
 
 #Version
 
-1.0.0
+1.0.1
 
 See CHANGELOG for more info.
 
@@ -18,10 +18,7 @@ See CHANGELOG for more info.
 
 * Improve doc and api;
 * Refactorize some code;
-* Work on an alternative to Local Storage for non compatible browsers;
-* Work on cases where server put content in text fields, let the user choose bw server or Local Storage version;
-* Improve tests coverage;
-* Improve compatibility;
+* Work on inputs radio and textarea where there are conflicts;
 * And much more, for fun!
 
 #Run tests
@@ -43,6 +40,12 @@ They'll be created and dumped in the dist/ directory
 * @johnrees
 * @Marfa
 * @leondewey
+
+
+#Used / Inspiration
+
+* localStorageshim for IE browsers: https://github.com/mattpowell/localstorageshim by @mattpowell
+* minify ruby script https://gist.github.com/765432 by @benpickles
 
 #Licence
 
