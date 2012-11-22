@@ -1,5 +1,8 @@
 #Changelog
 
+* **1.0.1** :
+    - Binding now works on any input field
+
 * **1.0.0** : First "stable" v1 version
 
     - created bin/build.sh script to build and dump various prod min files
