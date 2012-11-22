@@ -9,7 +9,7 @@ echo "** building garlic.min.js version " $1
 ruby ./bin/minify garlic.js dist/garlic.min.js $1 --force
 echo "  done!"
 
-echo "** building garlic.standalone.min.js version " $1
-ruby ./bin/minify resources/zepto-1.0rc1[zepto.event.data].min.js garlic.js dist/garlic.standalone.min.js $1 --force
+echo "** building garlic-standalone.min.js version " $1
+ruby ./bin/minify resources/zepto-1.0rc1[zepto.event.data].min.js garlic.js dist/garlic-standalone.min.js $1 --force
 echo "  done!"
 fi
