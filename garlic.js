@@ -45,7 +45,7 @@
 
     , clean: function ( fn ) {
       for ( var i = localStorage.length - 1; i >= 0; i-- ) {
-        if ( -1 !== localStorage.key(i).indexOf( 'garlic:' ) ) {
+        if ( 'undefined' === typeof Array.indexOf && -1 !== localStorage.key(i).indexOf( 'garlic:' ) ) {
           localStorage.removeItem( localStorage.key(i) );
         }
       }
@@ -241,7 +241,7 @@
       }
 
       var path = ''
-        , fullPath = this.$element.is( 'input[type=checkbox]')
+        , fullPath = this.$element.is( 'input[type=checkbox]' )
         , node = this.$element;
 
       while ( node.length ) {
