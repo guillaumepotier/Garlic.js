@@ -180,6 +180,12 @@ var testSuite = function () {
           expect( garlicStorage.get( $( '#input12' ).garlic( 'getPath' ) ) ).to.be( 'hello world!' );
         } )
       } )
+      it ( 'If a text field is willingly cleared by an user, its storage will also be cleared', function () {
+        $( '#input12' ).val( '' );
+        $( '#input12' ).trigger( 'keypress', function () {
+          expect( garlicStorage.has( $( '#input12' ).garlic( 'getPath' ) ) ).to.be( false );
+        } )
+      } )
       it ( 'If a select is changed, new value should be stored', function () {
         $( '#select3' ).val( 'bar' );
         $( '#select3' ).trigger( 'change', function () {

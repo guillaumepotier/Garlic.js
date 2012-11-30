@@ -31,8 +31,14 @@
     }
 
     , set: function ( key, value, fn ) {
-      if ( 'string' === typeof value && '' !== value ) {
-        localStorage.setItem( key , value );
+      if ( 'string' === typeof value ) {
+
+        // if value is null, remove storage if exists
+        if ( '' === value ) {
+          this.destroy( key );
+        } else {
+          localStorage.setItem( key , value );
+        }
       }
 
       return 'function' === typeof fn ? fn() : true;
