@@ -1,5 +1,9 @@
 #Changelog
 
+* **1.0.2** :
+
+    - fixed bug that did not allowed user to clear a field persisted by Garlic
+
 * **1.0.1** :
 
     - Garlic now works on any input field

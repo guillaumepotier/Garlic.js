@@ -17,7 +17,7 @@
 
     </script>
     <script type="text/javascript">
-        function jsAppend ( js_file ) {
+        function jsAppend ( js_file, fn ) {
           if ( 'string' === typeof js_file ) {
               js_file = [ js_file ];
           }
@@ -194,12 +194,11 @@
                 jsAppend( '../garlic.js' );
                 document.getElementById( 'info' ).innerHTML = 'Garlic test suite for jQuery, unminified version';
                 break;
-        
         }
 
-        jsAppend( [ 'expect.js', 'mocha.js', 'tests.js' ] );
+        jsAppend( [ 'mocha.js', 'expect.js', 'tests.js' ] );
 
-        onload = function() {
+        window.onload = function() {
 
             mocha.setup('bdd');
             mocha.reporter('html');

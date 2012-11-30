@@ -31,8 +31,14 @@
     }
 
     , set: function ( key, value, fn ) {
-      if ( 'string' === typeof value && '' !== value ) {
-        localStorage.setItem( key , value );
+      if ( 'string' === typeof value ) {
+
+        // if value is null, remove storage if exists
+        if ( '' === value ) {
+          this.destroy( key );
+        } else {
+          localStorage.setItem( key , value );
+        }
       }
 
       return 'function' === typeof fn ? fn() : true;
@@ -45,7 +51,7 @@
 
     , clean: function ( fn ) {
       for ( var i = localStorage.length - 1; i >= 0; i-- ) {
-        if ( -1 !== localStorage.key(i).indexOf( 'garlic:' ) ) {
+        if ( 'undefined' === typeof Array.indexOf && -1 !== localStorage.key(i).indexOf( 'garlic:' ) ) {
           localStorage.removeItem( localStorage.key(i) );
         }
       }
@@ -241,7 +247,7 @@
       }
 
       var path = ''
-        , fullPath = this.$element.is( 'input[type=checkbox]')
+        , fullPath = this.$element.is( 'input[type=checkbox]' )
         , node = this.$element;
 
       while ( node.length ) {

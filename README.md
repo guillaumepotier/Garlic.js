@@ -10,7 +10,7 @@ http://garlicjs.org/
 
 #Version
 
-1.0.1
+1.0.2
 
 See CHANGELOG for more info.
 
@@ -41,6 +41,14 @@ They'll be created and dumped in the dist/ directory
 * @Marfa
 * @leondewey
 
+#Contribute!
+
+* fork repository
+* add your changes to garlic.js
+* add / update tests to test suite (tests/index.html / tests/tests.js)
+* run tests (see above)
+* create new minified versions with minify script (see above)
+* make a Pull Request!
 
 #Used / Inspiration
 
