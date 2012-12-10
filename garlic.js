@@ -141,7 +141,7 @@
         this.$element.val( storedValue );
 
         // trigger custom user function when data is retrieved
-        this.options.retrieveTrigger( this.$element, storedValue );
+        this.options.onRetrieve( this.$element, storedValue );
 
         return;
       }
@@ -371,7 +371,7 @@
       , message: 'This is your saved data. Click here to see default one'                         // Default message for swapping data / state
       , onConflictDetected: function ( item, storedVal ) { return true; }                         // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
     }
-   , retrieveTrigger: function ( item, storedVal ) {}                                             // This function will be triggered each time Garlic find an retrieve a local stored data for a field
+   , onRetrieve: function ( item, storedVal ) {}                                                  // This function will be triggered each time Garlic find an retrieve a local stored data for a field
   }
 
   /* GARLIC DATA-API

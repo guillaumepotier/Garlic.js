@@ -8,7 +8,7 @@ var testSuite = function () {
       e.preventDefault();
     } );
     $( '#form1' ).garlic( { domain: true } );
-    $( '#retrieve-trigger' ).garlic( { retrieveTrigger: function ( elem, retrieveVal ) {
+    $( '#retrieve-trigger' ).garlic( { onRetrieve: function ( elem, retrieveVal ) {
       elem.attr( 'storedValue', retrieveVal );
     } } );
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );

@@ -10,7 +10,7 @@ http://garlicjs.org/
 
 #Version
 
-1.0.2
+1.0.3
 
 See CHANGELOG for more info.
 
@@ -40,6 +40,7 @@ They'll be created and dumped in the dist/ directory
 * @johnrees
 * @Marfa
 * @leondewey
+* @willdurand
 
 #Contribute!
 
