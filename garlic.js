@@ -116,13 +116,20 @@
     , retrieve: function () {
       if ( this.storage.has( this.path ) ) {
 
+        console.log('*** a');
+
         // if conflictManager enabled, manage fields with already provided data, different from the one stored
         if ( this.options.conflictManager.enabled && this.detectConflict() ) {
           return this.conflictManager();
         }
 
+        console.log('*** b');
+
         // input[type=checkbox] and input[type=radio] have a special checked / unchecked behavior
         if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
+
+          console.log('*** c');
+
 
           // for checkboxes and radios
           if ( 'checked' === this.storage.get( this.path ) || this.storage.get( this.path ) === this.$element.val() ) {
@@ -136,8 +143,15 @@
           return;
         }
 
+        console.log('*** d');
+
         // for input[type=text], select and textarea, just set val()
         this.$element.val( this.storage.get( this.path ) );
+
+        // Notify listeners
+        this.$element.trigger( 'retrieved' );
+        console.log('*** retrieving');
+        console.log(this.$element);
       }
     }
 
@@ -187,6 +201,7 @@
         this.$element.data( 'swap-data', this.$element.val() );
         this.$element.data( 'swap-state', 'garlic' );
         this.$element.val( this.storage.get( this.path ) );
+        this.$element.trigger('retrieved');
       } else {
         this.$element.data( 'swap-data', this.storage.get( this.path ) );
         this.$element.data( 'swap-state', 'default' );
