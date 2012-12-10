@@ -1,5 +1,10 @@
 #Changelog
 
+* **1.0.3** :
+
+    - added onRetrieve function in config. Called each time Garlic retrieves a field
+      stored value. Overridable by configuration
+
 * **1.0.2** :
 
     - fixed bug that did not allowed user to clear a field persisted by Garlic
