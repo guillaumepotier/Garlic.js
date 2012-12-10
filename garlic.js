@@ -138,6 +138,9 @@
 
         // for input[type=text], select and textarea, just set val()
         this.$element.val( this.storage.get( this.path ) );
+
+        // Notify listeners
+        this.$element.trigger( 'retrieved' );
       }
     }
 
@@ -187,6 +190,7 @@
         this.$element.data( 'swap-data', this.$element.val() );
         this.$element.data( 'swap-state', 'garlic' );
         this.$element.val( this.storage.get( this.path ) );
+        this.$element.trigger('retrieved');
       } else {
         this.$element.data( 'swap-data', this.storage.get( this.path ) );
         this.$element.data( 'swap-state', 'default' );
