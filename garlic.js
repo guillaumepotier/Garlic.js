@@ -115,6 +115,7 @@
     /* retrieve localStorage data / state and update elem accordingly */
     , retrieve: function () {
       if ( this.storage.has( this.path ) ) {
+        var storedValue = this.storage.get( this.path );
 
         // if conflictManager enabled, manage fields with already provided data, different from the one stored
         if ( this.options.conflictManager.enabled && this.detectConflict() ) {
@@ -125,11 +126,11 @@
         if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
 
           // for checkboxes and radios
-          if ( 'checked' === this.storage.get( this.path ) || this.storage.get( this.path ) === this.$element.val() ) {
+          if ( 'checked' === storedValue || this.$element.val() === storedValue ) {
             return this.$element.attr( 'checked', true );
 
           // only needed for checkboxes
-          } else if ( 'unchecked' === this.storage.get( this.path ) ) {
+          } else if ( 'unchecked' === storedValue ) {
             this.$element.attr( 'checked', false );
           }
 
@@ -137,7 +138,12 @@
         }
 
         // for input[type=text], select and textarea, just set val()
-        this.$element.val( this.storage.get( this.path ) );
+        this.$element.val( storedValue );
+
+        // trigger custom user function when data is retrieved
+        this.options.retrieveTrigger( this.$element, storedValue );
+
+        return;
       }
     }
 
@@ -354,17 +360,18 @@
   $.fn.garlic.Constructor = Garlic;
 
   $.fn.garlic.defaults = {
-      destroy: true                                                                               // remove or not localstorage on submit & clear
+      destroy: true                                                                               // Remove or not localstorage on submit & clear
     , inputs: 'input, textarea, select'                                                           // Default supported inputs.
-    , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // events list that trigger a localStorage
-    , domain: false                                                                               // store et retrieve forms data accross all domain, not just on
+    , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // Events list that trigger a localStorage
+    , domain: false                                                                               // Store et retrieve forms data accross all domain, not just on
     , conflictManager: {
-        enabled: true                                                                             // manage default data and persisted data. If false, persisted data will always replace default ones
-      , garlicPriority: true                                                                      // if form have default data, garlic persisted data will be shown first 
-      , template: '<span class="garlic-swap"></span>'                                             // template used to swap between values if conflict detected
-      , message: 'This is your saved data. Click here to see default one'                         // default message for swapping data / state
+        enabled: true                                                                             // Manage default data and persisted data. If false, persisted data will always replace default ones
+      , garlicPriority: true                                                                      // If form have default data, garlic persisted data will be shown first 
+      , template: '<span class="garlic-swap"></span>'                                             // Template used to swap between values if conflict detected
+      , message: 'This is your saved data. Click here to see default one'                         // Default message for swapping data / state
       , onConflictDetected: function ( item, storedVal ) { return true; }                         // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
     }
+   , retrieveTrigger: function ( item, storedVal ) {}                                             // This function will be triggered each time Garlic find an retrieve a local stored data for a field
   }
 
   /* GARLIC DATA-API

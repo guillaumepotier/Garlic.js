@@ -7,7 +7,10 @@ var testSuite = function () {
     $( '#submit13' ).click( function ( e ) {
       e.preventDefault();
     } );
-    $('#form1').garlic( { domain: true } );
+    $( '#form1' ).garlic( { domain: true } );
+    $( '#retrieve-trigger' ).garlic( { retrieveTrigger: function ( elem, retrieveVal ) {
+      elem.attr( 'storedValue', retrieveVal );
+    } } );
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
     /***************************************
@@ -141,6 +144,7 @@ var testSuite = function () {
       garlicStorage.set( $( '#checkbox2' ).garlic( 'getPath' ), 'checkbox2' );
       garlicStorage.set( $( '#checkbox3' ).garlic( 'getPath' ), 'wrong_data' );
       garlicStorage.set( $( '#select23' ).garlic( 'getPath' ), 'bar' );
+      garlicStorage.set( $( '#retrieve-input' ).garlic( 'getPath' ), 'foo' );
 
       it ( 'An input should be populated by its stored data', function () {
         $( '#input7' ).garlic ( 'retrieve' );
@@ -167,6 +171,11 @@ var testSuite = function () {
         expect( $( '#checkbox1' ).attr( 'checked' ) == 'checked' ||  $( '#checkbox1' ).attr( 'checked' ) == 'true' ).to.be( true );
         expect( $( '#checkbox2' ).attr( 'checked' ) == 'checked' ||  $( '#checkbox2' ).attr( 'checked' ) == 'true' ).to.be( true );
         expect( $( '#checkbox3' ).attr( 'checked' ) == undefined || $( '#checkbox3' ).attr( 'checked' ) == false ).to.be( true );
+      } )
+      it ( 'If custom retrieval function is defined, execute it', function () {
+        $( '#retrieve-input' ).garlic ( 'retrieve', function () {
+          expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'foo' );
+        } );
       } )
     } )
 
