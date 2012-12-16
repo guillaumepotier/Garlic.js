@@ -123,7 +123,7 @@ var testSuite = function () {
       var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ]
         , fieldPath = $( '#input6' ).garlic( 'getPath' );
 
-        it ( 'Data is persisted on ' + events[event] + 'event', function () {
+        it ( 'Data is persisted on supported events: ' + events.join( ', ' ) , function () {
           for ( var event in events ) {
             $('#input6').val( 'foo' +  events[event] );
             $('#input6').trigger( $.Event( events[event] ) );
