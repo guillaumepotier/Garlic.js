@@ -140,6 +140,8 @@
                     <div class="page-header">
                         <h1>Demonstration <small>some magic..</small></h1>
                     </div>
+
+                    <a name="demo1"></a>
                     <form data-persist="garlic" method="POST">
                         <fieldset>
                             <legend>1 - Simple form</legend><br/>
@@ -193,6 +195,7 @@
                     </form>
                     <a href="#top" class="pull-right">Top</a>
 
+                    <a name="demo2"></a>
                     <form data-persist="garlic"  method="POST">
                         <fieldset>
                             <legend>2 - Form with non-persisted fields</legend><br/>
@@ -206,6 +209,7 @@
                     </form>
                     <a href="#top" class="pull-right">Top</a>
 
+                    <a name="demo3"></a>
                     <form data-persist="garlic" method="POST">
                         <fieldset>
                             <legend>3 - Custom javascript or ajax validation</legend><br/>
@@ -215,14 +219,16 @@
                         </fieldset>
                     </form>
 
-                    <form data-persist="garlic" data-destroy="false" data-expires="60" method="POST">
+                    <a name="demo4"></a>
+                    <form data-persist="garlic" data-destroy="false" data-expires="20" method="POST">
                         <fieldset>
                             <legend>4 - Auto expiration</legend><br/>
-                            <label for="expiration-test">This field will be localy persisted during 60 seconds, not one more! Try to refresh!</label>
+                            <label for="expiration-test">This field will be localy persisted during 20 seconds, not one more! Try to refresh!</label>
                             <input type="text" id="expiration-test" name="myajaxtext" /> <span id="auto-expires-indicator"></span>
                         </fieldset>
                     </form>
 
+                    <a name="demo5"></a>
                     <form id="conflicted-form" method="POST">
                         <fieldset>
                             <legend>5 - Manage database and localStorage conflict</legend><br/>
@@ -242,6 +248,7 @@
                     </form>
                     <a href="#top" class="pull-right">Top</a>
 
+                    <a name="demo6"></a>
                     <form data-persist="garlic" data-destroy="false" method="POST">
                         <fieldset>
                             <legend>6 - "Infinite" persistency</legend><br/>
