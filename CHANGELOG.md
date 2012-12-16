@@ -1,5 +1,9 @@
 #Changelog
 
+* **1.1.1** :
+
+    - perf improvement on persist with redundant events
+
 * **1.1.0** :
 
     - added auto-expiration feature

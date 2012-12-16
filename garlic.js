@@ -107,6 +107,13 @@
     /* temporary store data / state in localStorage */
     , persist: function () {
 
+      // some binded events are redundant (change & paste for example), persist only once by field val
+      if ( this.val === this.$element.val() ) {
+        return;
+      }
+
+      this.val = this.$element.val();
+
       // if auto-expires is enabled, set the expiration date for future auto-deletion
       if ( this.options.expires ) {
         this.storage.set( this.expiresFlag , ( new Date().getTime() + this.options.expires * 1000 ).toString() );
