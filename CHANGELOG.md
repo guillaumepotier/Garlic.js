@@ -1,5 +1,9 @@
 #Changelog
 
+* **1.1.0** :
+
+    - added auto-expiration feature
+
 * **1.0.3** :
 
     - added onRetrieve function in config. Called each time Garlic retrieves a field

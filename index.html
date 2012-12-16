@@ -105,10 +105,10 @@
 
         <div class="row well intro">
             <div id="head-download" class="download">
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.0.3.zip">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.1.0.zip">
                     <img width="90" border="0" src="http://github.com/images/modules/download/zip.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.0.3.tar.gz">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.1.0.tar.gz">
                     <img width="90" border="0" src="http://github.com/images/modules/download/tar.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
             </div>
@@ -129,7 +129,7 @@
                     <li><a href="#download"><i class="icon-chevron-right"></i> Download</a></li>
                     <li><a href="#usage"><i class="icon-chevron-right"></i> Usage</a></li>
                     <li><a href="#documentation"><i class="icon-chevron-right"></i> Documentation</a></li>
-                    <li><a href="#they-use"><i class="icon-chevron-right"></i> They use Garlic.js!</a></li>
+                    <li><a href="#they-use"><i class="icon-chevron-right"></i> They use Garlic.js !</a></li>
                     <li><a href="#other"><i class="icon-chevron-right"></i> Other stuff</a></li>
                     <li><a href="#licence"><i class="icon-chevron-right"></i> Version / Licence</a></li>
                 </ul>
@@ -215,9 +215,17 @@
                         </fieldset>
                     </form>
 
+                    <form data-persist="garlic" data-destroy="false" data-expires="60" method="POST">
+                        <fieldset>
+                            <legend>4 - Auto expiration</legend><br/>
+                            <label for="expiration-test">This field will be localy persisted during 60 seconds, not one more! Try to refresh!</label>
+                            <input type="text" id="expiration-test" name="myajaxtext" /> <span id="auto-expires-indicator"></span>
+                        </fieldset>
+                    </form>
+
                     <form id="conflicted-form" method="POST">
                         <fieldset>
-                            <legend>4 - Manage database and localStorage conflict</legend><br/>
+                            <legend>5 - Manage database and localStorage conflict</legend><br/>
                             <label for="hello-world">These inputs have default values, let's say for example, database retrieved values. Try to edit them, and then, refresh the page!</label><br/>
                           <form data-persist="garlic" method="POST">
                             <div>
@@ -236,7 +244,7 @@
 
                     <form data-persist="garlic" data-destroy="false" method="POST">
                         <fieldset>
-                            <legend>5 - "Infinite" persistency</legend><br/>
+                            <legend>6 - "Infinite" persistency</legend><br/>
                             <label for="ajax-test">Use <code>data-destroy="false"</code> in your <code>&lt;form></code> to never remove localStorage persistency</label>
 
                             <input type="text" id="infinite-persistency" name="infinite-persistency" /><br/>
@@ -280,10 +288,10 @@
                         <h1>Download</h1>
                     </div>
                     <div id="download" class="download">
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.0.3.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.1.0.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
                             <img width="90" border="0" src="http://github.com/images/modules/download/zip.png">
                         </a>
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.0.3.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.1.0.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                             <img width="90" border="0" src="http://github.com/images/modules/download/tar.png">
                         </a>
                     </div>
@@ -354,7 +362,7 @@
 
                 <section id="they-use">
                     <div class="page-header">
-                        <h1>They use Garlic.js</h1>
+                        <h1>They use Garlic.js !</h1>
                     </div>
                     <ul>
                         <li>
@@ -362,6 +370,9 @@
                         </li>
                         <li>
                             <a href="https://chrome.google.com/webstore/detail/simple-form-recovery/cieifohdikchafcbdjbcmkdiabggalhp">Chrome extension</a> by <a href="https://twitter.com/kornnflake">@kornnflake</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/willdurand/Propilex">Propilex</a>
                         </li>
                         <li>
                             Feel free to contact me if your website use Garlic in a smart way! ;)
@@ -385,7 +396,7 @@
                     <div class="page-header">
                         <h1>Version / Licence</h1>
                     </div>
-                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">1.0.3 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">1.1.0 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
                     <a href="#top" class="pull-right">Top</a>
                 </section>
             </div>
@@ -422,6 +433,11 @@
                 , message: 'This is your saved data. Click here to choose between default or this data'
             }
         });
+        window.onload = function () { 
+            if ( $( '#expiration-test').attr( 'expires-in' ) ) {
+                $( '#auto-expires-indicator' ).text( ' Will auto destroy in ' + $( '#expiration-test').attr( 'expires-in' ) + ' seconds' );
+            }
+        }
     </script>
     <script type="text/javascript">
 
