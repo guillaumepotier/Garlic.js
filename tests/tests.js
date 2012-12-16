@@ -180,6 +180,70 @@ var testSuite = function () {
     } )
 
     /***************************************
+            auto-expiration feature
+    ***************************************/
+    describe ( 'Auto expiration feature', function () {
+      $( '#auto-expires' ).val( 'foo' );
+      $( '#auto-expires-2' ).val( 'bar' );
+      $( '#auto-expires-3' ).val( 'baz' );
+      var expireFlag1, expireFlag2;
+
+      it ( 'If data auto-expires, data is persisted an expires flag is set in localStorage', function () {
+        $( '#auto-expires' ).bind( 'change', function () {
+          var garlicFlagDate = garlicStorage.get( 'garlic:' + document.domain + window.location.pathname + '>form:eq(22)_flag' )
+            , diffDates = parseInt( garlicFlagDate ) - new Date().getTime()
+            , expireFlag2 = garlicFlagDate;
+
+          expect( garlicStorage.get( $( '#auto-expires' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
+
+          $( '#auto-expires' ).garlic( 'retrieve', function () {
+            expect( $( '#auto-expires' ).attr( 'expires-in' ) ).to.be( '14' );
+          } )
+        } )
+        $( '#auto-expires-2' ).bind( 'change', function () {
+          var garlicFlagDate = garlicStorage.get( 'garlic:' + document.domain + window.location.pathname + '>form:eq(22)_flag' )
+            , diffDates = parseInt( garlicFlagDate ) - new Date().getTime()
+            , expireFlag2 = garlicFlagDate;
+
+          expect( garlicStorage.get( $( '#auto-expires-2' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
+
+          $( '#auto-expires-2' ).garlic( 'retrieve', function () {
+            expect( $( '#auto-expires-2' ).attr( 'expires-in' ) ).to.be( '14' );
+          } )
+        } )
+        $( '#auto-expires-3' ).bind( 'change', function () {
+          var garlicFlagDate = garlicStorage.get( $( '#auto-expires-3' ).garlic( 'getPath' ) + '_flag')
+            , diffDates = parseInt( garlicFlagDate ) - new Date().getTime();
+
+          expect( garlicStorage.get( $( '#auto-expires-3' ).garlic( 'getPath' ) ) ).to.be( 'baz' );
+
+          $( '#auto-expires-3' ).garlic( 'retrieve', function () {
+            expect( $( '#auto-expires-3' ).attr( 'expires-in' ) ).to.be( '24' );
+          } )
+        } )
+
+        $( '#auto-expires' ).trigger( 'change' );
+        $( '#auto-expires-2' ).trigger( 'change' );
+        $( '#auto-expires-3' ).trigger( 'change' );
+      } )
+      it ( 'If data-expires is set on a form item, all form fields have the same expiration date, and this date updates each time one of them item is updated', function () {
+        expect( expireFlag1 ).to.be( expireFlag2 );
+      } )
+      it ( 'Data is not persisted in localStorage anymore after expiration time', function () {
+        garlicStorage.set( 'garlic:' + document.domain + window.location.pathname + '>form:eq(22)_flag', ( new Date().getTime() - 200 ).toString() );
+        $( '#auto-expires' ).garlic( 'retrieve', function () {
+          expect( garlicStorage.has( $( '#auto-expires' ).garlic( 'getPath' ) ) ).to.be( false );
+        } )
+        $( '#auto-expires-2' ).garlic( 'retrieve', function () {
+          expect( garlicStorage.has( $( '#auto-expires-2' ).garlic( 'getPath' ) ) ).to.be( false );
+        } )
+        $( '#auto-expires-3' ).garlic( 'retrieve', function () {
+          expect( garlicStorage.has( $( '#auto-expires-3' ).garlic( 'getPath' ) ) ).to.be( true );
+        } )
+      } )
+    } )
+
+    /***************************************
                change input states
     ***************************************/
     describe ( 'Test input data change', function () {

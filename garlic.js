@@ -84,16 +84,18 @@
       this.storage = storage;
       this.path = this.getPath();
       this.parentForm = this.$element.closest( 'form' );
+      this.$element.addClass('garlic-auto-save');
+      this.expiresFlag = !this.options.expires ? false : ( this.$element.data( 'expires' ) ? this.path : this.getPath( this.parentForm ) ) + '_flag' ;
 
-      this.retrieve();
-
+      // bind garlic events
       this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
 
       if ( this.options.destroy ) {
-        this.$element.closest( 'form' ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
+        $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
       }
 
-      this.$element.addClass('garlic-auto-save');
+      // retrieve garlic persisted data
+      this.retrieve();
     }
 
     , getOptions: function ( options ) {
@@ -104,6 +106,12 @@
 
     /* temporary store data / state in localStorage */
     , persist: function () {
+
+      // if auto-expires is enabled, set the expiration date for future auto-deletion
+      if ( this.options.expires ) {
+        this.storage.set( this.expiresFlag , ( new Date().getTime() + this.options.expires * 1000 ).toString() );
+      }
+
       // for checkboxes, we need to implement an unchecked / checked behavior
       if ( this.$element.is( 'input[type=checkbox]' ) ) {
         return this.storage.set( this.path , this.$element.attr( 'checked' ) ? 'checked' : 'unchecked' );
@@ -115,6 +123,18 @@
     /* retrieve localStorage data / state and update elem accordingly */
     , retrieve: function () {
       if ( this.storage.has( this.path ) ) {
+
+        // if data expired, destroy it!
+        if ( this.options.expires ) {
+          var date = new Date().getTime();
+          if ( this.storage.get( this.expiresFlag ) < date.toString() ) {
+            this.storage.destroy( this.path );
+            return;
+          } else {
+            this.$element.attr( 'expires-in',  Math.floor( ( parseInt( this.storage.get( this.expiresFlag ) ) - date ) / 1000 ) );
+          }
+        }
+
         var storedValue = this.storage.get( this.path );
 
         // if conflictManager enabled, manage fields with already provided data, different from the one stored
@@ -245,16 +265,20 @@
        * other inputs: domain > pathname > form.<attr.name>[:eq(x)] > input.<attr.name>[:eq(y)]
           we just need the element name / eq() inside a given form
     */
-    , getPath: function () {
+    , getPath: function ( elem ) {
+
+      if ( 'undefined' === typeof elem ) {
+        elem = this.$element;
+      }
 
       // Requires one element.
-      if ( this.$element.length != 1 ) {
+      if ( elem.length != 1 ) {
         return false;
       }
 
       var path = ''
-        , fullPath = this.$element.is( 'input[type=checkbox]' )
-        , node = this.$element;
+        , fullPath = elem.is( 'input[type=checkbox]' )
+        , node = elem;
 
       while ( node.length ) {
         var realNode = node[0]
@@ -364,6 +388,7 @@
     , inputs: 'input, textarea, select'                                                           // Default supported inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // Events list that trigger a localStorage
     , domain: false                                                                               // Store et retrieve forms data accross all domain, not just on
+    , expires: false                                                                              // false for no expiration, otherwise (int) in seconds for auto-expiration
     , conflictManager: {
         enabled: true                                                                             // Manage default data and persisted data. If false, persisted data will always replace default ones
       , garlicPriority: true                                                                      // If form have default data, garlic persisted data will be shown first 
