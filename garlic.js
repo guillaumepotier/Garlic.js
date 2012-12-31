@@ -99,9 +99,7 @@
     }
 
     , getOptions: function ( options ) {
-      options = $.extend( {}, $.fn[this.type].defaults, options, this.$element.data() );
-
-      return options;
+      return $.extend( {}, $.fn[this.type].defaults, options, this.$element.data() );
     }
 
     /* temporary store data / state in localStorage */

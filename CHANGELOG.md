@@ -1,5 +1,11 @@
 #Changelog
 
+
+* **1.1.2** :
+
+    - do not bind anymore input[type=password] with Garlic for evident security
+      reasons (@nashby)
+
 * **1.1.1** :
 
     - perf improvement on persist with redundant events

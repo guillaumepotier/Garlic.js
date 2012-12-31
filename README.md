@@ -10,7 +10,7 @@ http://garlicjs.org/
 
 #Version
 
-1.1.1
+1.1.2
 
 See CHANGELOG for more info.
 
@@ -30,7 +30,7 @@ See CHANGELOG for more info.
 
 You'll need ruby, and Google Closure compiler: `gem install closure-compiler`. Then, just call:
 
-`./bin/build.sh version` where version is the build release. eg: `./bin/build.sh 1.1.1`
+`./bin/build.sh version` where version is the build release. eg: `./bin/build.sh 1.1.2`
 
 They'll be created and dumped in the dist/ directory
 
@@ -41,6 +41,7 @@ They'll be created and dumped in the dist/ directory
 * @Marfa
 * @leondewey
 * @willdurand
+* @nashby
 
 #Contribute!
 
