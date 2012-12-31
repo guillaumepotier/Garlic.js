@@ -211,7 +211,7 @@
     , conflictManager: function () {
 
       // user can define here a custom function that could stop Garlic default behavior, if returns false
-      if ( 'function' === typeof this.options.conflictManager.onConflictDetected 
+      if ( 'function' === typeof this.options.conflictManager.onConflictDetected
         && !this.options.conflictManager.onConflictDetected( this.$element, this.storage.get( this.path ) ) ) {
         return false;
       }
@@ -356,6 +356,11 @@
         return;
       }
 
+      // don't bind a password type field
+      if ( 'password' === $( self ).attr( 'type' ) ) {
+        return;
+      }
+
       // if data never binded, bind it right now!
       if ( !data ) {
         $this.data( 'garlic', ( data = new Garlic( self, storage, fieldOptions ) ) );
@@ -398,7 +403,7 @@
     , expires: false                                                                              // false for no expiration, otherwise (int) in seconds for auto-expiration
     , conflictManager: {
         enabled: true                                                                             // Manage default data and persisted data. If false, persisted data will always replace default ones
-      , garlicPriority: true                                                                      // If form have default data, garlic persisted data will be shown first 
+      , garlicPriority: true                                                                      // If form have default data, garlic persisted data will be shown first
       , template: '<span class="garlic-swap"></span>'                                             // Template used to swap between values if conflict detected
       , message: 'This is your saved data. Click here to see default one'                         // Default message for swapping data / state
       , onConflictDetected: function ( item, storedVal ) { return true; }                         // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it

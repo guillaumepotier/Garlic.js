@@ -114,6 +114,9 @@ var testSuite = function () {
       it ( 'On a form that is of type email', function () {
         expect( $( '#email' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
       } )
+      it ( 'On a form that is of type password', function () {
+        expect( $( '#password' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
+      } )
     } )
 
     /***************************************
@@ -190,7 +193,7 @@ var testSuite = function () {
 
       it ( 'If data auto-expires, data is persisted an expires flag is set in localStorage', function () {
         $( '#auto-expires' ).bind( 'change', function () {
-          var garlicFlagDate = garlicStorage.get( 'garlic:' + document.domain + window.location.pathname + '>form:eq(22)_flag' )
+          var garlicFlagDate = garlicStorage.get( 'garlic:' + document.domain + window.location.pathname + '>form:eq(23)_flag' )
             , diffDates = parseInt( garlicFlagDate ) - new Date().getTime()
             , expireFlag2 = garlicFlagDate;
 
@@ -201,7 +204,7 @@ var testSuite = function () {
           } )
         } )
         $( '#auto-expires-2' ).bind( 'change', function () {
-          var garlicFlagDate = garlicStorage.get( 'garlic:' + document.domain + window.location.pathname + '>form:eq(22)_flag' )
+          var garlicFlagDate = garlicStorage.get( 'garlic:' + document.domain + window.location.pathname + '>form:eq(23)_flag' )
             , diffDates = parseInt( garlicFlagDate ) - new Date().getTime()
             , expireFlag2 = garlicFlagDate;
 
@@ -230,7 +233,7 @@ var testSuite = function () {
         expect( expireFlag1 ).to.be( expireFlag2 );
       } )
       it ( 'Data is not persisted in localStorage anymore after expiration time', function () {
-        garlicStorage.set( 'garlic:' + document.domain + window.location.pathname + '>form:eq(22)_flag', ( new Date().getTime() - 200 ).toString() );
+        garlicStorage.set( 'garlic:' + document.domain + window.location.pathname + '>form:eq(23)_flag', ( new Date().getTime() - 200 ).toString() );
         $( '#auto-expires' ).garlic( 'retrieve', function () {
           expect( garlicStorage.has( $( '#auto-expires' ).garlic( 'getPath' ) ) ).to.be( false );
         } )
@@ -316,7 +319,7 @@ var testSuite = function () {
       // tests for conflicts management, only for supported yet fields
       var conflicts = [ 'input', 'textarea', 'select' ];
       for ( var i in conflicts ) {
-        garlicStorage.set ( $( '#' + conflicts[ i ] + '14' ).garlic( 'getPath' ), 'not default' );          
+        garlicStorage.set ( $( '#' + conflicts[ i ] + '14' ).garlic( 'getPath' ), 'not default' );
       }
 
       it ( 'If ' + conflicts.join( ',' ) + ' fields have default value and conflictManager enabled, detect conflict', function () {
@@ -382,14 +385,14 @@ var testSuite = function () {
             } )
           }
         }
-      } ) 
+      } )
 
       it ( 'Reset button should remove both text and localStorage, but only on current form', function () {
         garlicStorage.set( $( '#input8' ).garlic( 'getPath' ), 'foo' );
         garlicStorage.set( $( '#input9' ).garlic( 'getPath' ), 'foo' );
         expect( garlicStorage.get( $( '#input8' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
         expect( garlicStorage.get( $( '#input9' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        
+
         $('#reset1').click();
         $('#reset1').click( function () {
           expect( $( '#input9' ).val() ).to.be( '' );
@@ -407,10 +410,10 @@ var testSuite = function () {
       } )
       it ( 'Do not destroy localStorage if data-destroy=false', function () {
         garlicStorage.set( $( '#textarea40' ).garlic( 'getPath' ), 'foo' );
-        $( '#reset40' ).click( function () {                    
+        $( '#reset40' ).click( function () {
           expect( garlicStorage.get( $( '#textarea40' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
         } )
-        $( '#submit40' ).click( function ( e ) {          
+        $( '#submit40' ).click( function ( e ) {
           expect( garlicStorage.get( $( '#textarea40' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
           e.preventDefault();
         } )
