@@ -82,7 +82,7 @@
       this.$element = $( element );
       this.options = this.getOptions( options );
       this.storage = storage;
-      this.path = this.getPath();
+      this.path = this.options.getPath( this.$element ) || this.getPath();
       this.parentForm = this.$element.closest( 'form' );
       this.$element.addClass('garlic-auto-save');
       this.expiresFlag = !this.options.expires ? false : ( this.$element.data( 'expires' ) ? this.path : this.getPath( this.parentForm ) ) + '_flag' ;
@@ -276,6 +276,10 @@
         elem = this.$element;
       }
 
+      if ( this.options.getPath( elem ) ) {
+        return this.options.getPath( elem );
+      }
+
       // Requires one element.
       if ( elem.length != 1 ) {
         return false;
@@ -404,9 +408,10 @@
       , garlicPriority: true                                                                      // If form have default data, garlic persisted data will be shown first
       , template: '<span class="garlic-swap"></span>'                                             // Template used to swap between values if conflict detected
       , message: 'This is your saved data. Click here to see default one'                         // Default message for swapping data / state
-      , onConflictDetected: function ( item, storedVal ) { return true; }                         // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
+      , onConflictDetected: function ( $item, storedVal ) { return true; }                        // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
     }
-   , onRetrieve: function ( item, storedVal ) {}                                                  // This function will be triggered each time Garlic find an retrieve a local stored data for a field
+   , getPath: function ( $item ) {}                                                               // Set your own key-storing strategy per field
+   , onRetrieve: function ( $item, storedVal ) {}                                                 // This function will be triggered each time Garlic find an retrieve a local stored data for a field
   }
 
   /* GARLIC DATA-API
