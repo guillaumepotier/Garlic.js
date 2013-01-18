@@ -1,5 +1,9 @@
 #Changelog
 
+* **1.2.0** :
+
+    - added custom getPath() function in config for custom key-storing strategy
+      implementation in localStorage
 
 * **1.1.2** :
 

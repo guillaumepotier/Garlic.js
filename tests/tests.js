@@ -13,6 +13,12 @@ var testSuite = function () {
     } } );
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
+    $( '#custom-get-path-form' ).garlic( {
+      getPath: function ($elem ) {
+        return $elem.attr( 'id' ) + '_mypath' ;
+      }
+    } );
+
     /***************************************
                      getPath
     ***************************************/
@@ -40,6 +46,9 @@ var testSuite = function () {
       } )
       it ( 'getPath() for elements with domain=true', function () {
         expect( $( '#input5' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + '*>' + 'form:eq(6)>input' );
+      } )
+      it ( 'test custom getPath()', function () {
+        expect( $( '#custom-get-path-field' ).garlic( 'getPath' ) ).to.be( 'custom-get-path-field_mypath' );
       } )
     } )
 
