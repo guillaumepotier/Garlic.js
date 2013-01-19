@@ -56,12 +56,14 @@
         }
 
         #parsley {
-            top: 550px;
-            padding: 25px;
-            width: 200px;
+            top: 250px;
+            right: 60px;
+/*            padding: 25px;*/
+            width: 250px;
             position: fixed;
             clear: both;
             line-height: 1.7em;
+            font-size: 1.3em;
         }
 
         #parsley a {
@@ -146,8 +148,9 @@
                     <li><a href="#other"><i class="icon-chevron-right"></i> Other stuff</a></li>
                     <li><a href="#licence"><i class="icon-chevron-right"></i> Version / Licence</a></li>
                 </ul>
-                <p id="parsley" class="alert alert-block alert-info">
-                    <span class="label label-warning">New !</span>: have a look to Garlicjs little brother (or sister, as you want), <a href="http://parsleyjs.org" target="_blank">Parsley.js: validate all your forms frontend without writting a single line of javascript !</a>
+                <p id="parsley" class="alert alert-block">
+                  <a class="close" data-dismiss="alert" href="#">&times;</a>
+                    <span class="label label-important"> New ! </span><br/> Have a look to Garlicjs little brother (or sister, as you want), <a href="http://parsleyjs.org" target="_blank">Parsley.js: validate all your forms frontend without writting a single line of javascript !</a>
                 </p>
             </div>
 
@@ -444,6 +447,7 @@
     <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>  
 
     <script type="text/javascript">
         hljs.initHighlightingOnLoad();
