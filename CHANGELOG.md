@@ -1,5 +1,10 @@
 #Changelog
 
+* **1.2.1** :
+
+    - fixed checkbox behavior (#32)
+    - garlic conflic manager is deactivated by default now (#24)
+
 * **1.2.0** :
 
     - added custom getPath() function in config for custom key-storing strategy
