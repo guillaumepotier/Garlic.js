@@ -19,6 +19,8 @@ var testSuite = function () {
       }
     } );
 
+    $( '#conflictedForm' ).garlic( { conflictManager: { enabled: true } } );
+
     /***************************************
                      getPath
     ***************************************/

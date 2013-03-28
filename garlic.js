@@ -106,23 +106,22 @@
     , persist: function () {
 
       // some binded events are redundant (change & paste for example), persist only once by field val
-      if ( this.val === this.$element.val() ) {
+      if ( this.val === this.getVal() ) {
         return;
       }
 
-      this.val = this.$element.val();
+      this.val = this.getVal();
 
       // if auto-expires is enabled, set the expiration date for future auto-deletion
       if ( this.options.expires ) {
         this.storage.set( this.expiresFlag , ( new Date().getTime() + this.options.expires * 1000 ).toString() );
       }
 
-      // for checkboxes, we need to implement an unchecked / checked behavior
-      if ( this.$element.is( 'input[type=checkbox]' ) ) {
-        return this.storage.set( this.path , this.$element.attr( 'checked' ) ? 'checked' : 'unchecked' );
-      }
+      this.storage.set( this.path , this.getVal() );
+    }
 
-      this.storage.set( this.path , this.$element.val() );
+    , getVal: function () {
+      return !this.$element.is( 'input[type=checkbox]' ) ? this.$element.val() : ( this.$element.attr( 'checked' ) ? 'checked' : 'unchecked' );
     }
 
     /* retrieve localStorage data / state and update elem accordingly */
@@ -398,20 +397,20 @@
   $.fn.garlic.Constructor = Garlic;
 
   $.fn.garlic.defaults = {
-      destroy: true                                                                               // Remove or not localstorage on submit & clear
-    , inputs: 'input, textarea, select'                                                           // Default supported inputs.
-    , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ] // Events list that trigger a localStorage
-    , domain: false                                                                               // Store et retrieve forms data accross all domain, not just on
-    , expires: false                                                                              // false for no expiration, otherwise (int) in seconds for auto-expiration
+      destroy: true                                                                                         // Remove or not localstorage on submit & clear
+    , inputs: 'input, textarea, select'                                                                     // Default supported inputs.
+    , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'click', 'keypress', 'paste', 'focus' ]  // Events list that trigger a localStorage
+    , domain: false                                                                                         // Store et retrieve forms data accross all domain, not just on
+    , expires: false                                                                                        // false for no expiration, otherwise (int) in seconds for auto-expiration
     , conflictManager: {
-        enabled: true                                                                             // Manage default data and persisted data. If false, persisted data will always replace default ones
-      , garlicPriority: true                                                                      // If form have default data, garlic persisted data will be shown first
-      , template: '<span class="garlic-swap"></span>'                                             // Template used to swap between values if conflict detected
-      , message: 'This is your saved data. Click here to see default one'                         // Default message for swapping data / state
-      , onConflictDetected: function ( $item, storedVal ) { return true; }                        // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
-    }
-   , getPath: function ( $item ) {}                                                               // Set your own key-storing strategy per field
-   , onRetrieve: function ( $item, storedVal ) {}                                                 // This function will be triggered each time Garlic find an retrieve a local stored data for a field
+        enabled: false                                                                                      // Manage default data and persisted data. If false, persisted data will always replace default ones                                                         
+      , garlicPriority: true                                                                                // If form have default data, garlic persisted data will be shown first                                                                                      
+      , template: '<span class="garlic-swap"></span>'                                                       // Template used to swap between values if conflict detected                                                                                                 
+      , message: 'This is your saved data. Click here to see default one'                                   // Default message for swapping data / state                                                                                                                 
+      , onConflictDetected: function ( $item, storedVal ) { return true; }                                  // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it    
+    }                                                                                                                                                                                                                                                                    
+   , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field                                                                                                               
+   , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field                                                         
   }
 
   /* GARLIC DATA-API
