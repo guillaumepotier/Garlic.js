@@ -1,5 +1,9 @@
 #Changelog
 
+* **1.2.2** :
+
+    - fixed checkboxes issue (#40)
+
 * **1.2.1** :
 
     - fixed checkbox behavior (#32)

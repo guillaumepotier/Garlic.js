@@ -121,7 +121,7 @@
     }
 
     , getVal: function () {
-      return !this.$element.is( 'input[type=checkbox]' ) ? this.$element.val() : ( this.$element.attr( 'checked' ) ? 'checked' : 'unchecked' );
+      return !this.$element.is( 'input[type=checkbox]' ) ? this.$element.val() : ( this.$element.prop( 'checked' ) ? 'checked' : 'unchecked' );
     }
 
     /* retrieve localStorage data / state and update elem accordingly */
@@ -252,7 +252,7 @@
       this.remove();
 
       if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
-        $( this.$element ).attr( 'checked', false );
+        $( this.$element ).prop( 'checked', false );
         return;
       }
 
