@@ -118,6 +118,8 @@
       }
 
       this.storage.set( this.path , this.getVal() );
+
+      this.options.onPersist(this.$element, this.getVal());
     }
 
     , getVal: function () {
@@ -411,7 +413,9 @@
     }                                                                                                                                                                                                                                                                    
    , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field                                                                                                               
    , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field                                                         
+   , onPersist: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic stores a field to local storage                                                         
   }
+
 
   /* GARLIC DATA-API
   * =============== */

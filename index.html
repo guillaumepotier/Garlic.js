@@ -379,6 +379,16 @@
 &lt;/script></code></pre>
                         </li>
                         <li>
+                            Be notified when Garlic persists a field val by a custom overridable <code>onPersist</code> callback:
+<pre><code>&lt;script type="text/javascript">
+  $( 'input.no_good' ).garlic( {
+      onPersist: function ( elem, storedValue ) {
+          console.log( 'The persisted value for ' + elem.name() + ' is : ' + storedValue );
+      }
+  } );
+&lt;/script></code></pre>
+                        </li>
+                        <li>
                             Generate your own key-storage fields policy to avoid conflicts:
 <pre><code>&lt;script type="text/javascript">
   $( '#form' ).garlic( {
