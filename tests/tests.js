@@ -11,6 +11,10 @@ var testSuite = function () {
     $( '#retrieve-trigger' ).garlic( { onRetrieve: function ( elem, retrieveVal ) {
       elem.attr( 'storedValue', retrieveVal );
     } } );
+    $( '#persist-trigger' ).garlic( { onPersist: function ( elem, persistVal ) {
+      console.log("Value: ", persistVal);
+      elem.attr( 'storedValue', persistVal );
+    } } );
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
     $( '#custom-get-path-form' ).garlic( {
@@ -76,6 +80,11 @@ var testSuite = function () {
       it ( 'Test destroy()', function () {
         garlicStorage.destroy( 'foo' );
         expect( garlicStorage.get( 'foo' ) ).to.be( null );
+      } )
+      it ( 'If custom onPersist function is defined, execute it', function () {
+        $( '#persist-input' ).garlic ( 'persist', function () {
+          expect( $( '#persist-input' ).attr( 'storedValue' ) ).to.be( 'bar' );
+        } );
       } )
     } )
 
