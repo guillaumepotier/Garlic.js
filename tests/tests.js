@@ -168,6 +168,7 @@ var testSuite = function () {
       garlicStorage.set( $( '#checkbox3' ).garlic( 'getPath' ), 'wrong_data' );
       garlicStorage.set( $( '#select23' ).garlic( 'getPath' ), 'bar' );
       garlicStorage.set( $( '#retrieve-input' ).garlic( 'getPath' ), 'foo' );
+      garlicStorage.set( $( '#input16' ).garlic( 'getPath' ), 'foo' );
 
       it ( 'An input should be populated by its stored data', function () {
         $( '#input7' ).garlic ( 'retrieve' );
@@ -199,6 +200,10 @@ var testSuite = function () {
         $( '#retrieve-input' ).garlic ( 'retrieve', function () {
           expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'foo' );
         } );
+      } )
+      it ( 'If initial retrieval is disabled, value should not come from local storage', function () {
+        $( '#input16' ).garlic();
+        expect( $( '#input16' ).val() ).to.be( 'bar' );
       } )
     } )
 
@@ -328,6 +333,12 @@ var testSuite = function () {
         $( '#checkbox9' ).trigger( 'click', function () {
           expect( $( '#checkbox9' ).attr( 'checked' ) == undefined || $( '#checkbox9' ).attr( 'checked' ) == false ).to.be( true );
           expect( garlicStorage.has( $( '#checkbox9' ).garlic( 'getPath' ) ) ).to.be( false );
+        } )
+      } )
+      it ( 'If initial retrieval is disabled, new values should still be stored in local storage', function () {
+        $( '#input16' ).val( 'baz' );
+        $( '#input16' ).trigger( 'keypress', function () {
+          expect( garlicStorage.has( $( '#input16' ).garlic( 'getPath' ) ) ).to.be( 'baz' );
         } )
       } )
     } )
