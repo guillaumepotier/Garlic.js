@@ -137,6 +137,9 @@ var testSuite = function () {
       it ( 'On a form that is of type password', function () {
         expect( $( '#password' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
       } )
+      it ( 'On a multiple select input', function () {
+        expect( $( '#mselect' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
     } )
 
     /***************************************
@@ -168,6 +171,7 @@ var testSuite = function () {
       garlicStorage.set( $( '#checkbox3' ).garlic( 'getPath' ), 'wrong_data' );
       garlicStorage.set( $( '#select23' ).garlic( 'getPath' ), 'bar' );
       garlicStorage.set( $( '#retrieve-input' ).garlic( 'getPath' ), 'foo' );
+      garlicStorage.set( $( '#mselect' ).garlic( 'getPath' ), 'option1,option3' );
 
       it ( 'An input should be populated by its stored data', function () {
         $( '#input7' ).garlic ( 'retrieve' );
@@ -199,6 +203,10 @@ var testSuite = function () {
         $( '#retrieve-input' ).garlic ( 'retrieve', function () {
           expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'foo' );
         } );
+      } )
+      it ( 'Multiple select must be setted accordingly to storage', function () {
+        $( '#mselect' ).garlic ( 'retrieve' );
+        expect( $( '#mselect' ).val() ).to.eql( ['option1', 'option3'] );
       } )
     } )
 

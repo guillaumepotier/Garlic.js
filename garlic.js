@@ -104,26 +104,36 @@
 
     /* temporary store data / state in localStorage */
     , persist: function () {
+      var val = this.getVal();
 
       // some binded events are redundant (change & paste for example), persist only once by field val
-      if ( this.val === this.getVal() ) {
+      if ( this.val === val ) {
         return;
       }
 
-      this.val = this.getVal();
+      this.val = val;
 
       // if auto-expires is enabled, set the expiration date for future auto-deletion
       if ( this.options.expires ) {
         this.storage.set( this.expiresFlag , ( new Date().getTime() + this.options.expires * 1000 ).toString() );
       }
 
-      this.storage.set( this.path , this.getVal() );
+      this.storage.set( this.path , val );
 
-      this.options.onPersist(this.$element, this.getVal());
+      this.options.onPersist(this.$element, val);
     }
 
     , getVal: function () {
-      return !this.$element.is( 'input[type=checkbox]' ) ? this.$element.val() : ( this.$element.prop( 'checked' ) ? 'checked' : 'unchecked' );
+      if ( !this.$element.is( 'input[type=checkbox]' ) ) {
+        var val = this.$element.val();
+        if (val.toString) {
+          return val.toString();
+        } else {
+          return val;
+        }
+      } else {
+        return this.$element.prop( 'checked' ) ? 'checked' : 'unchecked';
+      }
     }
 
     /* retrieve localStorage data / state and update elem accordingly */
@@ -160,6 +170,12 @@
             this.$element.attr( 'checked', false );
           }
 
+          return;
+        }
+
+        // for select[multiple]
+        if ( this.$element.is( 'select[multiple]' ) ) {
+          this.$element.val( storedValue.split( ',' ) );
           return;
         }
 
