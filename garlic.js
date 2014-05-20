@@ -12,6 +12,54 @@
   /*global localStorage */
   /*global document */
 
+    /* COOKIE STORAGE PUBLIC CLASS DEFINITION
+    Cookie storage requires jquery-cookie plugin.
+  * =============================== */
+  var CookieStorage = function (options) {
+      this.defined = true;
+  }
+
+  CookieStorage.prototype = {
+
+      constructor: CookieStorage
+
+    , get: function (key, placeholder) {
+        return $.cookie(key) ? $.cookie(key) : 'undefined' !== typeof placeholder ? placeholder : null;
+    }
+
+    , has: function (key) {
+        return $.cookie(key) != null ? true : false;
+    }
+
+    , set: function (key, value, fn) {
+        if ('string' === typeof value) {
+            if ('' === value) {
+                this.destroy(key);
+            } else {
+                var domain = location.hostname.split('.').slice(1).join('.');
+                $.cookie(key, value, { expires: 1, path: '/', domain: domain });
+            }
+        }
+
+        return 'function' === typeof fn ? fn() : true;
+    }
+
+    , destroy: function (key, fn) {
+        $.removeCookie(key, { path: '/' });
+        return 'function' === typeof fn ? fn() : true;
+    }
+
+    , clean: function (fn) {
+        // TBD
+        return 'function' === typeof fn ? fn() : true;
+    }
+
+    , clear: function (fn) {
+        localStorage.clear();
+        return 'function' === typeof fn ? fn() : true;
+    }
+  }
+
   /* STORAGE PUBLIC CLASS DEFINITION
    * =============================== */
   var Storage = function ( options ) {
@@ -80,8 +128,19 @@
     , init: function ( type, element, storage, options ) {
       this.type = type;
       this.$element = $( element );
-      this.options = this.getOptions( options );
-      this.storage = storage;
+      this.options = this.getOptions(options);
+      switch (this.options.storageEngine) {
+          case 'localStorage':
+              this.storage = storage;
+              break;
+          case 'cookieStorage':
+              this.storage = new CookieStorage;
+              break;
+          default:
+              this.storage = storage;
+              break;
+
+      }
       this.path = this.options.getPath( this.$element ) || this.getPath();
       this.parentForm = this.$element.closest( 'form' );
       this.$element.addClass('garlic-auto-save');
@@ -414,6 +473,7 @@
    , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field                                                                                                               
    , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field                                                         
    , onPersist: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic stores a field to local storage                                                         
+   , storageEngine: 'cookieStorage'                                                                          // localStorage or cookieStorage (use cookie for cross sub-domain)
   }
 
 
