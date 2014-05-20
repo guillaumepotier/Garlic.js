@@ -94,8 +94,10 @@
         $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
       }
 
-      // retrieve garlic persisted data
-      this.retrieve();
+      // retrieve garlic persisted data (if the prevent option isn't set)
+      if ( ! this.options.prevent_retrieve ) {
+          this.retrieve();
+      }
     }
 
     , getOptions: function ( options ) {
@@ -404,16 +406,17 @@
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'click', 'keypress', 'paste', 'focus' ]  // Events list that trigger a localStorage
     , domain: false                                                                                         // Store et retrieve forms data accross all domain, not just on
     , expires: false                                                                                        // false for no expiration, otherwise (int) in seconds for auto-expiration
+    , prevent_retrieval: false                                                                              // Retrieve data from local storage and populate form by default
     , conflictManager: {
-        enabled: false                                                                                      // Manage default data and persisted data. If false, persisted data will always replace default ones                                                         
-      , garlicPriority: true                                                                                // If form have default data, garlic persisted data will be shown first                                                                                      
-      , template: '<span class="garlic-swap"></span>'                                                       // Template used to swap between values if conflict detected                                                                                                 
-      , message: 'This is your saved data. Click here to see default one'                                   // Default message for swapping data / state                                                                                                                 
-      , onConflictDetected: function ( $item, storedVal ) { return true; }                                  // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it    
-    }                                                                                                                                                                                                                                                                    
-   , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field                                                                                                               
-   , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field                                                         
-   , onPersist: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic stores a field to local storage                                                         
+        enabled: false                                                                                      // Manage default data and persisted data. If false, persisted data will always replace default ones
+      , garlicPriority: true                                                                                // If form have default data, garlic persisted data will be shown first
+      , template: '<span class="garlic-swap"></span>'                                                       // Template used to swap between values if conflict detected
+      , message: 'This is your saved data. Click here to see default one'                                   // Default message for swapping data / state
+      , onConflictDetected: function ( $item, storedVal ) { return true; }                                  // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
+    }
+   , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field
+   , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field
+   , onPersist: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic stores a field to local storage
   }
 
 
