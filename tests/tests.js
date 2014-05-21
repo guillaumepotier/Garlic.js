@@ -137,6 +137,12 @@ var testSuite = function () {
       it ( 'On a form that is of type password', function () {
         expect( $( '#password' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
       } )
+      it ( 'On a file input', function () {
+        expect( $( '#file' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
+      } )
+      it ( 'On a hidden input', function () {
+        expect( $( '#hidden' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
+      } )
     } )
 
     /***************************************
