@@ -11,6 +11,10 @@ var testSuite = function () {
     $( '#retrieve-trigger' ).garlic( { onRetrieve: function ( elem, retrieveVal ) {
       elem.attr( 'storedValue', retrieveVal );
     } } );
+    $( '#persist-trigger' ).garlic( { onPersist: function ( elem, persistVal ) {
+      console.log("Value: ", persistVal);
+      elem.attr( 'storedValue', persistVal );
+    } } );
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
     $( '#custom-get-path-form' ).garlic( {
@@ -77,6 +81,11 @@ var testSuite = function () {
         garlicStorage.destroy( 'foo' );
         expect( garlicStorage.get( 'foo' ) ).to.be( null );
       } )
+      it ( 'If custom onPersist function is defined, execute it', function () {
+        $( '#persist-input' ).garlic ( 'persist', function () {
+          expect( $( '#persist-input' ).attr( 'storedValue' ) ).to.be( 'bar' );
+        } );
+      } )
     } )
 
     /***************************************
@@ -127,6 +136,12 @@ var testSuite = function () {
       } )
       it ( 'On a form that is of type password', function () {
         expect( $( '#password' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
+      } )
+      it ( 'On a file input', function () {
+        expect( $( '#file' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
+      } )
+      it ( 'On a hidden input', function () {
+        expect( $( '#hidden' ).hasClass( 'garlic-auto-save' ) ).to.be( false );
       } )
     } )
 
@@ -190,6 +205,12 @@ var testSuite = function () {
         $( '#retrieve-input' ).garlic ( 'retrieve', function () {
           expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'foo' );
         } );
+      } )
+      it( 'When stored data is retrieved, an input event should be triggered', function ( done ) {
+        $( '#retrieve-input' ).on( 'input', function () {
+          done();
+        } );
+        $( '#retrieve-input' ).garlic ( 'retrieve' );
       } )
     } )
 
