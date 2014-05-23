@@ -166,6 +166,9 @@
         // for input[type=text], select and textarea, just set val()
         this.$element.val( storedValue );
 
+        // trigger an input event given the value has been changed
+        this.$element.trigger( 'input' );
+
         // trigger custom user function when data is retrieved
         this.options.onRetrieve( this.$element, storedValue );
 
