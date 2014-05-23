@@ -206,6 +206,12 @@ var testSuite = function () {
           expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'foo' );
         } );
       } )
+      it( 'When stored data is retrieved, an input event should be triggered', function ( done ) {
+        $( '#retrieve-input' ).on( 'input', function () {
+          done();
+        } );
+        $( '#retrieve-input' ).garlic ( 'retrieve' );
+      } )
     } )
 
     /***************************************
