@@ -143,11 +143,16 @@
 
         var storedValue = this.storage.get( this.path );
 
-        // if conflictManager enabled, manage fields with already provided data, different from the one stored
+        // trigger custom user function when data is retrieved
+        this.options.onRetrieve( this.$element, storedValue );
+         // if conflictManager enabled, manage fields with already provided data, different from the one stored
         if ( this.options.conflictManager.enabled && this.detectConflict() ) {
           return this.conflictManager();
+        }else{
+           // for input[type=text], select and textarea, just set val()
+          this.$element.val( storedValue );
         }
-
+        
         // input[type=checkbox] and input[type=radio] have a special checked / unchecked behavior
         if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
 
@@ -162,13 +167,7 @@
 
           return;
         }
-
-        // for input[type=text], select and textarea, just set val()
-        this.$element.val( storedValue );
-
-        // trigger custom user function when data is retrieved
-        this.options.onRetrieve( this.$element, storedValue );
-
+        
         return;
       }
     }
