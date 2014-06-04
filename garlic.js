@@ -331,7 +331,7 @@
         node = parent;
       }
 
-      return 'garlic:' + document.domain + ( this.options.domain ? '*' : window.location.pathname ) + '>' + path;
+      return 'garlic:' + document.domain + ( this.options.domain ? '*' : window.location.pathname ) + window.location.hash + '>' + path;
     }
 
     , getStorage: function () {
