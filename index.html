@@ -120,10 +120,10 @@
 
         <div class="row well intro">
             <div id="head-download" class="download">
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.2.zip">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.3.zip">
                     <img width="90" border="0" src="http://github.com/images/modules/download/zip.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.2.tar.gz">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.3.tar.gz">
                     <img width="90" border="0" src="http://github.com/images/modules/download/tar.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
             </div>
@@ -140,7 +140,7 @@
             <div class="span3 bs-docs-sidenav">
                 <ul class="nav nav-list bs-docs-sidenav affix">
                     <li><a href="#demonstration"><i class="icon-chevron-right"></i> Demonstration</a></li>
-                    <li><a href="#requirements"><i class="icon-chevron-right"></i> Requirements / Compatibiliy</a></li>
+                    <li><a href="#requirements"><i class="icon-chevron-right"></i> Requirements / Compatibility</a></li>
                     <li><a href="#download"><i class="icon-chevron-right"></i> Download</a></li>
                     <li><a href="#usage"><i class="icon-chevron-right"></i> Usage</a></li>
                     <li><a href="#documentation"><i class="icon-chevron-right"></i> Documentation</a></li>
@@ -150,7 +150,7 @@
                 </ul>
                 <p id="parsley" class="alert alert-block">
                   <a class="close" data-dismiss="alert" href="#">&times;</a>
-                    <span class="label label-important"> New ! </span><br/> Have a look to Garlicjs little brother (or sister, as you want), <a href="http://parsleyjs.org" target="_blank">Parsley.js: validate all your forms frontend without writting a single line of javascript !</a>
+                    <span class="label label-important"> New! </span><br/> Have a look to Garlicjs little brother (or sister, as you want), <a href="http://parsleyjs.org" target="_blank">Parsley.js: validate all your forms frontend without writing a single line of javascript!</a>
                 </p>
             </div>
 
@@ -164,10 +164,10 @@
                     <form data-persist="garlic" method="POST">
                         <fieldset>
                             <legend>1 - Simple form</legend><br/>
-                            <label for="field1">Forms are independent. All text data is localy persisted thanks to localStorage<br/>
+                            <label for="field1">Forms are independent. All text data is locally persisted thanks to localStorage<br/>
                             if browser supports it. If you reload this page, quit and go back here, your<br/>
                             data will still be there. On simple validation, if you press the submit button<br/>
-                            the presisted data will be destroyed, considering it has properly been submited</label>
+                            the persisted data will be destroyed, considering it has properly been submitted</label>
                             <input type="text" name="mytext" id="field1"/><br/>
                             <textarea name="textarea"></textarea>
                             <br/>
@@ -218,7 +218,7 @@
                     <form data-persist="garlic"  method="POST">
                         <fieldset>
                             <legend>2 - Form with non-persisted fields</legend><br/>
-                            This field will be localy persisted while submit button is not triggered<br/>
+                            This field will be locally persisted while submit button is not triggered<br/>
                             <input type="text" name="mytext" /><br/>
 
                             Thise textarea will never be persisted since it has the <code>data-storage="false"</code> attribute<br/>
@@ -232,7 +232,7 @@
                     <form data-persist="garlic" method="POST">
                         <fieldset>
                             <legend>3 - Custom javascript or ajax validation</legend><br/>
-                            <label for="ajax-test">This field will be localy persisted while js test not ok. Could be usefull<br/>
+                            <label for="ajax-test">This field will be locally persisted while js test not ok. Could be useful<br/>
                             with some AJAX behaviour. Here text will be persisted only if < 10 chars</label>
                             <input type="text" id="ajax-test" name="myajaxtext" /> <span id="indicator"></span><br/>
                         </fieldset>
@@ -242,7 +242,7 @@
                     <form data-persist="garlic" data-destroy="false" data-expires="20" method="POST">
                         <fieldset>
                             <legend>4 - Auto expiration</legend><br/>
-                            <label for="expiration-test">This field will be localy persisted during 20 seconds, not one more! Try to refresh!</label>
+                            <label for="expiration-test">This field will be locally persisted during 20 seconds, not one more! Try to refresh!</label>
                             <input type="text" id="expiration-test" name="myajaxtext" /> <span id="auto-expires-indicator"></span>
                         </fieldset>
                     </form>
@@ -283,9 +283,9 @@
 
                 <section id="requirements">
                     <div class="page-header">
-                        <h1>Requirements / Compatibiliy</h1>
+                        <h1>Requirements / Compatibility</h1>
                     </div>
-                    Garlic is delivred to you in different builds (in the Github dist/ directory), here they are:<br/><br/>
+                    Garlic is delivered to you in different builds (in the Github dist/ directory), here they are:<br/><br/>
                     <ul>
                         <li>
                             <strong><a href="https://github.com/guillaumepotier/Garlic.js/tree/master/dist">Garlic.min.js: ~5K</a></strong>, requires jQuery or Zepto (with data module builded for Zepto, see <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">changelog 0.0.6</a>
@@ -294,7 +294,7 @@
                             <strong><a href="https://github.com/guillaumepotier/Garlic.js/tree/master/dist">Garlic-standalone.min.js: ~25K</a></strong>, with minimum Zepto config builded inside. Requires nothing more. <strong>Only use that one if you don't already have jQuery or Zepto on your website, could make conflicts</strong></a>
                         </li><br/>
                         <li>
-                            Native localStorage compatible only with "modern" browsers: IE8+, Chrome 4+, FF 4+, Safari 4+, Opera 11+. See more <a href="http://www.html5rocks.com/en/features/storage">here</a><br/>
+                            Native localStorage compatible only with "modern" browsers: IE8+, Chrome 4+, FF 4+, Safari 4+, Opera 11+. See more <a href="http://www.html5rocks.com/en/features/storage">here</a>.<br/>
                             Here is an awesome plugin that extends storage for IE6 and IE7!: https://github.com/mattpowell/localstorageshim<br/>
                             <strong>Use it that way with Garlic:</strong>
 <pre><code>&lt;!--[if lte IE 7]>
@@ -313,10 +313,10 @@
                         <h1>Download</h1>
                     </div>
                     <div id="download" class="download">
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.2.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.3.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
                             <img width="90" border="0" src="http://github.com/images/modules/download/zip.png">
                         </a>
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.2.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.2.3.tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                             <img width="90" border="0" src="http://github.com/images/modules/download/tar.png">
                         </a>
                     </div>
@@ -354,7 +354,7 @@
                             Never destroy localStorage for a form: use <code>data-destroy="false"</code> <strong>(don't work on inputs separately, only on whole form inputs)</strong>
                         </li>
                         <li>
-                            Store form localStorage accross all domain <strong>(by default, storage is specific to each pages)</strong>, use <code>data-domain="true"</code><br/>
+                            Store form localStorage across all domain <strong>(by default, storage is specific to each pages)</strong>, use <code>data-domain="true"</code><br/>
                         </li>
                         <li>
                             Manually call garlic in javascript<br/>
@@ -438,7 +438,7 @@
                     <div class="page-header">
                         <h1>Version / Licence</h1>
                     </div>
-                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">1.2.2 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">1.2.3 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
                     <a href="#top" class="pull-right">Top</a>
                 </section>
             </div>
@@ -457,7 +457,7 @@
     <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>  
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
 
     <script type="text/javascript">
         hljs.initHighlightingOnLoad();
@@ -479,7 +479,7 @@
                 , message: 'This is your saved data. Click here to choose between default or this data'
             }
         });
-        window.onload = function () { 
+        window.onload = function () {
             if ( $( '#expiration-test').attr( 'expires-in' ) ) {
                 $( '#auto-expires-indicator' ).text( ' Will auto destroy in ' + $( '#expiration-test').attr( 'expires-in' ) + ' seconds' );
             }
