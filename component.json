@@ -3,6 +3,6 @@
     "version": "1.2.1",
     "main": "./dist/garlic.min.js",
     "dependencies": {
-        "jquery": "1.8.*"
+        "jquery": ">=1.8.* <2.0"
     }
 }
