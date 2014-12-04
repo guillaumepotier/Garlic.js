@@ -245,6 +245,7 @@
       this.$element.data( 'swap-state', 'garlic' === this.$element.data( 'swap-state' ) ? 'default' : 'garlic' );
       this.$element.data( 'swap-data', this.$element.val());
       $( this.$element ).val( val );
+      this.options.onSwap(this.$element, this.$element.data( 'swap-data'), val);
     }
 
     /* delete localStorage persistance only */
@@ -420,6 +421,7 @@
    , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field
    , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field
    , onPersist: function ( $item, storedVal ) {}                                                            // This function will be triggered each time Garlic stores a field to local storage
+   , onSwap: function ( $item, prevValue, curValue ) {}                                                     // This function will be triggered each time Garlic swap values with conflict manager
   }
 
 
