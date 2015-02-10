@@ -406,7 +406,7 @@
   $.fn.garlic.defaults = {
       destroy: true                                                                                         // Remove or not localstorage on submit & clear
     , inputs: 'input, textarea, select'                                                                     // Default supported inputs.
-    , excluded: 'input[type="file"], input[type="hidden"]'                                                  // Default ignored inputs.
+    , excluded: 'input[type="file"], input[type="hidden"], input[type="submit"]'                            // Default ignored inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'click', 'keypress', 'paste', 'focus' ]  // Events list that trigger a localStorage
     , domain: false                                                                                         // Store et retrieve forms data accross all domain, not just on
     , expires: false                                                                                        // false for no expiration, otherwise (int) in seconds for auto-expiration
