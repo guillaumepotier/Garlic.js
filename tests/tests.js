@@ -2,28 +2,37 @@
 
 var testSuite = function () {
   describe ( 'Garlic.js test suite', function () {
-    $( '#noGarlicDefault' ).garlic( { conflictManager: { enabled: true, garlicPriority: false } } );
-    $( '[rel=persist-select]' ).garlic();
-    $( '#submit13' ).click( function ( e ) {
-      e.preventDefault();
-    } );
-    $( '#form1' ).garlic( { domain: true } );
-    $( '#retrieve-trigger' ).garlic( { onRetrieve: function ( elem, retrieveVal ) {
-      elem.attr( 'storedValue', retrieveVal );
-    } } );
-    $( '#persist-trigger' ).garlic( { onPersist: function ( elem, persistVal ) {
-      console.log("Value: ", persistVal);
-      elem.attr( 'storedValue', persistVal );
-    } } );
-    var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
+    var garlicStorage;
 
-    $( '#custom-get-path-form' ).garlic( {
-      getPath: function ($elem ) {
-        return $elem.attr( 'id' ) + '_mypath' ;
-      }
-    } );
+    beforeEach(function () {
+      $( '#noGarlicDefault' ).garlic( { conflictManager: { enabled: true, garlicPriority: false } } );
 
-    $( '#conflictedForm' ).garlic( { conflictManager: { enabled: true } } );
+      $( '[rel=persist-select]' ).garlic();
+
+      $( '#submit13' ).click( function ( e ) {
+        e.preventDefault();
+      } );
+
+      $( '#form1' ).garlic( { domain: true } );
+
+      $( '#retrieve-trigger' ).garlic( { onRetrieve: function ( elem, retrieveVal ) {
+        elem.attr( 'storedValue', retrieveVal );
+      } } );
+
+      $( '#persist-trigger' ).garlic( { onPersist: function ( elem, persistVal ) {
+        elem.attr( 'storedValue', persistVal );
+      } } );
+
+      garlicStorage = $( '#form1' ).garlic( 'getStorage' );
+
+      $( '#custom-get-path-form' ).garlic( {
+        getPath: function ($elem ) {
+          return $elem.attr( 'id' ) + '_mypath' ;
+        }
+      } );
+
+      $( '#conflictedForm' ).garlic( { conflictManager: { enabled: true } } );
+    });
 
     /***************************************
                      getPath
@@ -150,7 +159,11 @@ var testSuite = function () {
     ***************************************/
     describe ( 'Test inputs events', function () {
       var events = [ 'DOMAttrModified', 'textInput', 'input', 'change', 'keypress', 'paste', 'focus' ]
-        , fieldPath = $( '#input6' ).garlic( 'getPath' );
+        , fieldPath;
+
+      beforeEach(function () {
+        fieldPath = $( '#input6' ).garlic( 'getPath' );
+      });
 
         it ( 'Data is persisted on supported events: ' + events.join( ', ' ) , function () {
           for ( var event in events ) {
@@ -160,20 +173,22 @@ var testSuite = function () {
             expect( garlicStorage.get( fieldPath ) ).to.be( 'foo' +  events[event] );
           }
         } )
-    } )
+    } );
 
     /***************************************
               input data retrieving
     ***************************************/
     describe ( 'Test input data retrieving', function () {
-      garlicStorage.set( $( '#input7' ).garlic( 'getPath' ), 'foo' );
-      garlicStorage.set( $( '#textarea2' ).garlic( 'getPath' ), 'bar' );
-      garlicStorage.set( $( '#radio1' ).garlic( 'getPath' ), 'radio1' );
-      garlicStorage.set( $( '#checkbox1' ).garlic( 'getPath' ), 'checkbox1' );
-      garlicStorage.set( $( '#checkbox2' ).garlic( 'getPath' ), 'checkbox2' );
-      garlicStorage.set( $( '#checkbox3' ).garlic( 'getPath' ), 'wrong_data' );
-      garlicStorage.set( $( '#select23' ).garlic( 'getPath' ), 'bar' );
-      garlicStorage.set( $( '#retrieve-input' ).garlic( 'getPath' ), 'foo' );
+      beforeEach(function () {
+        garlicStorage.set( $( '#input7' ).garlic( 'getPath' ), 'foo' );
+        garlicStorage.set( $( '#textarea2' ).garlic( 'getPath' ), 'bar' );
+        garlicStorage.set( $( '#radio1' ).garlic( 'getPath' ), 'radio1' );
+        garlicStorage.set( $( '#checkbox1' ).garlic( 'getPath' ), 'checkbox1' );
+        garlicStorage.set( $( '#checkbox2' ).garlic( 'getPath' ), 'checkbox2' );
+        garlicStorage.set( $( '#checkbox3' ).garlic( 'getPath' ), 'wrong_data' );
+        garlicStorage.set( $( '#select23' ).garlic( 'getPath' ), 'bar' );
+        garlicStorage.set( $( '#retrieve-input' ).garlic( 'getPath' ), 'foo' );
+      });
 
       it ( 'An input should be populated by its stored data', function () {
         $( '#input7' ).garlic ( 'retrieve' );
@@ -350,9 +365,12 @@ var testSuite = function () {
     describe ( 'Conflicts management', function () {
       // tests for conflicts management, only for supported yet fields
       var conflicts = [ 'input', 'textarea', 'select' ];
-      for ( var i in conflicts ) {
-        garlicStorage.set ( $( '#' + conflicts[ i ] + '14' ).garlic( 'getPath' ), 'not default' );
-      }
+
+      beforeEach(function () {
+        for ( var i in conflicts ) {
+          garlicStorage.set ( $( '#' + conflicts[ i ] + '14' ).garlic( 'getPath' ), 'not default' );
+        }
+      });
 
       it ( 'If ' + conflicts.join( ',' ) + ' fields have default value and conflictManager enabled, detect conflict', function () {
         for ( var i in conflicts ) {
