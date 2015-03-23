@@ -1,5 +1,9 @@
 #Changelog
 
+* **1.2.4** :
+
+    - location hash added to path when available (#68)
+
 * **1.2.3** :
 
     - added `excluded` options (#67)
