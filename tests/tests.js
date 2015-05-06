@@ -1,7 +1,7 @@
 "use strict";
 
 var testSuite = function () {
-  describe ( 'Garlic.js test suite', function () {
+  describe ( 'Garlic.js test suite: ' + window.location.hash, function () {
     $( '#noGarlicDefault' ).garlic( { conflictManager: { enabled: true, garlicPriority: false } } );
     $( '[rel=persist-select]' ).garlic();
     $( '#submit13' ).click( function ( e ) {
