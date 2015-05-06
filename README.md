@@ -24,7 +24,7 @@ See CHANGELOG for more info.
 #Run tests
 
 * In your browser: go to `tests/index.html`
-* Headless tests: install mocha-phantomjs with npm: `npm install -g mocha-phantomjs` and then run `./bin/test-suite.sh`
+* Headless tests: `npm install && npm test`
 
 #Make production minified versions
 
@@ -42,15 +42,6 @@ They'll be created and dumped in the dist/ directory
 * @leondewey
 * @willdurand
 * @nashby
-
-#Contribute!
-
-* fork repository
-* add your changes to garlic.js
-* add / update tests to test suite (tests/index.html / tests/tests.js)
-* run tests (see above)
-* create new minified versions with minify script (see above)
-* make a Pull Request!
 
 #Used / Inspiration
 
