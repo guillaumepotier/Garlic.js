@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <title>Garlicjs Mocha Tests</title>
-    <link rel="stylesheet" href="mocha.css" />
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -219,7 +219,7 @@
                 break;
         }
 
-        jsAppend( [ 'mocha.js', 'expect.js', 'tests.js' ] );
+        jsAppend( [ '../node_modules/mocha/mocha.js', '../node_modules/expect.js/index.js', 'tests.js' ] );
 
         window.onload = function() {
 
