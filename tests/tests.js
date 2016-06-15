@@ -191,7 +191,7 @@ var testSuite = function () {
       } )
       it ( 'Select-multiple must be setted accordingly to storage', function () {
         $( '#mselect1' ).garlic ( 'retrieve' );
-        expect( $( '#mselect1' ).val() ).to.be( ['option1', 'option3'] );
+        expect( $( '#mselect1' ).val() ).to.eql( ['option1', 'option3'] );
       } )
       it ( 'Radio buttons must be checked accordingly to storage', function () {
         $( '#radio1' ).garlic ( 'retrieve', function () {
