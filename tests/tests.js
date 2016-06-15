@@ -109,6 +109,9 @@ var testSuite = function () {
       it ( 'On a select input', function () {
         expect( $( '#select2' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
       } )
+      it ( 'On a multiple select input', function () {
+        expect( $( '#mselect1' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
       it ( 'On a checkboxes inputs', function () {
         expect( $( '#checkbox1' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
         expect( $( '#checkbox2' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
@@ -173,6 +176,7 @@ var testSuite = function () {
       garlicStorage.set( $( '#checkbox2' ).garlic( 'getPath' ), 'checkbox2' );
       garlicStorage.set( $( '#checkbox3' ).garlic( 'getPath' ), 'wrong_data' );
       garlicStorage.set( $( '#select23' ).garlic( 'getPath' ), 'bar' );
+      garlicStorage.set( $( '#mselect1' ).garlic( 'getPath' ), ['option1', 'option3'] );
       garlicStorage.set( $( '#retrieve-input' ).garlic( 'getPath' ), 'foo' );
 
       it ( 'An input should be populated by its stored data', function () {
@@ -184,6 +188,10 @@ var testSuite = function () {
       it ( 'Select must be setted accordingly to storage', function () {
         $( '#select23' ).garlic ( 'retrieve' );
         expect( $( '#select23' ).val() ).to.be( 'bar' );
+      } )
+      it ( 'Select-multiple must be setted accordingly to storage', function () {
+        $( '#mselect1' ).garlic ( 'retrieve' );
+        expect( $( '#mselect1' ).val() ).to.be( ['option1', 'option3'] );
       } )
       it ( 'Radio buttons must be checked accordingly to storage', function () {
         $( '#radio1' ).garlic ( 'retrieve', function () {
