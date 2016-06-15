@@ -23,7 +23,15 @@
     constructor: Storage
 
     , get: function ( key, placeholder ) {
-      return localStorage.getItem( key ) ? localStorage.getItem( key ) : 'undefined' !== typeof placeholder ? placeholder : null;
+      if (localStorage.getItem( key )) {
+        return JSON.parse(localStorage.getItem( key ));
+
+      } else if ('undefined' !== typeof placeholder) {
+        return placeholder;
+
+      } else {
+        return null;
+      }
     }
 
     , has: function ( key ) {
@@ -31,14 +39,13 @@
     }
 
     , set: function ( key, value, fn ) {
-      if ( 'string' === typeof value ) {
 
-        // if value is null, remove storage if exists
-        if ( '' === value ) {
-          this.destroy( key );
-        } else {
-          localStorage.setItem( key , value );
-        }
+      // if value is null, remove storage if exists
+      if ( '' === value || (value instanceof Array && value.length === 0)) {
+        this.destroy( key );
+      } else {
+        value = JSON.stringify(value);
+        localStorage.setItem( key , value );
       }
 
       return 'function' === typeof fn ? fn() : true;
