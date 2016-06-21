@@ -71,6 +71,10 @@ var testSuite = function () {
         expect( garlicStorage.has( 'foo' ) ).to.be( true );
         expect( garlicStorage.has( 'garlic' ) ).to.be( true );
       } )
+      it ( 'Test fallback get()', function () {
+        localStorage.setItem( 'old-foo', 'old-bar' );
+        expect( garlicStorage.get( 'old-foo') ).to.be( 'old-bar' );
+      } )
       it ( 'Test get()', function () {
         expect( garlicStorage.get( 'foo') ).to.be( 'bar' );
         expect( garlicStorage.get( 'baz') ).to.be( null );

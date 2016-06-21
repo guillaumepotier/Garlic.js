@@ -16,15 +16,23 @@
    * =============================== */
   var Storage = function ( options ) {
     this.defined = 'undefined' !== typeof localStorage;
-  }
+  };
 
   Storage.prototype = {
 
     constructor: Storage
 
     , get: function ( key, placeholder ) {
-      if (localStorage.getItem( key )) {
-        return JSON.parse(localStorage.getItem( key ));
+      var value = localStorage.getItem( key );
+
+      if (value) {
+        try{
+          value = JSON.parse(value);
+        } catch (e) {
+          // ignore, fallback for older versions
+        }
+
+        return value;
 
       } else if ('undefined' !== typeof placeholder) {
         return placeholder;
@@ -77,7 +85,7 @@
 
   var Garlic = function ( element, storage, options ) {
     this.init( 'garlic', element, storage, options );
-  }
+  };
 
   Garlic.prototype = {
 
