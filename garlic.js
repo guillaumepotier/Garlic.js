@@ -16,6 +16,15 @@
    * =============================== */
   var Storage = function ( options ) {
     this.defined = 'undefined' !== typeof localStorage;
+
+    // https://github.com/Modernizr/Modernizr/blob/5eea7e2a213edc9e83a47b6414d0250468d83471/feature-detects/storage/localstorage.js#L40
+    var key = 'garlic:' + document.domain + '>test';
+    try {
+      localStorage.setItem(key, key);
+      localStorage.removeItem(key);
+    } catch (e) {
+      this.defined = false;
+    }
   };
 
   Storage.prototype = {
