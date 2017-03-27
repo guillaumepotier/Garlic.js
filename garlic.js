@@ -16,14 +16,39 @@
    * =============================== */
   var Storage = function ( options ) {
     this.defined = 'undefined' !== typeof localStorage;
-  }
+
+    // https://github.com/Modernizr/Modernizr/blob/5eea7e2a213edc9e83a47b6414d0250468d83471/feature-detects/storage/localstorage.js#L40
+    var key = 'garlic:' + document.domain + '>test';
+    try {
+      localStorage.setItem(key, key);
+      localStorage.removeItem(key);
+    } catch (e) {
+      this.defined = false;
+    }
+  };
 
   Storage.prototype = {
 
     constructor: Storage
 
     , get: function ( key, placeholder ) {
-      return localStorage.getItem( key ) ? localStorage.getItem( key ) : 'undefined' !== typeof placeholder ? placeholder : null;
+      var value = localStorage.getItem( key );
+
+      if (value) {
+        try{
+          value = JSON.parse(value);
+        } catch (e) {
+          // ignore, fallback for older versions
+        }
+
+        return value;
+
+      } else if ('undefined' !== typeof placeholder) {
+        return placeholder;
+
+      } else {
+        return null;
+      }
     }
 
     , has: function ( key ) {
@@ -31,14 +56,13 @@
     }
 
     , set: function ( key, value, fn ) {
-      if ( 'string' === typeof value ) {
 
-        // if value is null, remove storage if exists
-        if ( '' === value ) {
-          this.destroy( key );
-        } else {
-          localStorage.setItem( key , value );
-        }
+      // if value is null, remove storage if exists
+      if ( '' === value || (value instanceof Array && value.length === 0)) {
+        this.destroy( key );
+      } else {
+        value = JSON.stringify(value);
+        localStorage.setItem( key , value );
       }
 
       return 'function' === typeof fn ? fn() : true;
@@ -70,7 +94,7 @@
 
   var Garlic = function ( element, storage, options ) {
     this.init( 'garlic', element, storage, options );
-  }
+  };
 
   Garlic.prototype = {
 
@@ -91,7 +115,7 @@
       this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
 
       if ( this.options.destroy ) {
-        $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
+        $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.remove, this ) );
       }
 
       // retrieve garlic persisted data
@@ -245,6 +269,7 @@
       this.$element.data( 'swap-state', 'garlic' === this.$element.data( 'swap-state' ) ? 'default' : 'garlic' );
       this.$element.data( 'swap-data', this.$element.val());
       $( this.$element ).val( val );
+      this.options.onSwap(this.$element, this.$element.data( 'swap-data'), val);
     }
 
     /* delete localStorage persistance only */
@@ -254,10 +279,10 @@
 
     /* remove data / reset state AND delete localStorage */
     , remove: function () {
-      this.remove();
+      this.destroy();
 
       if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
-        $( this.$element ).prop( 'checked', false );
+        $( this.$element ).attr( 'checked', false );
         return;
       }
 
@@ -406,7 +431,7 @@
   $.fn.garlic.defaults = {
       destroy: true                                                                                         // Remove or not localstorage on submit & clear
     , inputs: 'input, textarea, select'                                                                     // Default supported inputs.
-    , excluded: 'input[type="file"], input[type="hidden"]'                                                  // Default ignored inputs.
+    , excluded: 'input[type="file"], input[type="hidden"], input[type="submit"], input[type="reset"]'                            // Default ignored inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'click', 'keypress', 'paste', 'focus' ]  // Events list that trigger a localStorage
     , domain: false                                                                                         // Store et retrieve forms data accross all domain, not just on
     , expires: false                                                                                        // false for no expiration, otherwise (int) in seconds for auto-expiration
@@ -420,6 +445,7 @@
    , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field
    , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field
    , onPersist: function ( $item, storedVal ) {}                                                            // This function will be triggered each time Garlic stores a field to local storage
+   , onSwap: function ( $item, prevValue, curValue ) {}                                                     // This function will be triggered each time Garlic swap values with conflict manager
   }
 
 
