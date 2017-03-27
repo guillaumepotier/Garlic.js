@@ -115,7 +115,7 @@
       this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
 
       if ( this.options.destroy ) {
-        $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
+        $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.remove, this ) );
       }
 
       // retrieve garlic persisted data
@@ -279,10 +279,10 @@
 
     /* remove data / reset state AND delete localStorage */
     , remove: function () {
-      this.remove();
+      this.destroy();
 
       if ( this.$element.is( 'input[type=radio], input[type=checkbox]' ) ) {
-        $( this.$element ).prop( 'checked', false );
+        $( this.$element ).attr( 'checked', false );
         return;
       }
 
@@ -431,7 +431,7 @@
   $.fn.garlic.defaults = {
       destroy: true                                                                                         // Remove or not localstorage on submit & clear
     , inputs: 'input, textarea, select'                                                                     // Default supported inputs.
-    , excluded: 'input[type="file"], input[type="hidden"], input[type="submit"]'                            // Default ignored inputs.
+    , excluded: 'input[type="file"], input[type="hidden"], input[type="submit"], input[type="reset"]'                            // Default ignored inputs.
     , events: [ 'DOMAttrModified', 'textInput', 'input', 'change', 'click', 'keypress', 'paste', 'focus' ]  // Events list that trigger a localStorage
     , domain: false                                                                                         // Store et retrieve forms data accross all domain, not just on
     , expires: false                                                                                        // false for no expiration, otherwise (int) in seconds for auto-expiration
