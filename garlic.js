@@ -141,9 +141,9 @@
         this.storage.set( this.expiresFlag , ( new Date().getTime() + this.options.expires * 1000 ).toString() );
       }
       
-      // Allow changing the value
+      // Allow changing the value to any other string
       var prePersistValue = this.options.prePersist(this.$element, this.val);
-      if (typeof prePersistValue != 'false') {
+      if (typeof prePersistValue == 'string') {
           this.val = prePersistValue;
       }
 
