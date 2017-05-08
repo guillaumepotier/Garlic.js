@@ -169,8 +169,15 @@
             this.$element.attr( 'expires-in',  Math.floor( ( parseInt( this.storage.get( this.expiresFlag ) ) - date ) / 1000 ) );
           }
         }
-
+        
+        var currentValue = this.$element.val();
         var storedValue = this.storage.get( this.path );
+
+        // Allow not restoring the value in case value was `false`
+        var storedValue = this.options.preRetrieve(this.$element, currentValue, storedValue);
+        if (typeof storedValue == 'boolean' && storedValue == false) {
+            return;
+        }
 
         // if conflictManager enabled, manage fields with already provided data, different from the one stored
         if ( this.options.conflictManager.enabled && this.detectConflict() ) {
@@ -448,6 +455,7 @@
       , onConflictDetected: function ( $item, storedVal ) { return true; }                                  // This function will be triggered if a conflict is detected on an item. Return true if you want Garlic behavior, return false if you want to override it
     }
    , getPath: function ( $item ) {}                                                                         // Set your own key-storing strategy per field
+   , preRetrieve: function ( $item, currentValue, storedVal ) { return storedVal; }                         // This function will be triggered before retrieve, and allows to override setting the field's value restored from local storage
    , onRetrieve: function ( $item, storedVal ) {}                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field
    , prePersist: function ( $item, storedVal ) { return false; }                                            // This function will be triggered before Garlic, and allows to override the value stored to local storage
    , onPersist: function ( $item, storedVal ) {}                                                            // This function will be triggered each time Garlic stores a field to local storage
