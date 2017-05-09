@@ -8,13 +8,26 @@ var testSuite = function () {
       e.preventDefault();
     } );
     $( '#form1' ).garlic( { domain: true } );
-    $( '#retrieve-trigger' ).garlic( { onRetrieve: function ( elem, retrieveVal ) {
-      elem.attr( 'storedValue', retrieveVal );
-    } } );
-    $( '#persist-trigger' ).garlic( { onPersist: function ( elem, persistVal ) {
-      console.log("Value: ", persistVal);
-      elem.attr( 'storedValue', persistVal );
-    } } );
+
+    $( '#retrieve-trigger' ).garlic( {
+        preRetrieve: function ( elem, retrieveVal, storedVal ) {
+          return 'preRetrieveValueChanged';
+        },
+        onRetrieve: function ( elem, retrieveVal ) {
+          elem.attr( 'storedValue', retrieveVal );
+        }
+    } );
+
+    $( '#persist-trigger' ).garlic( {
+      prePersist: function ( elem, persistVal ) {
+        return 'prePersistChanged';
+      },
+      onPersist: function ( elem, persistVal ) {
+        console.log("Value: ", persistVal);
+        elem.attr( 'storedValue', persistVal );
+      }
+    } );
+
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
     $( '#custom-get-path-form' ).garlic( {
@@ -85,9 +98,9 @@ var testSuite = function () {
         garlicStorage.destroy( 'foo' );
         expect( garlicStorage.get( 'foo' ) ).to.be( null );
       } )
-      it ( 'If custom onPersist function is defined, execute it', function () {
+      it ( 'If custom prePersist and onPersist functions are defined, change value and do not return false', function () {
         $( '#persist-input' ).garlic ( 'persist', function () {
-          expect( $( '#persist-input' ).attr( 'storedValue' ) ).to.be( 'bar' );
+          expect( $( '#persist-input' ).attr( 'storedValue' ) ).to.be( 'prePersistChanged' );
         } );
       } )
     } )
@@ -215,7 +228,7 @@ var testSuite = function () {
       } )
       it ( 'If custom retrieval function is defined, execute it', function () {
         $( '#retrieve-input' ).garlic ( 'retrieve', function () {
-          expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'foo' );
+          expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'preRetrieveValueChanged' );
         } );
       } )
       it( 'When stored data is retrieved, an input event should be triggered', function ( done ) {
