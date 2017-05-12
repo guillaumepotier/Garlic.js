@@ -177,11 +177,11 @@
 
           // for checkboxes and radios
           if ( 'checked' === storedValue || this.$element.val() === storedValue ) {
-            return this.$element.attr( 'checked', true );
+            return this.$element.prop( 'checked', true );
 
           // only needed for checkboxes
           } else if ( 'unchecked' === storedValue ) {
-            this.$element.attr( 'checked', false );
+            this.$element.prop( 'checked', false );
           }
 
           return;
