@@ -162,9 +162,10 @@ var testSuite = function () {
         it ( 'Data is persisted on supported events: ' + events.join( ', ' ) , function () {
           for ( var event in events ) {
             $('#input6').val( 'foo' +  events[event] );
-            $('#input6').trigger( $.Event( events[event] ) );
-            expect( $( '#input6' ).val() ).to.be( 'foo' +  events[event] );
-            expect( garlicStorage.get( fieldPath ) ).to.be( 'foo' +  events[event] );
+            $('#input6').one(  events[event], function () {
+              expect( $( '#input6' ).val() ).to.be( 'foo' +  events[event] );
+              expect( garlicStorage.get( fieldPath ) ).to.be( 'foo' +  events[event] );
+            } ).trigger( $.Event( events[event] ) );
           }
         } )
     } )
@@ -219,7 +220,7 @@ var testSuite = function () {
         } );
       } )
       it( 'When stored data is retrieved, an input event should be triggered', function ( done ) {
-        $( '#retrieve-input' ).on( 'input', function () {
+        $( '#retrieve-input' ).one( 'input', function () {
           done();
         } );
         $( '#retrieve-input' ).garlic ( 'retrieve' );
@@ -258,7 +259,7 @@ var testSuite = function () {
             expect( $( '#auto-expires-2' ).attr( 'expires-in' ) ).to.be( '14' );
           } )
         } )
-        $( '#auto-expires-3' ).bind( 'change', function () {
+        $( '#auto-expires-3' ).one( 'change', function () {
           var garlicFlagDate = garlicStorage.get( $( '#auto-expires-3' ).garlic( 'getPath' ) + '_flag')
             , diffDates = parseInt( garlicFlagDate ) - new Date().getTime();
 
@@ -295,64 +296,61 @@ var testSuite = function () {
     ***************************************/
     describe ( 'Test input data change', function () {
       it ( 'If some text is added / removed in a textarea or an input[type=text], it should be updated in storage', function () {
-        $( '#input12' ).val( 'hello world!' );
-        $( '#input12' ).trigger( 'keypress', function () {
-          expect( garlicStorage.get( $( '#input12' ).garlic( 'getPath' ) ) ).to.be( 'hello world!' );
-        } )
+        $( '#input13' ).val( 'hello world!' );
+        $( '#input13' ).one( 'keypress', function () {
+          expect( garlicStorage.get( $( '#input13' ).garlic( 'getPath' ) ) ).to.be( 'hello world!' );
+        } ).trigger( 'keypress' )
       } )
       it ( 'If a text field is willingly cleared by an user, its storage will also be cleared', function () {
-        $( '#input12' ).val( '' );
-        $( '#input12' ).trigger( 'keypress', function () {
-          expect( garlicStorage.has( $( '#input12' ).garlic( 'getPath' ) ) ).to.be( false );
-        } )
+        $( '#input13' ).val( '' );
+        $( '#input13' ).one( 'keypress', function () {
+          expect( garlicStorage.has( $( '#input13' ).garlic( 'getPath' ) ) ).to.be( false );
+        } ).trigger( 'keypress' )
       } )
       it ( 'If a select is changed, new value should be stored', function () {
         $( '#select3' ).val( 'bar' );
-        $( '#select3' ).trigger( 'change', function () {
+        $( '#select3' ).one( 'change', function () {
           expect( garlicStorage.get( $( '#select3' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        } )
+        } ).trigger( 'change' )
       } )
       it ( 'If radio button is selected, value or new value should be stored', function () {
         $( '#radio1' ).val( 'foo' );
-        $( '#radio1' ).trigger( 'change', function () {
+        $( '#radio1' ).one( 'change', function () {
           expect( garlicStorage.get( $( '#radio1' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        } )
+        } ).trigger( 'change' )
       } )
       it ( 'Same, but with radio buttons not at the same DOM level', function () {
         $( '#radio2' ).val( 'bar' );
-        $( '#radio2' ).trigger( 'change', function () {
+        $( '#radio2' ).one( 'change', function () {
           expect( garlicStorage.get( $( '#radio2' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        } )
+        } ).trigger( 'change' )
       } )
       it ( 'If a checkbox is checked, its state should be persisted', function () {
         $( '#checkbox4' ).val( 'foo' );
         $( '#checkbox6' ).val( 'bar' );
-        $( '#checkbox4' ).trigger( 'change', function () {
-          expect( garlicStorage.get( $( '#checkbox4' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        } )
-        $( '#checkbox6' ).trigger( 'change', function () {
-          expect( garlicStorage.get( $( '#checkbox6' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        } )
+        $( '#checkbox4' ).one( 'change', function () {
+          expect( garlicStorage.get( $( '#checkbox4' ).garlic( 'getPath' ) ) ).to.be( 'unchecked' );
+        } ).trigger( 'change' )
+        $( '#checkbox6' ).one( 'change', function () {
+          expect( garlicStorage.get( $( '#checkbox6' ).garlic( 'getPath' ) ) ).to.be( 'unchecked' );
+        } ).trigger( 'change' )
+      } )
+      it ( 'If a checkbox is checked, its state should be persisted', function () {
+        $( '#checkbox4' ).val( 'foo' );
+        $( '#checkbox4' ).prop("checked", true)
+        $( '#checkbox4' ).one( 'change', function () {
+          expect( garlicStorage.get( $( '#checkbox4' ).garlic( 'getPath' ) ) ).to.be( 'checked' );
+        } ).trigger( 'change' )
       } )
       it ( 'Same, but with checkboxes not at the same DOM level', function () {
         $( '#checkbox7' ).val( 'bar' );
         $( '#checkbox8' ).val( 'baz' );
-        $( '#checkbox7' ).trigger( 'change', function () {
-          expect( garlicStorage.get( $( '#checkbox7' ).garlic( 'getPath' ) ) ).to.be( 'bar' );
-        } )
-        $( '#checkbox8' ).trigger( 'change', function () {
-          expect( garlicStorage.get( $( '#checkbox8' ).garlic( 'getPath' ) ) ).to.be( 'baz' );
-        } )
-      } )
-      it ( 'If a checkbox is unchecked, its state should be removed from storage', function () {
-        $( '#checkbox9' ).trigger( 'click', function () {
-          expect( $( '#checkbox9' ).attr( 'checked' ) ).to.be( 'checked' );
-          expect( garlicStorage.get( $( '#checkbox9' ).garlic( 'getPath' ) ) ).to.be( 'foo' );
-        } )
-        $( '#checkbox9' ).trigger( 'click', function () {
-          expect( $( '#checkbox9' ).attr( 'checked' ) == undefined || $( '#checkbox9' ).attr( 'checked' ) == false ).to.be( true );
-          expect( garlicStorage.has( $( '#checkbox9' ).garlic( 'getPath' ) ) ).to.be( false );
-        } )
+        $( '#checkbox7' ).one( 'change', function () {
+          expect( garlicStorage.get( $( '#checkbox7' ).garlic( 'getPath' ) ) ).to.be( 'unchecked' );
+        } ).trigger( 'change' )
+        $( '#checkbox8' ).one( 'change', function () {
+          expect( garlicStorage.get( $( '#checkbox8' ).garlic( 'getPath' ) ) ).to.be( 'unchecked' );
+        } ).trigger( 'change' )
       } )
     } )
 

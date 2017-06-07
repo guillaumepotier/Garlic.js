@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/guillaumepotier/Garlic.js",
   "devDependencies": {
-    "mocha": "*",
-    "mocha-phantomjs": "*",
-    "expect.js": "*"
+    "mocha": "~> 2.2.3",
+    "mocha-phantomjs": "~> 3.6.0",
+    "expect.js": "~> 0.3.0"
   }
 }
