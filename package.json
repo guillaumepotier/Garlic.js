@@ -1,0 +1,30 @@
+{
+  "name": "garlicjs",
+  "version": "1.4.0",
+  "description": "Automatically persist your forms' text and select field values locally, until the form is submitted.",
+  "main": "dist/garlic.min.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "bin/test-suite.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guillaumepotier/Garlic.js"
+  },
+  "author": "Guillaume Potier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guillaumepotier/Garlic.js/issues"
+  },
+  "homepage": "https://github.com/guillaumepotier/Garlic.js",
+  "devDependencies": {
+    "expect.js": "*",
+    "mocha": "*",
+    "mocha-phantomjs": "*"
+  },
+  "dependencies": {
+    "webpack": "^3.10.0"
+  }
+}

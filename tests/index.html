@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <title>Garlicjs Mocha Tests</title>
-    <link rel="stylesheet" href="mocha.css" />
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -114,6 +114,11 @@
             <option value="bar">bar</option>
             <option value="baz">baz</option>
         </select>
+        <select id="mselect1" multiple>
+            <option value="option1">o1</option>
+            <option value="option2">o2</option>
+            <option value="option3">o3</option>
+        </select>
         <form data-persist="garlic">
             <input type="text" id="input12" />
             <select id="select3">
@@ -219,7 +224,7 @@
                 break;
         }
 
-        jsAppend( [ 'mocha.js', 'expect.js', 'tests.js' ] );
+        jsAppend( [ '../node_modules/mocha/mocha.js', '../node_modules/expect.js/index.js', 'tests.js' ] );
 
         window.onload = function() {
 

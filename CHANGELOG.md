@@ -1,4 +1,8 @@
-#Changelog
+# Changelog
+
+* **1.2.4** :
+
+    - loosen jquery dependency (#81)
 
 * **1.2.3** :
 

@@ -1,20 +1,33 @@
 "use strict";
 
 var testSuite = function () {
-  describe ( 'Garlic.js test suite', function () {
+  describe ( 'Garlic.js test suite: ' + window.location.hash, function () {
     $( '#noGarlicDefault' ).garlic( { conflictManager: { enabled: true, garlicPriority: false } } );
     $( '[rel=persist-select]' ).garlic();
     $( '#submit13' ).click( function ( e ) {
       e.preventDefault();
     } );
     $( '#form1' ).garlic( { domain: true } );
-    $( '#retrieve-trigger' ).garlic( { onRetrieve: function ( elem, retrieveVal ) {
-      elem.attr( 'storedValue', retrieveVal );
-    } } );
-    $( '#persist-trigger' ).garlic( { onPersist: function ( elem, persistVal ) {
-      console.log("Value: ", persistVal);
-      elem.attr( 'storedValue', persistVal );
-    } } );
+
+    $( '#retrieve-trigger' ).garlic( {
+        preRetrieve: function ( elem, retrieveVal, storedVal ) {
+          return 'preRetrieveValueChanged';
+        },
+        onRetrieve: function ( elem, retrieveVal ) {
+          elem.attr( 'storedValue', retrieveVal );
+        }
+    } );
+
+    $( '#persist-trigger' ).garlic( {
+      prePersist: function ( elem, persistVal ) {
+        return 'prePersistChanged';
+      },
+      onPersist: function ( elem, persistVal ) {
+        console.log("Value: ", persistVal);
+        elem.attr( 'storedValue', persistVal );
+      }
+    } );
+
     var garlicStorage = $( '#form1' ).garlic( 'getStorage' );
 
     $( '#custom-get-path-form' ).garlic( {
@@ -71,6 +84,10 @@ var testSuite = function () {
         expect( garlicStorage.has( 'foo' ) ).to.be( true );
         expect( garlicStorage.has( 'garlic' ) ).to.be( true );
       } )
+      it ( 'Test fallback get()', function () {
+        localStorage.setItem( 'old-foo', 'old-bar' );
+        expect( garlicStorage.get( 'old-foo') ).to.be( 'old-bar' );
+      } )
       it ( 'Test get()', function () {
         expect( garlicStorage.get( 'foo') ).to.be( 'bar' );
         expect( garlicStorage.get( 'baz') ).to.be( null );
@@ -81,9 +98,9 @@ var testSuite = function () {
         garlicStorage.destroy( 'foo' );
         expect( garlicStorage.get( 'foo' ) ).to.be( null );
       } )
-      it ( 'If custom onPersist function is defined, execute it', function () {
+      it ( 'If custom prePersist and onPersist functions are defined, change value and do not return false', function () {
         $( '#persist-input' ).garlic ( 'persist', function () {
-          expect( $( '#persist-input' ).attr( 'storedValue' ) ).to.be( 'bar' );
+          expect( $( '#persist-input' ).attr( 'storedValue' ) ).to.be( 'prePersistChanged' );
         } );
       } )
     } )
@@ -108,6 +125,9 @@ var testSuite = function () {
       } )
       it ( 'On a select input', function () {
         expect( $( '#select2' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
+      } )
+      it ( 'On a multiple select input', function () {
+        expect( $( '#mselect1' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
       } )
       it ( 'On a checkboxes inputs', function () {
         expect( $( '#checkbox1' ).hasClass( 'garlic-auto-save' ) ).to.be( true );
@@ -173,6 +193,7 @@ var testSuite = function () {
       garlicStorage.set( $( '#checkbox2' ).garlic( 'getPath' ), 'checkbox2' );
       garlicStorage.set( $( '#checkbox3' ).garlic( 'getPath' ), 'wrong_data' );
       garlicStorage.set( $( '#select23' ).garlic( 'getPath' ), 'bar' );
+      garlicStorage.set( $( '#mselect1' ).garlic( 'getPath' ), ['option1', 'option3'] );
       garlicStorage.set( $( '#retrieve-input' ).garlic( 'getPath' ), 'foo' );
 
       it ( 'An input should be populated by its stored data', function () {
@@ -184,6 +205,10 @@ var testSuite = function () {
       it ( 'Select must be setted accordingly to storage', function () {
         $( '#select23' ).garlic ( 'retrieve' );
         expect( $( '#select23' ).val() ).to.be( 'bar' );
+      } )
+      it ( 'Select-multiple must be setted accordingly to storage', function () {
+        $( '#mselect1' ).garlic ( 'retrieve' );
+        expect( $( '#mselect1' ).val() ).to.eql( ['option1', 'option3'] );
       } )
       it ( 'Radio buttons must be checked accordingly to storage', function () {
         $( '#radio1' ).garlic ( 'retrieve', function () {
@@ -203,7 +228,7 @@ var testSuite = function () {
       } )
       it ( 'If custom retrieval function is defined, execute it', function () {
         $( '#retrieve-input' ).garlic ( 'retrieve', function () {
-          expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'foo' );
+          expect( $( '#retrieve-input' ).attr( 'storedValue' ) ).to.be( 'preRetrieveValueChanged' );
         } );
       } )
       it( 'When stored data is retrieved, an input event should be triggered', function ( done ) {

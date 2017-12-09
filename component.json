@@ -1,8 +1,9 @@
 {
-    "name": "garlicjs",
-    "version": "1.2.1",
-    "main": "./dist/garlic.min.js",
-    "dependencies": {
-        "jquery": "1.8.*"
-    }
+  "name": "garlicjs",
+  "version": "1.2.4",
+  "main": "./dist/garlic.min.js",
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap": "^3.3.7"
+  }
 }
