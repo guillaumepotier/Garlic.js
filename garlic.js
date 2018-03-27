@@ -115,7 +115,7 @@
       this.$element.on( this.options.events.join( '.' + this.type + ' ') , false, $.proxy( this.persist, this ) );
 
       if ( this.options.destroy ) {
-        $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.remove, this ) );
+        $( this.parentForm ).on( 'submit reset' , false, $.proxy( this.destroy, this ) );
       }
 
       // retrieve garlic persisted data
