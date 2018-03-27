@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "scripts": {
+    "build": "NODE_ENV=production webpack",
     "test": "bin/test-suite.sh"
   },
   "repository": {

@@ -42,33 +42,44 @@ var testSuite = function () {
                      getPath
     ***************************************/
     describe ( 'Test getPath', function () {
+      before ( function () {
+        window.location.hash = 'foo';
+      });
+
       it ( 'getPath() for #input1', function () {
-        expect( $( '#input1' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>' + 'form:eq(0)>input' );
+        expect( $( '#input1' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>foo>' + 'form:eq(0)>input' );
       } )
       it ( 'getPath() for #div1', function () {
         expect( $( '#div1' ).garlic( 'getPath' ) ).to.be( false );
       } )
       it ( 'getPath() for #textarea2', function () {
-        expect( $( '#textarea2' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>' + 'form:eq(8)>textarea' );
+        expect( $( '#textarea2' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>foo>' + 'form:eq(8)>textarea' );
       } )
       it ( 'getPath() for #checkbox1', function () {
-        expect( $( '#checkbox1' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>' + 'form:eq(3)>input.checkbox[]:eq(0)' );
+        expect( $( '#checkbox1' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>foo>' + 'form:eq(3)>input.checkbox[]:eq(0)' );
       } )
       it ( 'getPath() for #checkbox2', function () {
-        expect( $( '#checkbox2' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>' + 'form:eq(3)>input.checkbox[]:eq(1)' );
+        expect( $( '#checkbox2' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>foo>' + 'form:eq(3)>input.checkbox[]:eq(1)' );
       } )
       it ( 'getPath() for #radio1', function () {
-        expect( $( '#radio1' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>' + 'form:eq(4)>input.radio' );
+        expect( $( '#radio1' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>foo>' + 'form:eq(4)>input.radio' );
       } )
       it ( 'getPath() for #radio2, should be same as #radio1', function () {
         expect( $( '#radio1' ).garlic( 'getPath' ) ).to.be( $( '#radio1' ).garlic( 'getPath' ) );
       } )
       it ( 'getPath() for elements with domain=true', function () {
-        expect( $( '#input5' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + '*>' + 'form:eq(6)>input' );
+        expect( $( '#input5' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + '*>foo>' + 'form:eq(6)>input' );
       } )
       it ( 'test custom getPath()', function () {
         expect( $( '#custom-get-path-field' ).garlic( 'getPath' ) ).to.be( 'custom-get-path-field_mypath' );
       } )
+      it ( 'getPath() with hash in url', function () {
+        expect( $( '#input1' ).garlic( 'getPath' ) ).to.be( 'garlic:' + document.domain + window.location.pathname + '>foo>' + 'form:eq(0)>input' );
+      } )
+
+      after ( function () {
+        window.location.hash = '';
+      });
     } )
 
     /***************************************

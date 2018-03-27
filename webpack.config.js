@@ -1,11 +1,11 @@
 // $ PROD_ENV=1 webpack
 var webpack = require('webpack')
 
-var PROD = JSON.parse(process.env.PROD_ENV || '0');
+var PROD = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: __dirname + '/garlic.js',
-  devtool: 'source-map',
+  // devtool: 'source-map',
   output: {
     path: __dirname + '/dist',
     filename: PROD ? 'garlic.min.js' : 'garlic.js'
