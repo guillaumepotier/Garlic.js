@@ -8,9 +8,8 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/2.3.2/assets/css/docs.css" rel="stylesheet">
+    <link href="./resources/bootstrap-2.3.2.css" rel="stylesheet">
+    <link href="./resources/docs.css" rel="stylesheet">
     <link href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -107,7 +106,7 @@
         <h1 class="">
             <img src="resources/garlicjs.png">
 
-            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://garlicjs.org" data-text="For better #UX, and in case of any accident, persist forms current data locally until user submit! via @guillaumepotier" data-size="large"></a>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://garlicjs.org" data-text="Garlic.js: allows you to automatically persist your forms' text field values locally, until the form is submitted" data-size="large"></a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
             <iframe src="http://ghbtns.com/github-btn.html?user=guillaumepotier&repo=garlic.js&type=watch&count=true"
@@ -120,10 +119,10 @@
 
         <div class="row well intro">
             <div id="head-download" class="download">
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.3.0.zip">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2.zip">
                     <img width="90" border="0" src="http://github.com/images/modules/download/zip.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
-                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.3.0.tar.gz">
+                <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2.tar.gz">
                     <img width="90" border="0" src="http://github.com/images/modules/download/tar.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                 </a>
             </div>
@@ -310,10 +309,10 @@
                         <h1>Download</h1>
                     </div>
                     <div id="download" class="download">
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.0.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
                             <img width="90" border="0" src="http://github.com/images/modules/download/zip.png">
                         </a>
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.0tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
                             <img width="90" border="0" src="http://github.com/images/modules/download/tar.png">
                         </a>
                     </div>
@@ -344,13 +343,6 @@
                     </div>
                     <p class="alert">Hey, all doc is not fully here. There are some useful config parameters in Garlic code, better directly have a look <a href="http://github.com/guillaumepotier/garlic.js">there</a>! ;)</p>
                     <ul>
-                        <li>
-                            Want to protect all your forms on the same page, without having to add for each one of them <code>data-persist="garlic"</code>?
-                            <pre>
-&lt;script type="text/javascript">
-  $( 'form' ).garlic();
-&lt;/script></pre>
-                        </li>
                         <li>
                             Want to specifically chart fields persisted by Garlic? Use the auto-added <code>class="garlic-auto-save"</code> class!<br/>
                         </li>
@@ -442,7 +434,7 @@
                     <div class="page-header">
                         <h1>Version / Licence</h1>
                     </div>
-                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">1.3.0 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
+                    <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/README.md">1.4.2 - MIT</a> - <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">See changelog</a>
                     <a href="#top" class="pull-right">Top</a>
                 </section>
             </div>
@@ -459,9 +451,9 @@
     <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
     <script src="garlic.js"></script>
     <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-affix.js"></script>
-    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-alert.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
 
     <script type="text/javascript">
         hljs.initHighlightingOnLoad();
