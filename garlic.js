@@ -344,7 +344,7 @@
           , siblings = parent.children( name );
 
         // don't need to pollute path with select, fieldsets, divs and other noisy elements,
-        // exept for checkboxes that need exact path, cuz have same name and sometimes same eq()!
+        // except for checkboxes that need exact path, cuz have same name and sometimes same eq()!
         if ( !$( realNode ).is( 'form, input, select, textarea' ) && !fullPath ) {
           node = parent;
           continue;
@@ -353,7 +353,7 @@
         // set input type as name + name attr if exists
         name += $( realNode ).attr( 'name' ) ? '.' + $( realNode ).attr( 'name' ) : '';
 
-        // if has sibilings, get eq(), exept for radio buttons
+        // if has sibilings, get eq(), except for radio buttons
         if ( siblings.length > 1 && !$( realNode ).is( 'input[type=radio]' ) ) {
           name += ':eq(' + siblings.index( realNode ) + ')';
         }
