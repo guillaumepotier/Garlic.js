@@ -9,24 +9,18 @@
 
     <!-- Le styles -->
     <link href="./resources/bootstrap-2.3.2.css" rel="stylesheet">
+    <link href="./resources/bootstrap-responsive-2.3.2.min.css" rel="stylesheet">
     <link href="./resources/docs.css" rel="stylesheet">
-    <link href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet">
+    <link href="https://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
     <style>
         body {
-            display: block;
-            padding: 10px 10%;
-            padding-top: 0;
+            padding: 0;
             margin: auto;
-        }
-
-        h1.affix {
-            display: block;
         }
 
         #head-download {
@@ -43,15 +37,6 @@
 
         pre {
             margin: 10px 0 15px 0;
-        }
-
-        .affix {
-            position: fixed;
-            clear: both;
-        }
-
-        .bs-docs-sidenav.affix {
-            top: 200px;
         }
 
         #parsley {
@@ -99,19 +84,19 @@
     </style>
     <link rel="icon" type="image/ico" href="resources/favicon.ico">
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="100">
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
     <a href="https://github.com/guillaumepotier/garlic.js"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:9999" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
     <a name="top"></top>
     <div class="container">
         <h1 class="">
             <img src="resources/garlicjs.png">
 
-            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://garlicjs.org" data-text="Garlic.js: allows you to automatically persist your forms' text field values locally, until the form is submitted" data-size="large"></a>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://garlicjs.org" data-text="Garlic.js: allows you to automatically persist your forms' text field values locally, until the form is submitted" data-size="large"></a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-            <iframe src="http://ghbtns.com/github-btn.html?user=guillaumepotier&repo=garlic.js&type=watch&count=true"
+            <iframe src="https://ghbtns.com/github-btn.html?user=guillaumepotier&repo=garlic.js&type=watch&count=true"
               allowtransparency="true" frameborder="0" scrolling="0" width="90" height="25"></iframe>
-            <iframe src="http://ghbtns.com/github-btn.html?user=guillaumepotier&repo=garlic.js&type=fork&count=true"
+            <iframe src="https://ghbtns.com/github-btn.html?user=guillaumepotier&repo=garlic.js&type=fork&count=true"
             allowtransparency="true" frameborder="0" scrolling="0" width="90" height="25"></iframe>
 
             <img src="https://secure.travis-ci.org/guillaumepotier/Garlic.js.png?branch=master" />
@@ -120,10 +105,10 @@
         <div class="row well intro">
             <div id="head-download" class="download">
                 <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2.zip">
-                    <img width="90" border="0" src="http://github.com/images/modules/download/zip.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                    <img width="90" border="0" src="https://github.com/images/modules/download/zip.png" onclick="var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;">
                 </a>
                 <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2.tar.gz">
-                    <img width="90" border="0" src="http://github.com/images/modules/download/tar.png" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
+                    <img width="90" border="0" src="https://github.com/images/modules/download/tar.png" onclick="var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;">
                 </a>
             </div>
 
@@ -134,10 +119,14 @@
                It strives to have a javascript agnostic interface for UI/UX developers that might want to use it. Just add some <code>data-persist="garlic"</code> in your form tags, and you're good to go!
             </p>
         </div>
+        <p id="parsley" class="alert alert-block">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <span class="label label-important"> New! </span><br/> Have a look to Garlicjs little brother (or sister, as you want), <a href="https://parsleyjs.org" target="_blank">Parsley.js: validate all your forms frontend without writing a single line of javascript!</a>
+        </p>
 
-        <div class="row row-content">
-            <div class="span3 bs-docs-sidenav">
-                <ul class="nav nav-list bs-docs-sidenav affix">
+        <div class="row">
+            <div class="span3 bs-docs-sidebar">
+                <ul data-spy="affix" class="nav nav-list bs-docs-sidenav">
                     <li><a href="#demonstration"><i class="icon-chevron-right"></i> Demonstration</a></li>
                     <li><a href="#requirements"><i class="icon-chevron-right"></i> Requirements / Compatibility</a></li>
                     <li><a href="#download"><i class="icon-chevron-right"></i> Download</a></li>
@@ -147,10 +136,6 @@
                     <li><a href="#other"><i class="icon-chevron-right"></i> Other stuff</a></li>
                     <li><a href="#licence"><i class="icon-chevron-right"></i> Version / Licence</a></li>
                 </ul>
-                <p id="parsley" class="alert alert-block">
-                  <a class="close" data-dismiss="alert" href="#">&times;</a>
-                    <span class="label label-important"> New! </span><br/> Have a look to Garlicjs little brother (or sister, as you want), <a href="http://parsleyjs.org" target="_blank">Parsley.js: validate all your forms frontend without writing a single line of javascript!</a>
-                </p>
             </div>
 
             <div class="span9 doc-content">
@@ -290,14 +275,14 @@
                             <strong><a href="https://github.com/guillaumepotier/Garlic.js/tree/master/dist">Garlic.min.js: ~5K</a></strong>, requires jQuery or Zepto (with data module builded for Zepto, see <a href="https://github.com/guillaumepotier/Garlic.js/blob/master/CHANGELOG.md">changelog 0.0.6</a>
                         </li><br/>
                         <li>
-                            Native localStorage compatible only with "modern" browsers: IE8+, Chrome 4+, FF 4+, Safari 4+, Opera 11+. See more <a href="http://www.html5rocks.com/en/features/storage">here</a>.<br/>
+                            Native localStorage compatible only with "modern" browsers: IE8+, Chrome 4+, FF 4+, Safari 4+, Opera 11+. See more <a href="https://www.html5rocks.com/en/features/storage">here</a>.<br/>
                             Here is an awesome plugin that extends storage for IE6 and IE7!: https://github.com/mattpowell/localstorageshim<br/>
                             <strong>Use it that way with Garlic:</strong>
 <pre><code>&lt;!--[if lte IE 7]>
     &lt;script src="https://raw.github.com/mattpowell/localstorageshim/master/localstorageshim.min.js" type="text/javascript">&lt;/script></script>
 &lt;![endif]-->
 
-&lt;script src="http://code.jquery.com/jquery-1.8.2.min.js">&lt;/script>
+&lt;script src="https://code.jquery.com/jquery-1.8.2.min.js">&lt;/script>
 &lt;script src="garlic.js">&lt;/script></code></pre>
                         </li>
                     </ul>
@@ -309,11 +294,11 @@
                         <h1>Download</h1>
                     </div>
                     <div id="download" class="download">
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2.zip" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”" >
-                            <img width="90" border="0" src="http://github.com/images/modules/download/zip.png">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2.zip" onclick="var that=this;_gaq.push(['_trackEvent','Download','ZIP',this.href]);setTimeout(function(){location.href=that.href;},200);return false;" >
+                            <img width="90" border="0" src="https://github.com/images/modules/download/zip.png">
                         </a>
-                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2tar.gz" onclick="onclick=”var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;”">
-                            <img width="90" border="0" src="http://github.com/images/modules/download/tar.png">
+                        <a href="https://github.com/guillaumepotier/Garlic.js/archive/1.4.2tar.gz" onclick="var that=this;_gaq.push(['_trackEvent','Download','TAR',this.href]);setTimeout(function(){location.href=that.href;},200);return false;">
+                            <img width="90" border="0" src="https://github.com/images/modules/download/tar.png">
                         </a>
                     </div>
                 </section>
@@ -341,7 +326,7 @@
                     <div class="page-header">
                         <h1>Documentation</h1>
                     </div>
-                    <p class="alert">Hey, all doc is not fully here. There are some useful config parameters in Garlic code, better directly have a look <a href="http://github.com/guillaumepotier/garlic.js">there</a>! ;)</p>
+                    <p class="alert">Hey, all doc is not fully here. There are some useful config parameters in Garlic code, better directly have a look <a href="https://github.com/guillaumepotier/garlic.js">there</a>! ;)</p>
                     <ul>
                         <li>
                             Want to specifically chart fields persisted by Garlic? Use the auto-added <code>class="garlic-auto-save"</code> class!<br/>
@@ -404,7 +389,7 @@
                     </div>
                     <ul>
                         <li>
-                            <a href="http://wisembly.com/en/">Wisembly (Backend)</a>
+                            <a href="https://wisembly.com/en/">Wisembly (Backend)</a>
                         </li>
                         <li>
                             <a href="https://chrome.google.com/webstore/detail/simple-form-recovery/cieifohdikchafcbdjbcmkdiabggalhp">Chrome extension</a> by <a href="https://twitter.com/kornnflake">@kornnflake</a>
@@ -442,18 +427,16 @@
     </div>
 
     <br/>
-    <p>&copy; <a href="http://twitter.com/guillaumepotier" target="_blank">@guillaumepotier</a> 2012 <a href="http://wisembly.com/en/#garlic">@wisembly</a></p>
+    <p>&copy; <a href="https://twitter.com/guillaumepotier" target="_blank">@guillaumepotier</a> 2012 <a href="https://wisembly.com/en/#garlic">@wisembly</a></p>
 
     <!--[if lte IE 7]>
         <script src="https://raw.github.com/mattpowell/localstorageshim/master/localstorageshim.min.js" type="text/javascript" id="ie-localstorage-shim"></script>
     <![endif]-->
 
-    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="./resources/bootstrap-2.3.2.min.js"></script>
     <script src="garlic.js"></script>
-    <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 
     <script type="text/javascript">
         hljs.initHighlightingOnLoad();
